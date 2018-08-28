@@ -18,6 +18,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 * Advanced error handling and retries
 * Backpressure
 * Advanced testing with virtual time
+* RxJava interoperability
 
 ## Day 3: Practical
 * Refactoring existing application to Reactor
