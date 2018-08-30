@@ -10,6 +10,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - Introducing Reactor
 - Basic operators
 - Error handling
+- Blocking and reactive, back and forth
 - Unit testing
 
 ## Day 2: Reactor advanced
