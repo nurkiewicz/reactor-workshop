@@ -6,10 +6,15 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 ## Day 1: Introduction
 
 - What is reactive programming
-- Crash course to CompletableFuture and thread pools
+- Crash course to `CompletableFuture` and thread pools
 - Introducing Reactor
+- How to create a stream?
 - Basic operators
+  - `map()`, `filter()`, `flatMap()`, `handle()`, `take()`, `skip()`
+  - `using()`, `do*()`
+  - `window()`, `buffer()`
 - Error handling
+  - `onError*()`, `retry*()`
 - Blocking and reactive, back and forth
 - Unit testing
 
@@ -18,6 +23,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - Concurrency with non-blocking code
 - Advanced error handling and retries
 - Backpressure
+- `Processor` API
 - Advanced testing with virtual time
 - [RxJava](https://github.com/ReactiveX/RxJava) interoperability
 
