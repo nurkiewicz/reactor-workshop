@@ -16,16 +16,17 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - Error handling
   - `onError*()`, `retry*()`
 - Blocking and reactive, back and forth
+- Concurrency with blocking code and thread pools
 - Unit testing
 
 ## Day 2: Reactor advanced
-- Concurrency with blocking code and thread pools
 - Concurrency with non-blocking code
 - Advanced error handling and retries
 - Backpressure
 - `Processor` API
   - `Unicast`, `Emitter`, `Replay`
 - Advanced testing with virtual time
+- `Context`
 - [RxJava](https://github.com/ReactiveX/RxJava) interoperability
 
 ## Day 3: Practical
