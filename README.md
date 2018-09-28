@@ -24,6 +24,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - Advanced error handling and retries
 - Backpressure
 - `Processor` API
+  - `UnicastProcessor`, `UnicastProcessor`
 - Advanced testing with virtual time
 - [RxJava](https://github.com/ReactiveX/RxJava) interoperability
 
