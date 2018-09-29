@@ -36,3 +36,4 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
   - Reactive controllers
 - Streaming data in and out
 - Troubleshooting and debugging
+  - `checkpoint()`, `onOperatorDebug()`, `doOn*()`
