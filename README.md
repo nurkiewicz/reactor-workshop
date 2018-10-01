@@ -24,6 +24,8 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - Concurrency with non-blocking code
 - Advanced error handling and retries
 - `transform()` vs. `compose()`
+- Advanced operators
+  - `groupBy`
 - Backpressure
 - `Processor` API
   - `Unicast`, `Emitter`, `Replay`
