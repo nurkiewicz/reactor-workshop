@@ -32,6 +32,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - [RxJava](https://github.com/ReactiveX/RxJava) interoperability
 
 ## Day 3: Practical
+- `ConnectableFlux`
 - Refactoring existing application to Reactor
 - [Spring Boot](https://spring.io/projects/spring-boot)
   - Reactive database access
