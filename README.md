@@ -18,6 +18,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
   - `onError*()`, `retry*()`
 - Blocking and reactive, back and forth
 - Concurrency with blocking code and thread pools
+  - `subscribeOn()`, `parallel()`
 - Unit testing
 
 ## Day 2: Reactor advanced
