@@ -10,6 +10,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - Introducing Reactor
 - How to create a stream?
 - Laziness
+  - How vs. cold
 - Basic operators
   - `map()`, `filter()`, `flatMap()`, `handle()`, `take()`, `skip()`
   - `using()`, `do*()`
