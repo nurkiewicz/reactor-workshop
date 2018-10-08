@@ -17,6 +17,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
   - `window()`, `buffer()`, `distinct()`
   - `cast()`, `ofType()`, `index()`, `timestamp()`
 - Error handling
+  - `timeout()`
   - `onError*()`, `retry*()`
 - Blocking and reactive, back and forth
 - Concurrency with blocking code and thread pools
