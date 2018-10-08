@@ -18,6 +18,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
   - `window()`, `buffer()`, `distinct()`
   - `cast()`, `ofType()`, `index()`
   - `timestamp()`, `elapsed()`
+  - `zip()`, `merge()`
 - Error handling
   - `timeout()`
   - `onError*()`, `retry*()`
