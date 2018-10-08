@@ -32,6 +32,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - Advanced operators
   - `groupBy()`, `window()`
 - Backpressure
+  - `onBackpressure*()`
 - `Processor` API
   - `Unicast`, `Emitter`, `Replay`
 - Advanced testing with virtual time
