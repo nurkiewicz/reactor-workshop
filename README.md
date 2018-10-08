@@ -15,6 +15,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
   - `map()`, `filter()`, `flatMap()`, `handle()`, `take()`, `skip()`
   - `using()`, `do*()`
   - `window()`, `buffer()`
+  - `cast()`, `index()`, `timestamp()`
 - Error handling
   - `onError*()`, `retry*()`
 - Blocking and reactive, back and forth
@@ -27,7 +28,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - Advanced error handling and retries
 - `transform()` vs. `compose()`
 - Advanced operators
-  - `groupBy`, `window`
+  - `groupBy()`, `window()`
 - Backpressure
 - `Processor` API
   - `Unicast`, `Emitter`, `Replay`
