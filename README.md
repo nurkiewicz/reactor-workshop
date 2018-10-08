@@ -20,8 +20,8 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
   - `timestamp()`, `elapsed()`
   - `zip()`, `merge()`
 - Error handling
-  - `timeout()`
-  - `onError*()`, `retry*()`
+  - `timeout()`, `retry*()`, `retryBackoff()`
+  - `onError*()`
 - Blocking and reactive, back and forth
 - Concurrency with blocking code and thread pools
   - `subscribeOn()`, `parallel()`
