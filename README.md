@@ -16,7 +16,8 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
   - `map()`, `filter()`, `flatMap()`, `handle()`, `take()`, `skip()`
   - `using()`, `do*()`
   - `window()`, `buffer()`, `distinct()`
-  - `cast()`, `ofType()`, `index()`, `timestamp()`
+  - `cast()`, `ofType()`, `index()`
+  - `timestamp()`, `elapsed()`
 - Error handling
   - `timeout()`
   - `onError*()`, `retry*()`
