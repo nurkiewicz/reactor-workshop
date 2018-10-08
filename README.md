@@ -9,6 +9,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - Crash course to `CompletableFuture` and thread pools
 - Introducing Reactor
 - How to create a stream?
+  - `just()`, `generate()`, `create()`, `fromCallable()`
 - Laziness
   - How vs. cold
 - Basic operators
