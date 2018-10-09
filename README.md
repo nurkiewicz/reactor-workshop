@@ -48,6 +48,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - [Spring Boot](https://spring.io/projects/spring-boot)
   - Reactive database access
   - Reactive controllers
+  - `WebFilter`
 - Streaming data in and out
 - Troubleshooting and debugging
   - `checkpoint()`, `onOperatorDebug()`, `doOn*()`
