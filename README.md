@@ -54,3 +54,9 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - Streaming data in and out
 - Troubleshooting and debugging
   - `checkpoint()`, `onOperatorDebug()`, `doOn*()`
+
+## Reference materials
+
+1. [Reactor 3 Reference Guide](https://projectreactor.io/docs/core/release/reference/)
+2. [Web on Reactive Stack](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#spring-webflux) in [Spring Framework Documentation](https://docs.spring.io/spring/docs/current/spring-framework-reference/index.html)
+3. [The "Spring WebFlux Framework"](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-developing-web-applications.html#boot-features-webflux) in [Spring Boot Reference Guide](https://docs.spring.io/spring-boot/docs/current/reference/html/)
