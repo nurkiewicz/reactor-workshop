@@ -33,7 +33,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - `transform()` vs. `compose()`
 - Advanced operators
   - `groupBy()`, `window()`
-  - `exapnd*()`
+  - `expand*()`
 - Backpressure
   - `onBackpressure*()`
 - `Processor` API
