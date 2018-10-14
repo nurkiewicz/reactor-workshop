@@ -50,6 +50,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
   - Reactive controllers
   - `WebFilter`
   - Global error handling
+  - Web sockets
 - Streaming data in and out
 - Troubleshooting and debugging
   - `checkpoint()`, `onOperatorDebug()`, `doOn*()`
