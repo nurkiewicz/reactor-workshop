@@ -40,6 +40,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
   - `Unicast`, `Emitter`, `Replay`
 - Advanced testing with virtual time
 - `Context`
+- Speculative execution example
 - [RxJava](https://github.com/ReactiveX/RxJava) interoperability
 
 ## Day 3: Practical
