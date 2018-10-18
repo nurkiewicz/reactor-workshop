@@ -1,0 +1,18 @@
+subprojects {
+    apply plugin: 'java'
+ 
+    repositories {
+       mavenCentral()
+    }
+
+    dependencies {
+        implementation 'io.projectreactor:reactor-core:3.2.1.RELEASE'
+        implementation 'org.slf4j:slf4j-api:1.7.5'
+        runtime 'ch.qos.logback:logback-classic:1.2.3'
+
+        testImplementation 'junit:junit:4.12'
+        testImplementation 'org.assertj:assertj-core:3.11.1'
+        testImplementation 'io.projectreactor:reactor-test:3.2.1.RELEASE'
+    }
+
+}
