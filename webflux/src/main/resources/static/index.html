@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title of the document</title>
+</head>
+
+<body>
+<ul>
+
+</ul>
+<script>
+    const sse = new EventSource("stream");
+    const ul = document.getElementsByTagName('ul')[0];
+    sse.onmessage = e => {
+        const li = document.createElement("li");
+        const data = JSON.parse(e.data);
+        li.innerText = `Got ${data.seqNo} at ${data.timestamp}`;
+        ul.appendChild(li);
+    }
+</script>
+</body>
+
+</html>
