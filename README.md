@@ -1,5 +1,7 @@
 # Reactor training
 
+[![Build Status](https://travis-ci.org/nurkiewicz/reactor-training.svg?branch=master)](https://travis-ci.org/nurkiewicz/reactor-training)
+
 Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 
 
