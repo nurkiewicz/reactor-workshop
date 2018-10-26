@@ -1,5 +1,6 @@
 package com.nurkiewicz.reactor;
 
+import com.nurkiewicz.reactor.samples.RestClient;
 import org.junit.Ignore;
 import org.junit.Test;
 import reactor.core.publisher.Mono;
@@ -108,6 +109,23 @@ public class R010_LetsMeetMono {
 
 		//then
 		assertThat(counter.get()).isEqualTo(1);
+	}
+
+	/**
+	 * TODO Use {Mono#cache} to avoid calling destructive method twice
+	 */
+	@Test
+	public void nonIdempotentWebService() throws Exception {
+		//given
+		var restClient = new RestClient();
+		final Mono<Object> result = Mono.fromRunnable(() -> restClient.post(1));
+
+		//when
+		result.block();
+		result.block();
+
+		//then
+		//no exceptions
 	}
 
 }
