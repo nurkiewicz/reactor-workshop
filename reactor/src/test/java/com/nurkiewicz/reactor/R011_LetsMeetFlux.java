@@ -1,5 +1,6 @@
 package com.nurkiewicz.reactor;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
 
@@ -10,6 +11,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
+@Ignore
 public class R011_LetsMeetFlux {
 
 	@Test
