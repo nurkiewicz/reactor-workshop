@@ -107,7 +107,7 @@ public class R011_LetsMeetFlux {
 		Flux.just(counter.incrementAndGet(), counter.incrementAndGet());
 
 		//then
-		assertThat(counter.get()).isEqualTo(2);
+		assertThat(counter).hasValue(2);
 	}
 
 	@Test
@@ -134,19 +134,20 @@ public class R011_LetsMeetFlux {
 		final List<Integer> second = flux.collectList().block();
 
 		//then
-		assertThat(c.get()).isEqualTo(4);
+		assertThat(c).hasValue(4);
 		assertThat(first).containsExactly(1, 2);
 		assertThat(second).containsExactly(3, 4);
 	}
 
 	/**
 	 * TODO Make sure Flux is computed only once
+	 * Hint: {@link Flux#cache()}
 	 */
 	@Test
 	public void makeLazyComputeOnlyOnce() throws Exception {
 		//given
 		AtomicInteger c = new AtomicInteger();
-		final Flux<Integer> flux = Flux.fromStream(() ->
+		Flux<Integer> flux = Flux.fromStream(() ->
 				Stream.of(c.incrementAndGet(), c.incrementAndGet()));
 
 		//when
@@ -154,7 +155,7 @@ public class R011_LetsMeetFlux {
 		final List<Integer> second = flux.collectList().block();
 
 		//then
-		assertThat(c.get()).isEqualTo(2);
+		assertThat(c).hasValue(2);
 		assertThat(first).isEqualTo(second);
 	}
 

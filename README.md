@@ -13,7 +13,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - How to create a stream?
   - `just()`, `generate()`, `create()`, `fromCallable()`, `fromStream()`
 - Laziness
-  - How vs. cold
+  - Hot vs. cold
 - Basic operators
   - `map()`, `filter()`, `flatMap()`, `handle()`, `take()`, `skip()`
   - `using()`, `do*()`

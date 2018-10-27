@@ -64,7 +64,7 @@ public class R010_LetsMeetMono {
 		Mono.just(counter.incrementAndGet());
 
 		//then
-		assertThat(counter.get()).isEqualTo(1);
+		assertThat(counter).hasValue(1);
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class R010_LetsMeetMono {
 		Mono.fromCallable(() -> counter.incrementAndGet());
 
 		//then
-		assertThat(counter.get()).isZero();
+		assertThat(counter).hasValue(0);
 	}
 
 	@Test
@@ -95,7 +95,7 @@ public class R010_LetsMeetMono {
 	}
 
 	/**
-	 * TODO: use cache() operator to call {@link AtomicInteger#incrementAndGet()} only once.
+	 * TODO: use {@link Mono#cache()} operator to call {@link AtomicInteger#incrementAndGet()} only once.
 	 */
 	@Test
 	public void cachingMonoComputesOnlyOnce() throws Exception {
@@ -108,11 +108,11 @@ public class R010_LetsMeetMono {
 		lazy.block();
 
 		//then
-		assertThat(counter.get()).isEqualTo(1);
+		assertThat(counter).hasValue(1);
 	}
 
 	/**
-	 * TODO Use {Mono#cache} to avoid calling destructive method twice
+	 * TODO Use {@link Mono#cache()} to avoid calling destructive method twice
 	 */
 	@Test
 	public void nonIdempotentWebService() throws Exception {
