@@ -39,7 +39,7 @@ public class R000_HelloWorld {
 	@Test
 	public void pleaseReadTheJavaDoc() throws Exception {
 		//given
-		var pwd = "what's the password?";
+		String pwd = "what's the password?";
 
 		//when
 		final byte[] hash = sha256.digest(pwd.getBytes(UTF_8));

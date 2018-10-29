@@ -117,7 +117,7 @@ public class R010_LetsMeetMono {
 	@Test
 	public void nonIdempotentWebService() throws Exception {
 		//given
-		var restClient = new RestClient();
+		RestClient restClient = new RestClient();
 		final Mono<Object> result = Mono.fromRunnable(() -> restClient.post(1));
 
 		//when
