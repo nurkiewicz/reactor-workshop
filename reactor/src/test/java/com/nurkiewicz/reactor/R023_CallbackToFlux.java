@@ -170,4 +170,19 @@ public class R023_CallbackToFlux {
 				.block();
 	}
 
+	@Test
+	public void fluxCreateIsNotCached() throws Exception {
+		//given
+		final Flux<Email> foo = Flux.create(emitter -> {
+			log.info("Subscribing to e-mails");
+			inbox.read("foo@example.com", emitter::next);
+		});
+
+		//when
+		foo.subscribe();
+		foo.subscribe();
+
+		//then
+	}
+
 }
