@@ -64,8 +64,8 @@ public class R023_CallbackToFlux {
 	@Test
 	public void convertCallbacksToStream() throws Exception {
 		//given
-		final Flux<Email> emails = Flux.create(emitter ->
-				inbox.read("foo@example.com", emitter::next));
+		final Flux<Email> emails = Flux.create(sink ->
+				inbox.read("foo@example.com", sink::next));
 
 		//when
 		final List<Email> list = emails
@@ -80,8 +80,8 @@ public class R023_CallbackToFlux {
 	@Test
 	public void testingUsingStepVerifier() throws Exception {
 		//given
-		final Flux<Email> emails = Flux.create(emitter ->
-				inbox.read("foo@example.com", emitter::next));
+		final Flux<Email> emails = Flux.create(sink ->
+				inbox.read("foo@example.com", sink::next));
 
 		//when
 		emails
@@ -98,10 +98,10 @@ public class R023_CallbackToFlux {
 	@Test
 	public void mergeMessagesFromTwoInboxes() throws Exception {
 		//given
-		final Flux<Email> foo = Flux.create(emitter ->
-				inbox.read("foo@example.com", emitter::next));
-		final Flux<Email> bar = Flux.create(emitter ->
-				inbox.read("bar@example.com", emitter::next));
+		final Flux<Email> foo = Flux.create(sink ->
+				inbox.read("foo@example.com", sink::next));
+		final Flux<Email> bar = Flux.create(sink ->
+				inbox.read("bar@example.com", sink::next));
 
 		//when
 		Flux<Email> merged = null; //TODO
@@ -116,29 +116,26 @@ public class R023_CallbackToFlux {
 	@Test
 	public void fluxDoesNotAcceptNull() throws Exception {
 		Flux
-				.create(emitter -> {
-					inbox.read("spam@example.com", emitter::next);
-				})
+				.create(sink -> inbox.read("spam@example.com", sink::next))
 				.blockLast();
 	}
 
 	/**
 	 * TODO terminate the stream when <code>null</code> is received from callback.
-	 * Hint: <code>emitter.complete()</code>
+	 * Hint: <code>sink.complete()</code>
 	 */
 	@Test
 	public void handleNullAsEndOfStream() throws Exception {
 		//when
 		final Flux<Email> emails = Flux
-				.create(emitter -> {
-					inbox.read("spam@example.com", e -> {
-						if (e != null) {
-							emitter.next(e);
-						} else {
-							emitter.complete();
-						}
-					});
-				});
+				.create(sink ->
+						inbox.read("spam@example.com", e -> {
+							if (e != null) {
+								sink.next(e);
+							} else {
+								sink.complete();
+							}
+						}));
 
 		//then
 		emails
@@ -153,8 +150,8 @@ public class R023_CallbackToFlux {
 	@Test
 	public void asOperator() throws Exception {
 		//given
-		final Flux<Email> foo = Flux.create(emitter ->
-				inbox.read("foo@example.com", emitter::next));
+		final Flux<Email> foo = Flux.create(sink ->
+				inbox.read("foo@example.com", sink::next));
 
 		//when
 		final List<Email> emails = toList(foo);
@@ -173,9 +170,9 @@ public class R023_CallbackToFlux {
 	@Test
 	public void fluxCreateIsNotCached() throws Exception {
 		//given
-		final Flux<Email> foo = Flux.create(emitter -> {
+		final Flux<Email> foo = Flux.create(sink -> {
 			log.info("Subscribing to e-mails");
-			inbox.read("foo@example.com", emitter::next);
+			inbox.read("foo@example.com", sink::next);
 		});
 
 		//when
