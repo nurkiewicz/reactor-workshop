@@ -1,4 +1,4 @@
-package com.nurkiewicz.reactor.samples;
+package com.nurkiewicz.reactor.user;
 
 import java.util.Objects;
 

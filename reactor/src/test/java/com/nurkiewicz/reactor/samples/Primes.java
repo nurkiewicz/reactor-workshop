@@ -2,7 +2,6 @@ package com.nurkiewicz.reactor.samples;
 
 import com.google.common.collect.ImmutableSet;
 
-import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -120,6 +119,6 @@ public class Primes {
 					.collect(Collectors.toSet())
 	);
 
-	public static final BigInteger LARGE = new BigInteger("68480406462161287469");
+	public static final long LARGE = 99999199999L;
 
 }

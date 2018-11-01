@@ -1,5 +1,6 @@
-package com.nurkiewicz.reactor.samples;
+package com.nurkiewicz.reactor.email;
 
+import com.nurkiewicz.reactor.samples.Sleeper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

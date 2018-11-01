@@ -1,4 +1,4 @@
-package com.nurkiewicz.reactor.samples;
+package com.nurkiewicz.reactor.email;
 
 import com.devskiller.jfairy.Fairy;
 import org.slf4j.Logger;

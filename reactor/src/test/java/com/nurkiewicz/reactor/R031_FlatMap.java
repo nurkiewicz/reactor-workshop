@@ -1,9 +1,9 @@
 package com.nurkiewicz.reactor;
 
-import com.nurkiewicz.reactor.samples.Item;
-import com.nurkiewicz.reactor.samples.Order;
-import com.nurkiewicz.reactor.samples.User;
-import com.nurkiewicz.reactor.samples.UserOrders;
+import com.nurkiewicz.reactor.user.Item;
+import com.nurkiewicz.reactor.user.Order;
+import com.nurkiewicz.reactor.user.User;
+import com.nurkiewicz.reactor.user.UserOrders;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;

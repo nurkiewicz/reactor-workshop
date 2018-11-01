@@ -1,6 +1,6 @@
 package com.nurkiewicz.reactor;
 
-import com.nurkiewicz.reactor.samples.LoremIpsum;
+import com.nurkiewicz.reactor.user.LoremIpsum;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;

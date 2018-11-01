@@ -1,7 +1,7 @@
 package com.nurkiewicz.reactor;
 
-import com.nurkiewicz.reactor.samples.Email;
-import com.nurkiewicz.reactor.samples.Inbox;
+import com.nurkiewicz.reactor.email.Email;
+import com.nurkiewicz.reactor.email.Inbox;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;

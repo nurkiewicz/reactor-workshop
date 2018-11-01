@@ -1,6 +1,6 @@
 package com.nurkiewicz.reactor;
 
-import com.nurkiewicz.reactor.samples.EmailSender;
+import com.nurkiewicz.reactor.email.EmailSender;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.nurkiewicz.reactor.samples.EmailSender.sendEmail;
+import static com.nurkiewicz.reactor.email.EmailSender.sendEmail;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
