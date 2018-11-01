@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
@@ -43,7 +42,7 @@ public class R022_HowToCreateMonoAndFlux {
 	@Test
 	public void creatingEagerFluxFromStreamIncorrectly() throws Exception {
 		//given
-		List<Boolean> tasks = Arrays.asList(killHumanity(), destroyEarth());
+		List<Boolean> tasks = List.of(killHumanity(), destroyEarth());
 
 		//when
 		Flux.fromStream(tasks.stream());

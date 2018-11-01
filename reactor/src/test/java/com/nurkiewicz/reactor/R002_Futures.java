@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,7 +21,7 @@ public class R002_Futures {
 
 	private static final Logger log = LoggerFactory.getLogger(R002_Futures.class);
 
-	private static List<String> EMAILS = Arrays.asList("one@example.com", "two@example.com", "three@example.com");
+	private static List<String> EMAILS = List.of("one@example.com", "two@example.com", "three@example.com");
 	private static String ONE_EMAIL = EMAILS.get(0);
 
 	private ExecutorService executor;

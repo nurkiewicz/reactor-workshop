@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicReference;
@@ -23,7 +22,7 @@ public class R001_BlockingCode {
 
 	private static final Logger log = LoggerFactory.getLogger(R001_BlockingCode.class);
 
-	public static List<String> EMAILS = Arrays.asList("one@example.com", "two@example.com", "three@example.com");
+	public static List<String> EMAILS = List.of("one@example.com", "two@example.com", "three@example.com");
 	public static String ONE_EMAIL = EMAILS.get(0);
 
 	private ExecutorService executor;
@@ -73,7 +72,7 @@ public class R001_BlockingCode {
 		//TODO new Thread()...
 
 		//then
-		await().until(() -> acks, equalTo(Arrays.asList("OK one", "OK two", "OK three")));
+		await().until(() -> acks, equalTo(List.of("OK one", "OK two", "OK three")));
 	}
 
 
