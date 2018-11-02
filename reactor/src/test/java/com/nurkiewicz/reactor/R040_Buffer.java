@@ -1,5 +1,6 @@
 package com.nurkiewicz.reactor;
 
+import com.nurkiewicz.reactor.samples.Ping;
 import com.nurkiewicz.reactor.user.LoremIpsum;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -111,7 +112,7 @@ public class R040_Buffer {
 	/**
 	 * TODO Count how many frames there are approximately per second
 	 * <p>
-	 *     Hint: use {@link Flux#buffer(Duration)} and most like {@link Flux#map(Function)}
+	 * Hint: use {@link Flux#buffer(Duration)} and most like {@link Flux#map(Function)}
 	 * </p>
 	 */
 	@Test
@@ -135,8 +136,8 @@ public class R040_Buffer {
 
 	/**
 	 * TODO Ping host every 500ms using {@link Flux#interval(Duration)}
-	 * <P>
-	 *     Show result using {@link Mono#doOnSuccess(Consumer)}
+	 * <p>
+	 * Show result using {@link Mono#doOnSuccess(Consumer)}
 	 * </P>
 	 */
 	@Test
@@ -151,6 +152,7 @@ public class R040_Buffer {
 
 	/**
 	 * TODO Turn Mono is empty, turn it into true. If it terminates with an error, make it false
+	 *
 	 * @see Mono#switchIfEmpty(Mono)
 	 * @see Mono#onErrorReturn(Object)
 	 */
@@ -165,6 +167,40 @@ public class R040_Buffer {
 	 */
 	static Mono<Boolean> toTrueFalse(Mono<Boolean> v) {
 		return v;
+	}
+
+	/**
+	 * TODO using moving, overlapping window discover three subsequent false values
+	 * <p>
+	 * Hint: use {@link Flux#buffer(Duration)} and {@link Flux#doOnNext(Consumer)} to troubleshoot
+	 * </p>
+	 */
+	@Test
+	public void discoverIfThreeSubsequentPingsFailed() throws Exception {
+		//given
+		final Flux<Boolean> pings = Ping.checkConstantly("buggy.com");
+
+		//when
+		Flux<Boolean> bufferPings = pings
+				//TODO Put operators here
+				.take(12);
+
+		//then
+		bufferPings
+				.as(StepVerifier::create)
+				.expectNext(true)   // true, true, true
+				.expectNext(true)   // true, true, false
+				.expectNext(true)   // true, false, true
+				.expectNext(true)   // false, true, false
+				.expectNext(true)   // true, false, false
+				.expectNext(true)   // false, false, true
+				.expectNext(true)   // false, true, true
+				.expectNext(true)   // true, true, false
+				.expectNext(true)   // true, false, false
+				.expectNext(false)  // false, false, false
+				.expectNext(true)   // false, false, true  <-- overflow, starting all over again
+				.expectNext(true)   // false, true, true
+				.verifyComplete();
 	}
 
 }
