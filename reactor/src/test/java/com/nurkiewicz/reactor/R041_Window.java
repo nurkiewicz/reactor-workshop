@@ -7,32 +7,32 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
-public class R040_Buffer {
+public class R041_Window {
 
-	private static final Logger log = LoggerFactory.getLogger(R040_Buffer.class);
+	private static final Logger log = LoggerFactory.getLogger(R041_Window.class);
 
 	@Test
-	public void buffer() throws Exception {
+	public void window() throws Exception {
 		//given
 		final Flux<Integer> nums = Flux.range(1, 10);
 
 		//when
-		final Flux<List<Integer>> buffers = nums.buffer(3);
+		final Flux<Flux<Integer>> windowsBadly = nums.window(3);
+		final Flux<List<Integer>> windows = nums
+				.window(3)
+				.flatMap(Flux::collectList);
 
 		//then
-		buffers
+		windows
 				.as(StepVerifier::create)
 				.expectNext(List.of(1, 2, 3))
 				.expectNext(List.of(4, 5, 6))
@@ -47,10 +47,12 @@ public class R040_Buffer {
 		final Flux<Integer> nums = Flux.range(1, 8);
 
 		//when
-		final Flux<List<Integer>> buffers = nums.buffer(3, 2);
+		final Flux<List<Integer>> windows = nums
+				.window(3, 2)
+				.flatMap(Flux::collectList);
 
 		//then
-		buffers
+		windows
 				.as(StepVerifier::create)
 				.expectNext(List.of(1, 2, 3))
 				.expectNext(List.of(3, 4, 5))
@@ -65,10 +67,12 @@ public class R040_Buffer {
 		final Flux<Integer> nums = Flux.range(1, 10);
 
 		//when
-		final Flux<List<Integer>> buffers = nums.buffer(2, 3);
+		final Flux<List<Integer>> windows = nums
+				.window(2, 3)
+				.flatMap(Flux::collectList);
 
 		//then
-		buffers
+		windows
 				.as(StepVerifier::create)
 				.expectNext(List.of(1, 2))
 				.expectNext(List.of(4, 5))
@@ -78,9 +82,9 @@ public class R040_Buffer {
 	}
 
 	/**
-	 * TODO Find every third word in a sentence using {@link Flux#buffer(int, int)}
+	 * TODO Find every third word in a sentence using {@link Flux#window(int, int)}
 	 * <p>
-	 * Hint: {@link Flux#skip(long)} <i>may</i> also help
+	 * Hint: {@link Flux#skip(long)} <i>may</i> also help, or maybe {@link Flux#next()} that yields first element?
 	 * </p>
 	 */
 	@Test
@@ -96,23 +100,10 @@ public class R040_Buffer {
 				.containsExactly("dolor", "consectetur", "Proin", "suscipit");
 	}
 
-	@Test
-	public void interval() throws Exception {
-		final Flux<Long> frames = Flux.interval(Duration.ofMillis(16));
-
-		frames
-				.take(120)
-				.subscribe(
-						x -> log.info("Got frame {}", x)
-				);
-
-		TimeUnit.SECONDS.sleep(3);  //Why ???
-	}
-
 	/**
 	 * TODO Count how many frames there are approximately per second
 	 * <p>
-	 * Hint: use {@link Flux#buffer(Duration)} and most likely {@link Flux#map(Function)}
+	 * Hint: use {@link Flux#window(Duration)} and most likely {@link Flux#count()}
 	 * </p>
 	 */
 	@Test
@@ -135,44 +126,9 @@ public class R040_Buffer {
 	}
 
 	/**
-	 * TODO Ping host every 500ms using {@link Flux#interval(Duration)}
-	 * <p>
-	 * Show result using {@link Mono#doOnSuccess(Consumer)}
-	 * </P>
-	 */
-	@Test
-	public void pingHost() throws Exception {
-		//given
-		//Ping.check("example.com");
-
-		//then
-
-		TimeUnit.SECONDS.sleep(10);
-	}
-
-	/**
-	 * TODO Turn Mono is empty, turn it into true. If it terminates with an error, make it false
-	 *
-	 * @see Mono#switchIfEmpty(Mono)
-	 * @see Mono#onErrorReturn(Object)
-	 */
-	@Test
-	public void turnVoidToTrueFalse() throws Exception {
-		assertThat(toTrueFalse(Mono.empty()).block()).isEqualTo(true);
-		assertThat(toTrueFalse(Mono.error(new RuntimeException())).block()).isEqualTo(false);
-	}
-
-	/**
-	 * TODO Implement this
-	 */
-	static Mono<Boolean> toTrueFalse(Mono<Boolean> v) {
-		return v;
-	}
-
-	/**
 	 * TODO using moving, overlapping window discover three subsequent false values
 	 * <p>
-	 * Hint: use {@link Flux#buffer(Duration)} and {@link Flux#doOnNext(Consumer)} to troubleshoot
+	 * Hint: use {@link Flux#window(Duration)} and {@link Flux#doOnNext(Consumer)} to troubleshoot
 	 * </p>
 	 */
 	@Test
@@ -181,12 +137,12 @@ public class R040_Buffer {
 		final Flux<Boolean> pings = Ping.checkConstantly("buggy.com");
 
 		//when
-		Flux<Boolean> bufferPings = pings
+		Flux<Boolean> windowPings = pings
 				//TODO Put operators here
 				.take(12);
 
 		//then
-		bufferPings
+		windowPings
 				.as(StepVerifier::create)
 				.expectNext(true)   // true, true, true
 				.expectNext(true)   // true, true, false
