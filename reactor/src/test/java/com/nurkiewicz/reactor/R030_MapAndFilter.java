@@ -73,12 +73,10 @@ public class R030_MapAndFilter {
 	public void lengthOfAllWordsEndingWithT() throws Exception {
 		//given
 		final Flux<String> words = Flux.just(LoremIpsum.words());
-		System.out.println(LoremIpsum.text());
 
 		//when
 		final Flux<String> lengths = words;
 
-		System.out.println(lengths.collectList().block());
 		//then
 		lengths
 				.as(StepVerifier::create)
