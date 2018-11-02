@@ -149,4 +149,22 @@ public class R040_Buffer {
 		TimeUnit.SECONDS.sleep(10);
 	}
 
+	/**
+	 * TODO Turn Mono is empty, turn it into true. If it terminates with an error, make it false
+	 * @see Mono#switchIfEmpty(Mono)
+	 * @see Mono#onErrorReturn(Object)
+	 */
+	@Test
+	public void turnVoidToTrueFalse() throws Exception {
+		assertThat(toTrueFalse(Mono.empty()).block()).isEqualTo(true);
+		assertThat(toTrueFalse(Mono.error(new RuntimeException())).block()).isEqualTo(false);
+	}
+
+	/**
+	 * TODO Implement this
+	 */
+	static Mono<Boolean> toTrueFalse(Mono<Boolean> v) {
+		return v;
+	}
+
 }

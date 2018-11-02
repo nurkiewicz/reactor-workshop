@@ -6,9 +6,9 @@ import java.time.Duration;
 
 public class Ping {
 
-	public static Mono<Void> check(String host) {
+	public static Mono<Boolean> check(String host) {
 		return Mono
-				.<Void>empty()
+				.<Boolean>empty()
 				.delaySubscription(Duration.ofMillis(10));
 	}
 
