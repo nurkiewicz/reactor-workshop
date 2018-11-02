@@ -6,11 +6,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -113,7 +115,7 @@ public class R040_Buffer {
 	 * </p>
 	 */
 	@Test
-	public void countFramePerSecond() throws Exception {
+	public void countFramesPerSecond() throws Exception {
 		//given
 		final Flux<Long> frames = Flux.interval(Duration.ofMillis(16));
 
@@ -129,6 +131,22 @@ public class R040_Buffer {
 				.expectNextMatches(x -> x >= 55 && x <= 65)
 				.expectNextMatches(x -> x >= 55 && x <= 65)
 				.verifyComplete();
+	}
+
+	/**
+	 * TODO Ping host every 500ms using {@link Flux#interval(Duration)}
+	 * <P>
+	 *     Show result using {@link Mono#doOnSuccess(Consumer)}
+	 * </P>
+	 */
+	@Test
+	public void pingHost() throws Exception {
+		//given
+		//Ping.check("example.com");
+
+		//then
+
+		TimeUnit.SECONDS.sleep(10);
 	}
 
 }
