@@ -8,7 +8,10 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -90,5 +93,42 @@ public class R040_Buffer {
 				.containsExactly("dolor", "consectetur", "Proin", "suscipit");
 	}
 
+	@Test
+	public void interval() throws Exception {
+		final Flux<Long> frames = Flux.interval(Duration.ofMillis(16));
+
+		frames
+				.take(120)
+				.subscribe(
+						x -> log.info("Got frame {}", x)
+				);
+
+		TimeUnit.SECONDS.sleep(3);  //Why ???
+	}
+
+	/**
+	 * TODO Count how many frames there are approximately per second
+	 * <p>
+	 *     Hint: use {@link Flux#buffer(Duration)} and most like {@link Flux#map(Function)}
+	 * </p>
+	 */
+	@Test
+	public void countFramePerSecond() throws Exception {
+		//given
+		final Flux<Long> frames = Flux.interval(Duration.ofMillis(16));
+
+		//when
+		//TODO operator here, add take(4)
+		final Flux<Integer> fps = null;
+
+		//then
+		fps
+				.as(StepVerifier::create)
+				.expectNextMatches(x -> x >= 55 && x <= 65)
+				.expectNextMatches(x -> x >= 55 && x <= 65)
+				.expectNextMatches(x -> x >= 55 && x <= 65)
+				.expectNextMatches(x -> x >= 55 && x <= 65)
+				.verifyComplete();
+	}
 
 }
