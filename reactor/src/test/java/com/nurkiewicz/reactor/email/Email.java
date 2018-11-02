@@ -11,6 +11,10 @@ public class Email {
 	private final String subject;
 	private final String body;
 
+	public static Email random(Fairy fairy) {
+		return Email.random(fairy.person().getEmail(), fairy);
+	}
+
 	public static Email random(String to, Fairy fairy) {
 		final Person from = fairy.person();
 		final TextProducer text = fairy.textProducer();
@@ -22,6 +26,22 @@ public class Email {
 		this.to = to;
 		this.subject = subject;
 		this.body = body;
+	}
+
+	public String getFrom() {
+		return from;
+	}
+
+	public String getTo() {
+		return to;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public String getBody() {
+		return body;
 	}
 
 	@Override

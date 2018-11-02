@@ -1,5 +1,10 @@
 package com.nurkiewicz.reactor;
 
+import com.devskiller.jfairy.Fairy;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.nurkiewicz.reactor.email.Email;
+import com.nurkiewicz.reactor.samples.CacheCollectionAdapter;
 import com.nurkiewicz.reactor.samples.Weather;
 import com.nurkiewicz.reactor.samples.WeatherService;
 import org.junit.Ignore;
@@ -9,8 +14,16 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
+
+import static java.time.Duration.ofMillis;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
 public class R034_Distinct {
@@ -60,6 +73,7 @@ public class R034_Distinct {
 	/**
 	 * TODO Use {@link Flux#distinctUntilChanged(Function, BiPredicate)} to discover temperature changes
 	 * greater than 0.5
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -68,9 +82,7 @@ public class R034_Distinct {
 		final Flux<Weather> measurements = WeatherService.measurements();
 
 		//when
-		final Flux<Weather> changes = measurements.distinctUntilChanged(
-				Weather::getTemperature,
-				(x, y) -> Math.abs(x - y) < 0.5);
+		final Flux<Weather> changes = measurements;
 
 		//then
 		changes
@@ -82,7 +94,89 @@ public class R034_Distinct {
 				.expectNext(15.2)
 				.expectNext(14.0)
 				.verifyComplete();
-
 	}
 
+	/**
+	 * TODO Create stream of {@link Email} messages using @{link {@link Email#random(Fairy)}} and {@link Flux#generate(Consumer)}
+	 */
+	@Test
+	public void inboxAsStream() throws Exception {
+		//given
+		final Flux<Email> emails = emails(Fairy.create());
+
+		//when
+		final Flux<Email> ten = emails.take(10);
+
+		//then
+		assertThat(ten.collectList().block()).hasSize(10);
+
+		//alternatively
+		ten
+				.as(StepVerifier::create)
+				.expectNextCount(10)
+				.verifyComplete();
+	}
+
+	/**
+	 * TODO Generate infinite stream of e-mails. Use {@link Email#random(Fairy)}
+	 */
+	Flux<Email> emails(Fairy fairy) {
+		return Flux.generate(sink -> sink.next(Email.random(fairy)));
+	}
+
+	Flux<Email> emails() {
+		return emails(Fairy.create());
+	}
+
+	/**
+	 * TODO Find first 10 distinct e-mail sends from random sample
+	 * <p>
+	 * Hint: use parameterless {@link Flux#distinct()}
+	 * </p>
+	 */
+	@Test
+	public void findOnlyDistinctEmailSender() throws Exception {
+		//given
+		final Flux<Email> emails = emails();
+		final int total = 10;
+
+		//when
+		final Flux<String> distinctSenders = null;
+
+		//then
+		final HashSet<String> unique = new HashSet<>(distinctSenders.collectList().block());
+		assertThat(unique).hasSize(total);
+	}
+
+	/**
+	 * TODO Make sure you do not run out of memory by using expiring cache inside {@link Flux#distinct()}
+	 * <p>
+	 * Observe the output, cache behaves non-deterministically
+	 * </p>
+	 * Hint: use {@link Flux#distinct(Function, Supplier)} with custom collection
+	 */
+	@Test
+	public void distinctWithin() throws Exception {
+		//given
+		final Flux<Integer> numbers = Flux.just(1, 2, 3)
+				.repeat(1)
+				.delayElements(ofMillis(1_000));
+		final Collection<Integer> cache = new CacheCollectionAdapter<>(cache(2));
+
+		//when
+		final Flux<Integer> distinct = numbers;
+
+		//then
+		distinct
+				.doOnNext(x -> log.info("Got {}", x))
+				.blockLast();
+	}
+
+	<T> Cache<T, Boolean> cache(int maxSize) {
+		return Caffeine.newBuilder()
+				.maximumSize(maxSize)
+				.expireAfterWrite(10, TimeUnit.MINUTES)
+				.removalListener((key, value, cause) -> log.debug("REMOVE {} ({})", key, cause))
+				.build();
+	}
 }
