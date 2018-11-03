@@ -1,5 +1,9 @@
 *.class
 .idea
-build
+**/build
+**/.gradle
+gradle
 *.log
 hs_err_pid*
+**/out
+out
