@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -26,14 +25,27 @@ public class CacheServer {
 		return Mono.defer(() -> {
 			final double jitter = ThreadLocalRandom.current().nextGaussian() * delay.toMillis() / 10;
 			return Mono
-					.fromCallable(() -> {
-						if (ThreadLocalRandom.current().nextDouble() < failureProbability) {
-							throw new IOException("Simulated fault");
-						}
-						return "Value-" + id + " from " + host;
-					})
+					.fromCallable(() -> findInternal(id))
+					.doOnSubscribe(s -> log.debug("Fetching {} from {}", id, host))
+					.doOnNext(value -> log.debug("Fetching {} from {}", id, host))
 					.delayElement(delay.plus(Duration.ofMillis((long) jitter)));
 		});
+	}
+
+	public String findBlocking(int id) {
+		log.debug("Fetching {} from {}", id, host);
+		Sleeper.sleepRandomly(delay);
+		final String value = findInternal(id);
+		log.debug("Returning {} from {}", value, host);
+		return value;
+	}
+
+	private String findInternal(int id) {
+		if (ThreadLocalRandom.current().nextDouble() < failureProbability) {
+			throw new IllegalStateException("Simulated fault");
+		}
+		final String value = "Value-" + id + " from " + host;
+		return "Value-" + id + " from " + host;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.nurkiewicz.reactor;
 
+import com.nurkiewicz.reactor.samples.NotFound;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -66,8 +67,3 @@ public class R025_ReadingFileFromStream {
 
 }
 
-class NotFound extends RuntimeException {
-	public NotFound(String message) {
-		super(message);
-	}
-}
