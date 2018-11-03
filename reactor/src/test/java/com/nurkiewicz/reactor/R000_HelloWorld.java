@@ -1,6 +1,5 @@
 package com.nurkiewicz.reactor;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -11,7 +10,6 @@ import java.security.NoSuchAlgorithmException;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
 public class R000_HelloWorld {
 
 	private MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
@@ -39,7 +37,7 @@ public class R000_HelloWorld {
 	@Test
 	public void pleaseReadTheJavaDoc() throws Exception {
 		//given
-		var pwd = "what's the password?";
+		var pwd = "pleaseReadTheJavaDoc";
 
 		//when
 		final byte[] hash = sha256.digest(pwd.getBytes(UTF_8));

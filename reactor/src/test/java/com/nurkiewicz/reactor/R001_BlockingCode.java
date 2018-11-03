@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -66,10 +66,10 @@ public class R001_BlockingCode {
 	@Test
 	public void shouldProcessMultipleEmailsInBackground() throws Exception {
 		//given
-		final List<String> acks = new ArrayList<>();
+		final List<String> acks = new CopyOnWriteArrayList<>();
 
 		//when
-		//TODO new Thread()...
+
 
 		//then
 		await().until(() -> acks, equalTo(List.of("OK one", "OK two", "OK three")));

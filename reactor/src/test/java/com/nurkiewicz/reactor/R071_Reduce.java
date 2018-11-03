@@ -46,7 +46,7 @@ public class R071_Reduce {
         final Flux<Integer> nums = Flux.range(1, 10);
 
         //when
-        final Mono<Integer> factorial = null;  //TODO
+        final Mono<Integer> factorial = nums.reduce((l, r) -> l * r);
 
         //then
         factorial

@@ -2,7 +2,6 @@ package com.nurkiewicz.reactor;
 
 import com.nurkiewicz.reactor.samples.Ping;
 import com.nurkiewicz.reactor.user.LoremIpsum;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,6 @@ import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
 public class R040_Buffer {
 
 	private static final Logger log = LoggerFactory.getLogger(R040_Buffer.class);
@@ -89,7 +87,10 @@ public class R040_Buffer {
 		final Flux<String> words = Flux.just(LoremIpsum.words()).take(14);
 
 		//when
-		final Flux<String> third = words;
+		final Flux<String> third = words
+				.skip(2)
+				.buffer(3)
+				.map(list -> list.get(0));
 
 		//then
 		assertThat(third.collectList().block())
@@ -122,7 +123,10 @@ public class R040_Buffer {
 
 		//when
 		//TODO operator here, add take(4)
-		final Flux<Integer> fps = null;
+		final Flux<Integer> fps = frames
+				.buffer(Duration.ofSeconds(1))
+				.map(List::size)
+				.take(4);;
 
 		//then
 		fps
@@ -143,9 +147,14 @@ public class R040_Buffer {
 	@Test
 	public void pingHost() throws Exception {
 		//given
-		//Ping.check("example.com");
 
 		//then
+		Flux
+				.interval(Duration.ofMillis(500))
+				.flatMap(x -> Ping.check("example.com").doOnSuccess(v -> log.debug("Pong")))
+				.subscribe(
+						v -> log.info("Will never happen anyway")
+				);
 
 		TimeUnit.SECONDS.sleep(10);
 	}
@@ -166,7 +175,9 @@ public class R040_Buffer {
 	 * TODO Implement this
 	 */
 	static Mono<Boolean> toTrueFalse(Mono<Boolean> v) {
-		return v;
+		return v
+				.switchIfEmpty(Mono.just(true))
+				.onErrorReturn(false);
 	}
 
 	/**
@@ -182,7 +193,9 @@ public class R040_Buffer {
 
 		//when
 		Flux<Boolean> bufferPings = pings
-				//TODO Put operators here
+				.buffer(3, 1)
+				.doOnNext(System.out::println)
+				.map(list -> list.stream().anyMatch(x -> x))
 				.take(12);
 
 		//then

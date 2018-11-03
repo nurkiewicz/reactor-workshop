@@ -4,7 +4,6 @@ import com.nurkiewicz.reactor.domains.Crawler;
 import com.nurkiewicz.reactor.domains.Domain;
 import com.nurkiewicz.reactor.domains.Domains;
 import com.nurkiewicz.reactor.domains.Html;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +18,8 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static reactor.core.scheduler.Schedulers.elastic;
 
-@Ignore
 public class R054_Parallel {
 
 	private static final Logger log = LoggerFactory.getLogger(R054_Parallel.class);
@@ -36,7 +35,11 @@ public class R054_Parallel {
 		final Flux<Domain> domains = Domains.all();
 
 		//when
-		final Flux<Html> htmls = null; // TODO
+		final Flux<Html> htmls = domains
+				.parallel(500)
+				.runOn(elastic())
+				.map(Crawler::crawlBlocking)
+				.sequential();
 
 		//then
 		final List<String> strings = htmls.map(Html::getRaw).collectList().block();
@@ -59,7 +62,11 @@ public class R054_Parallel {
 		final Flux<Domain> domains = Domains.all();
 
 		//when
-		final Flux<Tuple2<URI, Html>> tuples = null; // TODO
+		final Flux<Tuple2<URI, Html>> tuples = domains
+				.parallel(500)
+				.runOn(elastic())
+				.map(domain -> Tuples.of(domain.getUri(), Crawler.crawlBlocking(domain)))
+				.sequential();
 
 		//then
 		final List<Tuple2<URI, Html>> list = tuples
@@ -87,7 +94,12 @@ public class R054_Parallel {
 		final Flux<Domain> domains = Domains.all();
 
 		//when
-		final Mono<Map<URI, Html>> mapStream = null; // TODO
+		final Mono<Map<URI, Html>> mapStream = domains
+				.parallel(500)
+				.runOn(elastic())
+				.map(domain -> Tuples.of(domain.getUri(), Crawler.crawlBlocking(domain)))
+				.sequential()
+				.collectMap(Tuple2::getT1, Tuple2::getT2);
 
 		//then
 		final Map<URI, Html> map = mapStream.block();
@@ -114,7 +126,12 @@ public class R054_Parallel {
 		final Flux<Domain> domains = Domains.all();
 
 		//when
-		final Mono<Map<URI, Html>> mapStream = null; // TODO
+		final Mono<Map<URI, Html>> mapStream = domains
+				.parallel(50)
+				.runOn(elastic())
+				.map(domain -> Tuples.of(domain.getUri(), Crawler.crawlThrottled(domain)))
+				.sequential()
+				.collectMap(Tuple2::getT1, Tuple2::getT2);
 
 		//then
 		final Map<URI, Html> map = mapStream.block();

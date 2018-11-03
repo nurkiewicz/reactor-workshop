@@ -21,8 +21,8 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static reactor.core.scheduler.Schedulers.elastic;
 
-@Ignore
 public class R053_Concurrency {
 
 	private static final Logger log = LoggerFactory.getLogger(R053_Concurrency.class);
@@ -41,7 +41,10 @@ public class R053_Concurrency {
 		final Flux<Domain> domains = Domains.all();
 
 		//when
-		final Flux<Html> htmls = null; // TODO
+		final Flux<Html> htmls = domains
+				.flatMap(domain ->
+						Mono.fromCallable(() ->
+								Crawler.crawlBlocking(domain)).subscribeOn(elastic()));
 
 		//then
 		final List<String> strings = htmls.map(Html::getRaw).collectList().block();
@@ -61,7 +64,11 @@ public class R053_Concurrency {
 		final Flux<Domain> domains = Domains.all();
 
 		//when
-		final Flux<Tuple2<URI, Html>> tuples = null; // TODO
+		final Flux<Tuple2<URI, Html>> tuples = domains
+				.flatMap(domain ->
+						Mono.fromCallable(() ->
+								Crawler.crawlBlocking(domain)).subscribeOn(elastic())
+								.map(html -> Tuples.of(domain.getUri(), html)));
 
 		//then
 		final List<Tuple2<URI, Html>> list = tuples
@@ -88,7 +95,12 @@ public class R053_Concurrency {
 		final Flux<Domain> domains = Domains.all();
 
 		//when
-		final Mono<Map<URI, Html>> mapStream = null; // TODO
+		final Mono<Map<URI, Html>> mapStream = domains
+				.flatMap(domain ->
+						Mono.fromCallable(() ->
+								Crawler.crawlBlocking(domain)).subscribeOn(elastic())
+								.map(html -> Tuples.of(domain.getUri(), html)))
+				.collectMap(Tuple2::getT1, Tuple2::getT2);
 
 		//then
 		final Map<URI, Html> map = mapStream.block();
@@ -115,7 +127,12 @@ public class R053_Concurrency {
 		final Flux<Domain> domains = Domains.all();
 
 		//when
-		final Mono<Map<URI, Html>> mapStream = null; // TODO
+		final Mono<Map<URI, Html>> mapStream = domains
+				.flatMap(domain ->
+						Mono.fromCallable(() ->
+								Crawler.crawlThrottled(domain)).subscribeOn(elastic())
+								.map(html -> Tuples.of(domain.getUri(), html)), 50)
+				.collectMap(Tuple2::getT1, Tuple2::getT2);
 
 		//then
 		final Map<URI, Html> map = mapStream.block();
@@ -136,12 +153,13 @@ public class R053_Concurrency {
 	 * Why does it fail?
 	 */
 	@Test
+	@Ignore
 	public void zipIsBroken() throws Exception {
 		//given
 		final Flux<Domain> domains = Domains.all();
 
 		//when
-		Flux<Html> responses = null; // TODO
+		Flux<Html> responses = domains.flatMap(domain -> Mono.fromCallable(() -> Crawler.crawlBlocking(domain)).subscribeOn(elastic()));
 		final Flux<Tuple2<URI, Html>> tuples = Flux.zip(
 				domains.map(Domain::getUri),
 				responses

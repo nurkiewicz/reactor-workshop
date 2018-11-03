@@ -19,7 +19,10 @@ public class Domains {
 	 * @see Flux#defer(Supplier)
 	 */
 	public static Flux<Domain> all() {
-		return Flux.empty();
+		return Flux.defer(
+				() -> Flux
+						.fromStream(open().lines())
+						.flatMap(line -> Mono.justOrEmpty(parse(line))));
 	}
 
 	/**

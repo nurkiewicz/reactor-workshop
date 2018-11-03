@@ -27,7 +27,7 @@ public class R025_ReadingFileFromStream {
 	@Test
 	public void readFileAsStreamOfLines() throws Exception {
 		//when
-		final Flux<String> lines = null;
+		final Flux<String> lines = Flux.fromStream(() -> open("/logback-test.xml").lines());
 
 		//then
 		final Long count = lines
@@ -50,7 +50,7 @@ public class R025_ReadingFileFromStream {
 	@Test
 	public void readingFileShouldBeLazy() throws Exception {
 		//when
-		final Flux<String> lines = notFound();
+		final Flux<String> lines = Flux.defer(this::notFound);
 
 		//then
 		lines

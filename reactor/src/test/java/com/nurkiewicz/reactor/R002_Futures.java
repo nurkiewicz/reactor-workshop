@@ -1,5 +1,6 @@
 package com.nurkiewicz.reactor;
 
+import com.nurkiewicz.reactor.email.EmailSender;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -8,10 +9,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -58,7 +66,19 @@ public class R002_Futures {
 		//given
 
 		//when
-		List<String> acks = null; //
+		List<String> acks = EMAILS
+				.stream()
+				.map(e -> executor.submit(() -> EmailSender.sendEmail(e)))
+				.collect(toList())
+				.stream()
+				.map(f -> {
+					try {
+						return f.get();
+					} catch (InterruptedException | ExecutionException e) {
+						throw new RuntimeException(e);
+					}
+				})
+				.collect(Collectors.toList());
 
 		//then
 		assertThat(acks)
@@ -68,16 +88,38 @@ public class R002_Futures {
 	/**
 	 * TODO Send all e-mails concurrently, but wait for the very first ACK only.
 	 */
-	@Test
+	@Test(timeout = 500L)
 	public void waitForTheFirstEmailOnly() throws Exception {
 		//given
-		String ack = null;
-
-		//when
-		EMAILS.stream(); //continue from here
+		String ack = waitForFirst();
 
 		//then
 		await().until(() -> ack, equalTo("OK three"));
+	}
+
+	private String waitForFirst() {
+		final List<Future<String>> futures = EMAILS
+				.stream()
+				.map(e -> executor.submit(() -> EmailSender.sendEmail(e)))
+				.collect(toList());
+
+		while(true) {
+			final Optional<String> first = futures
+					.stream()
+					.flatMap(f -> {
+						try {
+							return Optional.ofNullable(f.get(10, MILLISECONDS)).stream();
+						} catch(TimeoutException e) {
+							return Stream.empty();
+						} catch (InterruptedException | ExecutionException e) {
+							throw new RuntimeException(e);
+						}
+					})
+					.findFirst();
+			if (first.isPresent()) {
+				return first.get();
+			}
+		}
 	}
 
 }

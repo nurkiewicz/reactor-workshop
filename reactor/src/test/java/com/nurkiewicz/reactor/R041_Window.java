@@ -2,7 +2,6 @@ package com.nurkiewicz.reactor;
 
 import com.nurkiewicz.reactor.samples.Ping;
 import com.nurkiewicz.reactor.user.LoremIpsum;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +11,11 @@ import reactor.test.StepVerifier;
 import java.time.Duration;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
+import static java.time.Duration.ofSeconds;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
 public class R041_Window {
 
 	private static final Logger log = LoggerFactory.getLogger(R041_Window.class);
@@ -93,7 +93,10 @@ public class R041_Window {
 		final Flux<String> words = Flux.just(LoremIpsum.words()).take(14);
 
 		//when
-		final Flux<String> third = words;
+		final Flux<String> third = words
+				.skip(2)
+				.window(3)
+				.flatMap(Flux::next);
 
 		//then
 		assertThat(third.collectList().block())
@@ -112,8 +115,11 @@ public class R041_Window {
 		final Flux<Long> frames = Flux.interval(Duration.ofMillis(16));
 
 		//when
-		//TODO operator here, add take(4)
-		final Flux<Integer> fps = null;
+		final Flux<Integer> fps = frames
+				.window(ofSeconds(1))
+				.flatMap(Flux::count)
+				.map(Long::intValue)
+				.take(4);
 
 		//then
 		fps
@@ -128,7 +134,8 @@ public class R041_Window {
 	/**
 	 * TODO using moving, overlapping window discover three subsequent false values
 	 * <p>
-	 * Hint: use {@link Flux#window(Duration)} and {@link Flux#doOnNext(Consumer)} to troubleshoot
+	 * Hint: use {@link Flux#window(Duration)} and {@link Flux#doOnNext(Consumer)} to troubleshoot.
+	 * Also try {@link Flux#any(Predicate)}
 	 * </p>
 	 */
 	@Test
@@ -138,7 +145,8 @@ public class R041_Window {
 
 		//when
 		Flux<Boolean> windowPings = pings
-				//TODO Put operators here
+				.window(3, 1)
+				.flatMap(win -> win.any(x -> x))
 				.take(12);
 
 		//then

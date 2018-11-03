@@ -148,7 +148,8 @@ public class R011_LetsMeetFlux {
 		//given
 		AtomicInteger c = new AtomicInteger();
 		Flux<Integer> flux = Flux.fromStream(() ->
-				Stream.of(c.incrementAndGet(), c.incrementAndGet()));
+				Stream.of(c.incrementAndGet(), c.incrementAndGet()))
+				.cache();
 
 		//when
 		final List<Integer> first = flux.collectList().block();

@@ -63,7 +63,11 @@ public class R071_GroupBy {
                 .groupBy(String::length);
 
         //when
-        final Flux<Tuple2<Integer, Long>> lenToCount = null; // TODO
+        final Flux<Tuple2<Integer, Long>> lenToCount = wordsByLength
+                .flatMap((GroupedFlux<Integer, String> words) -> words
+                        .count()
+                        .map(c -> of(words.key(), c))
+                );
 
         //then
         final Set<Tuple2<Integer, Long>> pairs = lenToCount
@@ -103,7 +107,14 @@ public class R071_GroupBy {
         final Flux<Domain> domains = Domains.all();
 
         //when
-        final Flux<Tuple2<String, Long>> tldToTotalLinkingRootDomains = null; //TODO
+        final Flux<Tuple2<String, Long>> tldToTotalLinkingRootDomains = domains
+                .groupBy(Domain::getTld)
+                .flatMap(tlds -> tlds
+                        .map(Domain::getLinkingRootDomains)
+                        .collectList()
+                        .map(this::sum)
+                        .map(total -> of(tlds.key(), total)))
+                .sort(Comparator.comparing(t -> -t.getT2()));
 
         //then
         tldToTotalLinkingRootDomains
@@ -145,6 +156,13 @@ public class R071_GroupBy {
                 .expectNext(of("info", 37701L))
                 .expectNext(of("no", 35631L))
                 .verifyComplete();
+    }
+
+    private long sum(List<Long> list) {
+        return list
+                .stream()
+                .mapToLong(x -> x)
+                .sum();
     }
 
 }

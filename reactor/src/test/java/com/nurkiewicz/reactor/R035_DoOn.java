@@ -1,6 +1,5 @@
 package com.nurkiewicz.reactor;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import java.util.concurrent.atomic.LongAdder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
 public class R035_DoOn {
 
 	private static final Logger log = LoggerFactory.getLogger(R035_DoOn.class);
@@ -100,6 +98,10 @@ public class R035_DoOn {
 		//when
 		Flux
 				.just("1.00", "2.500", "3", "meh")
+				.doOnNext(x -> inputCount.increment())
+				.flatMap(this::tryParse)
+				.doOnNext(x -> outputCount.increment())
+				.doOnError(e -> errorCount.increment())
 				.subscribe(
 						x -> log.info("Received {}", x),
 						e -> log.warn("Stack-trace intentionally left blank: {}", e.toString())

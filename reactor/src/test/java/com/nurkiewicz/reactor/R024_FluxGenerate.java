@@ -20,6 +20,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 import static java.math.BigInteger.ONE;
+import static java.math.BigInteger.ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
@@ -194,12 +195,16 @@ public class R024_FluxGenerate {
 	public void prependFirstTwoFibonacci() throws Exception {
 		//given
 		final Flux<BigInteger> fib = Flux.generate(
-				() -> null /* TODO initial state */,
-				(p, sink) -> p);
+				() -> Tuples.of(ZERO, ONE),
+				(p, sink) -> {
+					final BigInteger sum = p.getT1().add(p.getT2());
+					sink.next(sum);
+					return Tuples.of(p.getT2(), sum);
+				});
 
 		//when
 		final Mono<BigInteger> thousandth = fib
-				//TODO one extra operator here
+				.startWith(ZERO, ONE)
 				.skip(999)
 				.next();
 

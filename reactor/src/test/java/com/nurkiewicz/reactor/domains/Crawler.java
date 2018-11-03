@@ -48,7 +48,9 @@ public class Crawler {
 	 * @see Mono#justOrEmpty(Object)
 	 */
 	public static Flux<URI> outgoingLinks(URI url) {
-		return Flux.empty();
+		return Mono
+				.justOrEmpty(OUTGOING.get(url))
+				.flatMapMany(Flux::fromIterable);
 	}
 
 	private static final ImmutableMap<URI, ImmutableList<URI>> OUTGOING = links();

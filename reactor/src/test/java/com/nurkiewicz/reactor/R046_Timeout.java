@@ -43,7 +43,15 @@ public class R046_Timeout {
 		CacheServer second = new CacheServer("bar", ofMillis(100), 0.5);
 
 		//when
-		final Mono<String> response = null;
+		final Mono<String> response = Flux.merge(
+				first.findBy(1),
+				second.findBy(1)
+						.delaySubscription(ofMillis(200))
+						.doOnError(e -> log.warn("Got exception: {}", e.toString()))
+						.onErrorResume(e -> Mono.empty())
+		)
+				.next()
+				.doOnNext(x -> log.info("Got {}", x));
 
 		//then
 		response
@@ -62,7 +70,8 @@ public class R046_Timeout {
 		final Mono<Long> withTimeout = Mono.delay(ofMillis(200));
 
 		//when
-		final Mono<Long> withFallback = withTimeout;
+		final Mono<Long> withFallback = withTimeout
+				.timeout(ofMillis(100), Mono.just(-1L));
 
 		//then
 		withFallback
@@ -85,8 +94,12 @@ public class R046_Timeout {
 		//when
 		final Mono<String> withTimeouts = cacheServer
 				.findBy(1)
-				//TODO Operators here
-				;
+				.timeout(ofMillis(8))
+				.doOnError(e -> log.warn("Small timeout: {}", e.toString()))
+				.retry()
+				.timeout(ofSeconds(5))
+				.doOnError(e -> log.warn("Fatal timeout: {}", e.toString()))
+				.doOnNext(x -> log.info("Received {}", x));
 
 		//then
 		withTimeouts.block();

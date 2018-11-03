@@ -1,7 +1,7 @@
 package com.nurkiewicz.reactor;
 
 import com.nurkiewicz.reactor.user.LoremIpsum;
-import org.junit.Ignore;
+import com.nurkiewicz.reactor.samples.Ping;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,6 @@ import static java.time.Duration.ofMillis;
 import static org.assertj.core.api.Assertions.assertThat;
 import static reactor.util.function.Tuples.of;
 
-@Ignore
 public class R042_Casting {
 
 	private static final Logger log = LoggerFactory.getLogger(R042_Casting.class);
@@ -77,7 +76,10 @@ public class R042_Casting {
 		final Flux<String> words = Flux.just(LoremIpsum.words()).take(14);
 
 		//when
-		final Flux<String> third = words;
+		final Flux<String> third = words
+				.index()
+				.filter(t -> t.getT1() % 3 == 2)
+				.map(Tuple2::getT2);
 
 		//then
 		assertThat(third.collectList().block())
@@ -117,7 +119,12 @@ public class R042_Casting {
 				.map(lng -> "Item-" + lng);
 
 		//when
-		final Flux<Long> elapsed = null; // TODO tickers...take(5)
+		final Flux<Long> elapsed = ticker
+				.timestamp()
+				.map(Tuple2::getT1)
+				.buffer(2)
+				.map(buf -> buf.get(1) - buf.get(0))
+				.take(5);
 
 		//then
 		elapsed
@@ -168,7 +175,14 @@ public class R042_Casting {
 		//given
 
 		//when
-		final Flux<Long> slowIndices = null;  // Ping.checkConstantly("vary.com")...take(5);
+		final Flux<Long> slowIndices = Ping
+				.checkConstantly("vary.com")
+				.index()
+				.map(Tuple2::getT1)
+				.elapsed()
+				.filter(t -> t.getT1() > 100)
+				.map(Tuple2::getT2)
+				.take(5);
 
 		//then
 		slowIndices

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 import reactor.util.function.Tuple2;
+import reactor.util.function.Tuples;
 
 import java.util.function.BiFunction;
 
@@ -54,7 +55,12 @@ public class R072_Scan {
         final Flux<Integer> nums = Flux.just(10, 20, 6, 4, 20, 24);
 
         //when
-        final Flux<Double> avg = null; // TODO
+        final Flux<Double> avg = nums
+                .scan(Tuples.of(0, 0), (acc, cur) -> acc
+                        .mapT1(x -> x + 1)
+                        .mapT2(x -> x + cur)
+                )
+                .map(t -> (double)t.getT2() / t.getT1());
 
         //then
         avg
