@@ -16,7 +16,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
   - Hot vs. cold
 - Basic operators
   - `map()`, `filter()`, `filterWhen()` `flatMap()`, `handle()`, `take()`, `skip()`
-  - `using()`, `do*()`
+  - `doOn*()` operators
   - `window()`, `buffer()`, `distinct()`
   - `cast()`, `ofType()`, `index()`
   - `timestamp()`, `elapsed()`

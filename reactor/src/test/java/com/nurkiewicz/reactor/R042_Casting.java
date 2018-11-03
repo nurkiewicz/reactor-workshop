@@ -112,4 +112,51 @@ public class R042_Casting {
 				.verifyComplete();
 	}
 
+	@Test
+	public void elapsed() throws Exception {
+		//given
+		final Flux<String> ticker = Flux
+				.interval(ofMillis(200))
+				.map(lng -> "Item-" + lng);
+
+		//when
+		final Flux<Tuple2<Long, String>> elapsedPairs = ticker
+				.elapsed();
+
+		final Flux<Long> elapsed = elapsedPairs
+				.map(Tuple2::getT1)
+				.take(5);
+
+		//then
+		elapsed
+				.as(StepVerifier::create)
+				.expectNextMatches(x -> x >= 150 && x <= 250)
+				.expectNextMatches(x -> x >= 150 && x <= 250)
+				.expectNextMatches(x -> x >= 150 && x <= 250)
+				.expectNextMatches(x -> x >= 150 && x <= 250)
+				.expectNextMatches(x -> x >= 150 && x <= 250)
+				.verifyComplete();
+	}
+
+	/**
+	 * TODO Which pings were slower?
+	 * <p>
+	 * Pick sequence number of pings that returned > 100ms after request.
+	 * Hint: use {@link Flux#index()} and {@link Flux#elapsed()}
+	 * </p>
+	 */
+	@Test
+	public void whichEventWasSlow() throws Exception {
+		//given
+
+		//when
+		final Flux<Long> slowIndices = null;  // Ping.checkConstantly("vary.com")...take(5);
+
+		//then
+		slowIndices
+				.as(StepVerifier::create)
+				.expectNext(3L, 11L, 19L, 27L, 35L)
+				.verifyComplete();
+	}
+
 }
