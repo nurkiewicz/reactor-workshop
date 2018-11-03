@@ -1,5 +1,6 @@
 package com.nurkiewicz.reactor;
 
+import com.nurkiewicz.reactor.user.LoremIpsum;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -64,6 +65,23 @@ public class R042_Casting {
 				.expectNext(of(1L, "B"))
 				.expectNext(of(2L, "C"))
 				.verifyComplete();
+	}
+
+	/**
+	 * TODO Find every third word using {@link Flux#index()}
+	 * @throws Exception
+	 */
+	@Test
+	public void everyThirdWord() throws Exception {
+		//given
+		final Flux<String> words = Flux.just(LoremIpsum.words()).take(14);
+
+		//when
+		final Flux<String> third = words;
+
+		//then
+		assertThat(third.collectList().block())
+				.containsExactly("dolor", "consectetur", "Proin", "suscipit");
 	}
 
 	@Test
