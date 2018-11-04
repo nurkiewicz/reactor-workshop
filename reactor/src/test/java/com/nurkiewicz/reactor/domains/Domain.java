@@ -1,5 +1,7 @@
 package com.nurkiewicz.reactor.domains;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URI;
@@ -33,6 +35,10 @@ public class Domain {
 		} catch (URISyntaxException e) {
 			throw new IllegalArgumentException(e);
 		}
+	}
+
+	public String getTld() {
+		return StringUtils.substringAfterLast(url.getHost(), ".");
 	}
 
 	public long getLinkingRootDomains() {
