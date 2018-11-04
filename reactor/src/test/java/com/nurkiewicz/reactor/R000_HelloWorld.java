@@ -34,7 +34,7 @@ public class R000_HelloWorld {
 	}
 
 	/**
-	 * The password is the name of this test
+	 * TODO The password is the name of this test
 	 */
 	@Test
 	public void pleaseReadTheJavaDoc() throws Exception {
