@@ -1,9 +1,15 @@
 package com.nurkiewicz.reactor.domains;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.nurkiewicz.reactor.samples.Sleeper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.concurrent.Semaphore;
@@ -34,6 +40,46 @@ public class Crawler {
 			}
 		} else {
 			throw new RuntimeException("Too many concurrent crawlers: " + MAX_CRAWLERS);
+		}
+	}
+
+	/**
+	 * TODO Implement by returning all outgoing links. Use {@link #OUTGOING} map.
+	 * @see Mono#justOrEmpty(Object)
+	 */
+	public static Flux<URI> outgoingLinks(URI url) {
+		return Flux.empty();
+	}
+
+	private static final ImmutableMap<URI, ImmutableList<URI>> OUTGOING = links();
+
+	private static ImmutableMap<URI, ImmutableList<URI>> links() {
+		try {
+			return ImmutableMap.<URI, ImmutableList<URI>>builder()
+					.put(new URI("https://google.com"), ImmutableList.of(
+							new URI("https://abc.xyz/"),
+							new URI("https://gmail.com"),
+							new URI("https://maps.google.com")
+					))
+					.put(new URI("https://abc.xyz/"), ImmutableList.of(
+							new URI("https://abc.xyz/investor/")
+					))
+					.put(new URI("https://gmail.com"), ImmutableList.of(
+							new URI("https://mail.google.com/mail/u/0"),
+							new URI("https://mail.google.com/new")
+					))
+					.put(new URI("https://maps.google.com"), ImmutableList.of(
+							new URI("https://www.google.com/maps/place/Warszawa,+Polska"),
+							new URI("https://www.google.com/maps/dir/Warszawa,+Polska"),
+									new URI("https://www.google.com/maps/search/Restaurants/")
+											))
+					.put(new URI("https://abc.xyz/investor/"), ImmutableList.of(
+							new URI("https://abc.xyz/investor/other/board/"),
+							new URI("https://abc.xyz/investor/other/code-of-conduct/")
+					))
+					.build();
+		} catch (URISyntaxException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
