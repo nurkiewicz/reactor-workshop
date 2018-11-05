@@ -21,7 +21,7 @@ public class R025_ReadingFileFromStream {
 	private static final Logger log = LoggerFactory.getLogger(R025_ReadingFileFromStream.class);
 
 	/**
-	 * TODO Read file using {@link BufferedReader#lines()} and {@link Flux#fromStream(Supplier)}
+	 * TODO Read <code>/logback-test.xml</code> file using {@link BufferedReader#lines()} and {@link Flux#fromStream(Supplier)}
 	 * <p>Hint: use {@link #open(String)} helper method</p>
 	 */
 	@Test
