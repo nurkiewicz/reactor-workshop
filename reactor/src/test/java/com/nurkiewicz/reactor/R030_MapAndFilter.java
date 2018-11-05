@@ -67,7 +67,7 @@ public class R030_MapAndFilter {
 	}
 
 	/**
-	 * TODO only pick words starting with 'e' and ending with 't'. But first remove words ending with comma or dot.
+	 * TODO only pick words starting with 'e' and ending with 't'. But first remove comma or dot from word ending.
 	 */
 	@Test
 	public void lengthOfAllWordsEndingWithT() throws Exception {
