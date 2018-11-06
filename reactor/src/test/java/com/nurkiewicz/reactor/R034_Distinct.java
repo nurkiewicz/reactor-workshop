@@ -102,7 +102,7 @@ public class R034_Distinct {
 	@Test
 	public void inboxAsStream() throws Exception {
 		//given
-		final Flux<Email> emails = emails(Fairy.create());
+		final Flux<Email> emails = emails();
 
 		//when
 		final Flux<Email> ten = emails.take(10);
@@ -117,15 +117,15 @@ public class R034_Distinct {
 				.verifyComplete();
 	}
 
+	Flux<Email> emails() {
+		return emails(Fairy.create());
+	}
+
 	/**
 	 * TODO Generate infinite stream of e-mails. Use {@link Email#random(Fairy)}
 	 */
 	Flux<Email> emails(Fairy fairy) {
-		return Flux.generate(sink -> sink.next(Email.random(fairy)));
-	}
-
-	Flux<Email> emails() {
-		return emails(Fairy.create());
+		return Flux.empty();
 	}
 
 	/**
