@@ -2,7 +2,11 @@ package com.nurkiewicz.reactor;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.hash.Hashing;
-import com.nurkiewicz.reactor.user.*;
+import com.nurkiewicz.reactor.user.Item;
+import com.nurkiewicz.reactor.user.LoremIpsum;
+import com.nurkiewicz.reactor.user.Order;
+import com.nurkiewicz.reactor.user.User;
+import com.nurkiewicz.reactor.user.UserOrders;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -109,7 +113,7 @@ public class R032_AdvancedFiltering {
 	/**
 	 * TODO Use {@link #asyncSha256(String)} to filter items
 	 * <p>
-	 *     Hint: you will need {@link Flux#flatMap(Function)} and inne {@link Flux#filter(Predicate)}
+	 *     Hint: you will need {@link Flux#flatMap(Function)} and inner {@link Flux#filter(Predicate)}
 	 * </p>
 	 */
 	@Test
