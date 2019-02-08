@@ -9,7 +9,6 @@ import org.xml.sax.SAXException;
 import javax.annotation.PostConstruct;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 @Component
@@ -26,7 +25,7 @@ public class FeedAggregator {
     }
 
     @PostConstruct
-    public void init() throws IOException, FeedException, SAXException, ParserConfigurationException, URISyntaxException {
+    public void init() throws IOException, FeedException, SAXException, ParserConfigurationException {
         final String feed = opmlReader.allFeeds().get(0).getXmlUrl();
         feedReader.fetch(new URL(feed)).forEach(e -> {
             log.info("{}: {} at {}", e.getPublishedDate(), e.getTitle(), e.getLink());

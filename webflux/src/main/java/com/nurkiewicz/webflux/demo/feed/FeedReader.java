@@ -17,7 +17,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
@@ -26,7 +25,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Component
 public class FeedReader {
 
-    public List<SyndEntry> fetch(URL url) throws IOException, FeedException, ParserConfigurationException, SAXException, URISyntaxException {
+    public List<SyndEntry> fetch(URL url) throws IOException, FeedException, ParserConfigurationException, SAXException {
         final String feedBody = get(url);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -49,6 +48,5 @@ public class FeedReader {
             return CharStreams.toString(reader);
         }
     }
-
 
 }
