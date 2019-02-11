@@ -18,17 +18,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.springframework.http.MediaType.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.http.MediaType.TEXT_EVENT_STREAM;
+import static org.springframework.http.MediaType.TEXT_EVENT_STREAM_VALUE;
 
 
 @RestController
-class HelloController {
+class ReactorController {
 
-	private static final Logger log = LoggerFactory.getLogger(HelloController.class);
+	private static final Logger log = LoggerFactory.getLogger(ReactorController.class);
 
 	private final WebClient webClient;
 
-	HelloController(WebClient webClient) {
+	ReactorController(WebClient webClient) {
 		this.webClient = webClient;
 	}
 
@@ -70,7 +72,7 @@ class HelloController {
 	Mono<ResponseEntity<Map<String, String>>> cached() {
 		return Mono.fromCallable(() -> {
 			Map<String, String> book = new HashMap<>();
-			book.put("title", "Tytuł");
+			book.put("title", "Lord Of The Rings");
 			return book;
 		}).map(book ->
 				ResponseEntity
@@ -84,14 +86,11 @@ class HelloController {
 
 	@GetMapping("/proxy")
 	Mono<String> exampleProxy() {
-//		log.info("Making request");
 		return webClient
 				.get()
 				.uri("http://example.com")
 				.retrieve()
-				.bodyToMono(String.class)
-//				.doOnNext(html -> log.info("Got response"))
-				;
+				.bodyToMono(String.class);
 	}
 
 	@GetMapping("/leak")

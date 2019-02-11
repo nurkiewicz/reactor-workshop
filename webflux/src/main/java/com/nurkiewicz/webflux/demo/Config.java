@@ -13,7 +13,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
 
@@ -92,27 +91,6 @@ class Config {
         return ServerResponse
                 .ok()
                 .syncBody("Foo " + request.pathVariable("id"));
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        Flux
-                .create(c -> {
-                    emitAsync(c, "A");
-                    emitAsync(c, "B");
-                    emitAsync(c, "C");
-                    emitAsync(c, "D");
-                })
-//                .publishOn(Schedulers.elastic())
-                .subscribe(x -> {
-                    log.info("About to handle {}", x);
-                    try {
-                        TimeUnit.SECONDS.sleep(3);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    log.info("Done with {}", x);
-                });
-        TimeUnit.SECONDS.sleep(4);
     }
 
     private static void emitAsync(FluxSink<Object> c, String a) {
