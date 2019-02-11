@@ -113,7 +113,7 @@ public class R032_AdvancedFiltering {
 	/**
 	 * TODO Use {@link #asyncSha256(String)} to filter items
 	 * <p>
-	 *     Hint: you will need {@link Flux#flatMap(Function)} and inner {@link Flux#filter(Predicate)}
+	 *     Hint: you will need {@link Flux#flatMap(Function)} and inner {@link Mono#filter(Predicate)}
 	 * </p>
 	 */
 	@Test
