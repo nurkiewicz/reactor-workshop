@@ -51,7 +51,8 @@ public class R053_Concurrency {
 	}
 
 	/**
-	 * TODO Just like above, but return {@link Tuple2} with both {@link Domain} and {@link Html}
+	 * TODO Just like above, but return {@link Tuple2} with both {@link Domain} and {@link Html}.
+	 * You <strong>must</strong> use {@link Crawler#crawlAsync(Domain)}
 	 *
 	 * @see Tuples#of(Object, Object)
 	 */

@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -42,6 +43,13 @@ public class Crawler {
 			throw new RuntimeException("Too many concurrent crawlers: " + MAX_CRAWLERS);
 		}
 	}
+
+	public static Mono<Html> crawlAsync(Domain domain) {
+		return Mono
+				.fromCallable(() -> crawlBlocking(domain))
+				.subscribeOn(Schedulers.elastic());
+	}
+
 
 	/**
 	 * TODO Implement by returning all outgoing links. Use {@link #OUTGOING} map.
