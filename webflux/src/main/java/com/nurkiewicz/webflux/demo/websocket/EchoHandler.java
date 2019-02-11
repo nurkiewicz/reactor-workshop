@@ -8,9 +8,9 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public class MyWebSocketHandler implements WebSocketHandler {
+public class EchoHandler implements WebSocketHandler {
 
-	private static final Logger log = LoggerFactory.getLogger(MyWebSocketHandler.class);
+	private static final Logger log = LoggerFactory.getLogger(EchoHandler.class);
 
 	@Override
 	public Mono<Void> handle(WebSocketSession session) {
@@ -18,12 +18,12 @@ public class MyWebSocketHandler implements WebSocketHandler {
 				.receive()
 				.doOnSubscribe(s -> log.info("Got new connection"))
 				.map(WebSocketMessage::getPayloadAsText)
+				.doOnNext(x -> log.info("Recevied: '{};", x))
 				.map(String::toUpperCase)
-				.doOnNext(x -> log.info("Will send {}", x))
+				.doOnNext(x -> log.info("Sending {}", x))
 				.map(session::textMessage);
 		return session
-				.send(Mono.just(session.textMessage("HELLO!")).concatWith(outMessages))
-				.log()
+				.send(outMessages)
 				.doOnSuccess(v -> log.info("Done, terminating the connection"));
 	}
 

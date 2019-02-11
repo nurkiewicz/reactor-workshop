@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 
-import javax.annotation.PostConstruct;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +23,7 @@ public class FeedAggregator {
         this.feedReader = feedReader;
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void init() throws IOException, FeedException, SAXException, ParserConfigurationException {
         final String feed = opmlReader.allFeeds().get(0).getXmlUrl();
         feedReader.fetch(new URL(feed)).forEach(e -> {

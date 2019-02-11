@@ -14,11 +14,11 @@ class EmojiRepository {
     }
 
     Mono<Long> inc(String emoji, long by) {
-        return redisTemplate.opsForValue().increment(emoji, by);
+        return Mono.empty();
     }
 
     Mono<String> get(String emoji) {
-        return redisTemplate.opsForValue().get(emoji);
+        return Mono.empty();
     }
 
 }

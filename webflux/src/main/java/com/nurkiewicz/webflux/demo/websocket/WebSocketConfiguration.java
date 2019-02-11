@@ -7,7 +7,6 @@ import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
@@ -15,8 +14,10 @@ public class WebSocketConfiguration {
 
     @Bean
     public HandlerMapping handlerMapping() {
-        Map<String, WebSocketHandler> map = new HashMap<>();
-        map.put("/ws", new MyWebSocketHandler());
+        Map<String, WebSocketHandler> map = Map.of(
+                "/echo", new EchoHandler(),
+                "/time", new TimeHandler()
+        );
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
         mapping.setUrlMap(map);
         mapping.setOrder(-1);

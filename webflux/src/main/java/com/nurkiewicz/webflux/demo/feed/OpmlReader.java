@@ -22,7 +22,7 @@ public class OpmlReader {
      */
     public List<Outline> allFeeds() throws FeedException, IOException {
         WireFeedInput input = new WireFeedInput();
-        try(final InputStream inputStream = OpmlReader.class.getResourceAsStream("/feed.xml")) {
+        try(final InputStream inputStream = OpmlReader.class.getResourceAsStream("/feed-jvm-bloggers.xml")) {
             final InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             final Reader reader = new BufferedReader(streamReader);
             Opml feed = (Opml) input.build(reader);
