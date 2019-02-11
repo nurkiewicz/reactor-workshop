@@ -135,7 +135,7 @@ public class R032_AdvancedFiltering {
 	/**
 	 * TODO filter words using {@link Flux#filterWhen(Function)}
 	 * <p>
-	 *     Hint: you will also need inner {@link Flux#map(Function)}
+	 *     Hint: you will also need inner {@link Mono#map(Function)}
 	 * </p>
 	 */
 	@Test
