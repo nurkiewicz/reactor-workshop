@@ -52,15 +52,15 @@ public class R030_MapAndFilter {
 	}
 
 	/**
-	 * TODO Use {@link Flux#filter(Predicate)}
+	 * TODO Use {@link Flux#filter(Predicate)} to choose words ending with 't'
 	 */
 	@Test
 	public void filterSelectsOnlyMatchingElements() throws Exception {
 		//given
-		final Flux<String> numbers = Flux.just("Excepteur", "sint", "occaecat", "cupidatat", "non", "proident");
+		final Flux<String> words = Flux.just("Excepteur", "sint", "occaecat", "cupidatat", "non", "proident");
 
 		//when
-		final Flux<String> endingWithT = numbers;
+		final Flux<String> endingWithT = words;
 
 		//then
 		assertThat(endingWithT.collectList().block()).containsExactly("sint", "occaecat", "cupidatat", "proident");
