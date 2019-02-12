@@ -18,7 +18,7 @@ public class EchoHandler implements WebSocketHandler {
 				.receive()
 				.doOnSubscribe(s -> log.info("Got new connection"))
 				.map(WebSocketMessage::getPayloadAsText)
-				.doOnNext(x -> log.info("Recevied: '{};", x))
+				.doOnNext(x -> log.info("Received: '{};", x))
 				.map(String::toUpperCase)
 				.doOnNext(x -> log.info("Sending {}", x))
 				.map(session::textMessage);
