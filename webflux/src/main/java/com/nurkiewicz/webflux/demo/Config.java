@@ -5,15 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
-import org.springframework.web.reactive.HandlerMapping;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
-import org.springframework.web.reactive.socket.WebSocketHandler;
-import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
 
@@ -31,22 +26,6 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 class Config {
 
     private static final Logger log = LoggerFactory.getLogger(Config.class);
-
-    @Bean
-    public HandlerMapping handlerMapping() {
-        Map<String, WebSocketHandler> map = new HashMap<>();
-        map.put("/ws", new MyWebSocketHandler());
-
-        SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
-        mapping.setUrlMap(map);
-        mapping.setOrder(-1);
-        return mapping;
-    }
-
-    @Bean
-    public WebSocketHandlerAdapter handlerAdapter() {
-        return new WebSocketHandlerAdapter();
-    }
 
     @Bean
     WebClient webClient() {
@@ -92,27 +71,6 @@ class Config {
         return ServerResponse
                 .ok()
                 .syncBody("Foo " + request.pathVariable("id"));
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        Flux
-                .create(c -> {
-                    emitAsync(c, "A");
-                    emitAsync(c, "B");
-                    emitAsync(c, "C");
-                    emitAsync(c, "D");
-                })
-//                .publishOn(Schedulers.elastic())
-                .subscribe(x -> {
-                    log.info("About to handle {}", x);
-                    try {
-                        TimeUnit.SECONDS.sleep(3);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    log.info("Done with {}", x);
-                });
-        TimeUnit.SECONDS.sleep(4);
     }
 
     private static void emitAsync(FluxSink<Object> c, String a) {

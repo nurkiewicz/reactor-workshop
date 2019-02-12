@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<opml version="1.0">
+    <head>
+        <title>Test subscriptions</title>
+    </head>
+    <body>
+        <outline type="rss" text="Abstraction Extraction" title="Abstraction Extraction" xmlUrl="http://abstractionextraction.wordpress.com/feed/" htmlUrl="https://abstractionextraction.wordpress.com"/>
+        <outline type="rss" text="Abstractivate" title="Abstractivate" xmlUrl="http://blog.jessitron.com/feeds/posts/default" htmlUrl="http://blog.jessitron.com/"/>
+        <outline type="rss" text="Advanced Reactive Java" title="Advanced Reactive Java" xmlUrl="http://akarnokd.blogspot.com/feeds/posts/default" htmlUrl="http://akarnokd.blogspot.com/"/>
+        <outline type="rss" text="Akka Essentials" title="Akka Essentials" xmlUrl="http://www.akkaessentials.in/feeds/posts/default" htmlUrl="http://www.akkaessentials.in/"/>
+        <outline type="rss" text="Allegro Open Source" title="Allegro Open Source" xmlUrl="https://allegro.tech/feed.xml" htmlUrl="https://allegro.tech/"/>
+        <outline type="rss" text="Artima Developer Spotlight" title="Artima Developer Spotlight" xmlUrl="http://www.artima.com/spotlight/feeds/spotlight.rss" htmlUrl="http://www.artima.com/spotlight/"/>
+        <outline type="rss" text="behind the times" title="behind the times" xmlUrl="http://hamletdarcy.blogspot.com/feeds/posts/default" htmlUrl="http://hamletdarcy.blogspot.com/"/>
+        <outline type="rss" text="Blog of Adam Warski" title="Blog of Adam Warski" xmlUrl="http://www.warski.org/blog/feed/" htmlUrl="http://www.warski.org/blog"/>
+        <outline type="rss" text="Blog PeTe" title="Blog PeTe" xmlUrl="http://piotrkontek.wordpress.com/feed/" htmlUrl="https://piotrkontek.wordpress.com"/>
+        <outline type="rss" text="blog.iterate.no" title="blog.iterate.no" xmlUrl="http://blog.iterate.no/feed/" htmlUrl="https://blog.iterate.no"/>
+        <outline type="rss" text="Bozho's tech blog" title="Bozho's tech blog" xmlUrl="http://techblog.bozho.net/?feed=rss2" htmlUrl="https://techblog.bozho.net"/>
+        <outline type="rss" text="Cake Solutions Team Blog" title="Cake Solutions Team Blog" xmlUrl="http://www.cakesolutions.net/teamblogs/feed/" htmlUrl="http://www.cakesolutions.net/teamblogs"/>
+        <outline type="rss" text="Captain Debug's Blog" title="Captain Debug's Blog" xmlUrl="http://www.captaindebug.com/feeds/posts/default" htmlUrl="http://www.captaindebug.com/"/>
+        <outline type="rss" text="Code 2 Learn" title="Code 2 Learn" xmlUrl="http://feeds.feedburner.com/Code2Learn" htmlUrl="http://www.code2learn.com/"/>
+        <outline type="rss" text="Coding Horror" title="Coding Horror" xmlUrl="http://feeds.feedburner.com/codinghorror/" htmlUrl="https://blog.codinghorror.com/"/>
+        <outline type="rss" text="Coding matters" title="Coding matters" xmlUrl="http://feeds2.feedburner.com/blogspot/SvAh" htmlUrl="http://codingmatters.blogspot.com/"/>
+        <outline type="rss" text="Comments on: Blog" title="Comments on: Blog" xmlUrl="https://softwaremill.com/blog/feed/" htmlUrl="https://softwaremill.com"/>
+        <outline type="rss" text="crazybob.org" title="crazybob.org" xmlUrl="http://feeds.feedburner.com/crazybob/" htmlUrl="http://blog.crazybob.org/"/>
+        <outline type="rss" text="DataLiteracy.com" title="DataLiteracy.com" xmlUrl="http://dataliteracy.com/feed/" htmlUrl="http://dataliteracy.com"/>
+        <outline type="rss" text="DDD and CqRS Leaven" title="DDD and CqRS Leaven" xmlUrl="http://ddd-cqrs-leaven.blogspot.com/feeds/posts/default" htmlUrl="http://ddd-cqrs-leaven.blogspot.com/"/>
+        <outline type="rss" text="Developers Blog - Programming Languages, Technologies and Visions" title="Developers Blog - Programming Languages, Technologies and Visions" xmlUrl="http://developers-blog.org/blog/default/feed/" htmlUrl="http://developers-blog.org/blog/default"/>
+        <outline type="rss" text="Don’t panic" title="Don’t panic" xmlUrl="http://feeds.42.nl/42dontpanic" htmlUrl="http://dontpanic.42.nl/"/>
+        <outline type="rss" text="ethlo" title="ethlo" xmlUrl="http://blog.ethlo.com/atom.xml" htmlUrl="http://ethlo.com/"/>
+        <outline type="rss" text="Featured Articles" title="Featured Articles" xmlUrl="http://www.javaworld.com/features/index.xml" htmlUrl="https://www.javaworld.com"/>
+        <outline type="rss" text="Finding craftsmanship" title="Finding craftsmanship" xmlUrl="http://blog.craftforge.org/feeds/posts/default" htmlUrl="http://blog.craftforge.org/"/>
+        <outline type="rss" text="Geek And Poke" title="Geek And Poke" xmlUrl="http://feeds.feedburner.com/GeekAndPoke" htmlUrl="http://geek-and-poke.com/"/>
+        <outline type="rss" text="GeoNames Blog" title="GeoNames Blog" xmlUrl="http://geonames.wordpress.com/feed/" htmlUrl="https://geonames.wordpress.com"/>
+        <outline type="rss" text="Google Testing Blog" title="Google Testing Blog" xmlUrl="http://feeds.feedburner.com/blogspot/RLXA" htmlUrl="http://testing.googleblog.com/"/>
+        <outline type="rss" text="Green's Opinion" title="Green's Opinion" xmlUrl="http://greensopinion.blogspot.com/feeds/posts/default" htmlUrl="http://greensopinion.blogspot.com/"/>
+        <outline type="rss" text="Hacker News Best" title="Hacker News Best" xmlUrl="http://hnbest.herokuapp.com/rss" htmlUrl="https://news.ycombinator.com/best"/>
+        <outline type="rss" text="Herbi's Blog" title="Herbi's Blog" xmlUrl="http://herbi-blog.blogspot.com/feeds/posts/default" htmlUrl="http://herbi-blog.blogspot.com/"/>
+        <outline type="rss" text="High Scalability" title="High Scalability" xmlUrl="http://feeds.feedburner.com/HighScalability" htmlUrl="http://highscalability.com/blog/"/>
+        <outline type="rss" text="Interoperability Happens" title="Interoperability Happens" xmlUrl="http://blogs.tedneward.com/SyndicationService.asmx/GetRss" htmlUrl="http://blogs.tedneward.com/"/>
+        <outline type="rss" text="IT Researches" title="IT Researches" xmlUrl="http://feeds2.feedburner.com/ItResearches" htmlUrl="http://it-researches.blogspot.com/"/>
+        <outline type="rss" text="James Strachan's Blog" title="James Strachan's Blog" xmlUrl="http://macstrac.blogspot.com/feeds/posts/default" htmlUrl="http://macstrac.blogspot.com/"/>
+        <outline type="rss" text="JVMBloggers" title="JVMBloggers" xmlUrl="http://jvm-bloggers.com/pl/rss"/>
+        <outline type="rss" text="Java development thoughts" title="Java development thoughts" xmlUrl="http://jmilkiewicz.blogspot.com/feeds/posts/default" htmlUrl="http://jmilkiewicz.blogspot.com/"/>
+        <outline type="rss" text="Java EE Support Patterns" title="Java EE Support Patterns" xmlUrl="http://feeds.feedburner.com/JavaEESupportPatterns" htmlUrl="http://javaeesupportpatterns.blogspot.com/"/>
+        <outline type="rss" text="Java News/Tech/Discussion/etc. No programming help, no learning Java" title="Java News/Tech/Discussion/etc. No programming help, no learning Java" xmlUrl="http://www.reddit.com/r/java/.rss" htmlUrl="https://www.reddit.com/r/java/"/>
+        <outline type="rss" text="Java Programming" title="Java Programming" xmlUrl="http://java-jre.blogspot.com/feeds/posts/default" htmlUrl="http://java-jre.blogspot.com/"/>
+        <outline type="rss" text="Java Software Development Tutorials and Videos" title="Java Software Development Tutorials and Videos" xmlUrl="http://www.java-tv.com/feed/atom/" htmlUrl="http://www.java-tv.com"/>
+        <outline type="rss" text="Javalobby - The heart of the Java developer community" title="Javalobby - The heart of the Java developer community" xmlUrl="http://feeds.dzone.com/javalobby/frontpage" htmlUrl="https://dzone.com/java-jdk-development-tutorials-tools-news"/>
+        <outline type="rss" text="JetBrains Company Blog" title="JetBrains Company Blog" xmlUrl="http://feeds.feedburner.com/JetBrainsBlog" htmlUrl="https://blog.jetbrains.com"/>
+        <outline type="rss" text="JetBrains IntelliJ IDEA Blog" title="JetBrains IntelliJ IDEA Blog" xmlUrl="http://feeds2.feedburner.com/jetbrains_intellijidea" htmlUrl="https://blog.jetbrains.com/idea"/>
+        <outline type="rss" text="Joel on Software" title="Joel on Software" xmlUrl="http://www.joelonsoftware.com/rss.xml" htmlUrl="https://www.joelonsoftware.com"/>
+        <outline type="rss" text="L-peer in the software world" title="L-peer in the software world" xmlUrl="http://lpeer.blogspot.com/feeds/posts/default" htmlUrl="http://lpeer.blogspot.com/"/>
+        <outline type="rss" text="Lambda the Ultimate - Programming Languages Weblog" title="Lambda the Ultimate - Programming Languages Weblog" xmlUrl="http://lambda-the-ultimate.org/rss.xml" htmlUrl="http://lambda-the-ultimate.org"/>
+        <outline type="rss" text="Let it crash" title="Let it crash" xmlUrl="http://letitcrash.com/rss" htmlUrl="http://letitcrash.com/"/>
+        <outline type="rss" text="Mad programmer's cave" title="Mad programmer's cave" xmlUrl="http://blog.xemantic.com/feeds/posts/default" htmlUrl="http://blog.xemantic.com/"/>
+        <outline type="rss" text="Mechanical Sympathy" title="Mechanical Sympathy" xmlUrl="http://mechanical-sympathy.blogspot.com/feeds/posts/default" htmlUrl="https://mechanical-sympathy.blogspot.com/"/>
+        <outline type="rss" text="Mistaeks I Hav Made" title="Mistaeks I Hav Made" xmlUrl="http://www.natpryce.com/news.feed" htmlUrl="http://natpryce.com"/>
+        <outline type="rss" text="Notes from a (very) small Island" title="Notes from a (very) small Island" xmlUrl="http://rossmason.blogspot.com/feeds/posts/default" htmlUrl="http://rossmason.blogspot.com/"/>
+        <outline type="rss" text="Ola Bini: Programming Language Synchronicity" title="Ola Bini: Programming Language Synchronicity" xmlUrl="http://feeds.feedburner.com/olabini" htmlUrl="https://olabini.se/blog"/>
+        <outline type="rss" text="Paul Chiusano's blog" title="Paul Chiusano's blog" xmlUrl="http://pchiusano.github.io/feed.xml" htmlUrl="http://pchiusano.github.io"/>
+        <outline type="rss" text="Polyglots" title="Polyglots" xmlUrl="http://poligloci.blogspot.com/feeds/posts/default" htmlUrl="http://poligloci.blogspot.com/"/>
+        <outline type="rss" text="Process Developments" title="Process Developments" xmlUrl="http://processdevelopments.blogspot.com/feeds/posts/default" htmlUrl="http://processdevelopments.blogspot.com/"/>
+        <outline type="rss" text="Programming in the 21st Century" title="Programming in the 21st Century" xmlUrl="http://prog21.dadgum.com/atom.xml" htmlUrl="http://prog21.dadgum.com/"/>
+        <outline type="rss" text="Psychosomatic, Lobotomy, Saw" title="Psychosomatic, Lobotomy, Saw" xmlUrl="http://psy-lob-saw.blogspot.com/feeds/posts/default" htmlUrl="http://psy-lob-saw.blogspot.com/"/>
+        <outline type="rss" text="Puerile Geek" title="Puerile Geek" xmlUrl="http://puerilegeek.blogspot.com/feeds/posts/default" htmlUrl="http://puerilegeek.blogspot.com/"/>
+        <outline type="rss" text="Random thoughts by Ceki Gülcü" title="Random thoughts by Ceki Gülcü" xmlUrl="http://ceki.blogspot.com/feeds/posts/default" htmlUrl="http://ceki.blogspot.com/"/>
+        <outline type="rss" text="realestate.com.au Tech Blog" title="realestate.com.au Tech Blog" xmlUrl="http://techblog.realestate.com.au/feed/" htmlUrl="http://cms.rea.tech"/>
+        <outline type="rss" text="Rob Davies on Open Source Integration" title="Rob Davies on Open Source Integration" xmlUrl="http://rajdavies.blogspot.com/feeds/posts/default" htmlUrl="http://www.rajdavies.today/"/>
+        <outline type="rss" text="SKORKS" title="SKORKS" xmlUrl="http://feeds.feedburner.com/softwaretechandmore" htmlUrl="https://www.skorks.com"/>
+        <outline type="rss" text="Software Passion" title="Software Passion" xmlUrl="http://www.softwarepassion.com/feed/" htmlUrl="http://www.softwarepassion.com"/>
+        <outline type="rss" text="Solid Soft" title="Solid Soft" xmlUrl="http://solidsoft.wordpress.com/feed/" htmlUrl="https://solidsoft.wordpress.com"/>
+        <outline type="rss" text="Technophile Blog" title="Technophile Blog" xmlUrl="http://gordondickens.com/wordpress/feed/" htmlUrl="http://gordondickens.com/wordpress"/>
+        <outline type="rss" text="Test Drive this" title="Test Drive this" xmlUrl="https://testdrivethisblog.wordpress.com/feed/" htmlUrl="https://testdrivethisblog.wordpress.com"/>
+        <outline type="rss" text="The Holy Java" title="The Holy Java" xmlUrl="http://theholyjava.wordpress.com/feed/" htmlUrl="https://theholyjava.wordpress.com"/>
+        <outline type="rss" text="The Lowly Programmer" title="The Lowly Programmer" xmlUrl="http://feeds.feedburner.com/TheLowlyProgrammer" htmlUrl="http://www.thelowlyprogrammer.com/"/>
+        <outline type="rss" text="The Netflix Tech Blog" title="The Netflix Tech Blog" xmlUrl="http://techblog.netflix.com/feeds/posts/default" htmlUrl="https://medium.com/netflix-techblog?source=rss----2615bd06b42e---4"/>
+        <outline type="rss" text="TheServerSide.com: News" title="TheServerSide.com: News" xmlUrl="http://feeds.feedburner.com/techtarget/tsscom/home"/>
+        <outline type="rss" text="ThinkD" title="ThinkD" xmlUrl="http://thinkd.org/feed/" htmlUrl="http://thinkd.org"/>
+        <outline type="rss" text="This PLT Life" title="This PLT Life" xmlUrl="http://this-plt-life.tumblr.com/rss" htmlUrl="http://this-plt-life.tumblr.com/"/>
+        <outline type="rss" text="Twitter Engineering" title="Twitter Engineering" xmlUrl="http://engineering.twitter.com/feeds/posts/default" htmlUrl="https://blog.twitter.com/content/blog-twitter/engineering/en_us"/>
+        <outline type="rss" text="Uncle Bob's Blog" title="Uncle Bob's Blog" xmlUrl="http://cleancoder.posterous.com/rss.xml"/>
+        <outline type="rss" text="Unimplemented" title="Unimplemented" xmlUrl="http://feeds.feedburner.com/Unimplemented" htmlUrl="http://unimplemented.blogspot.com/"/>
+        <outline type="rss" text="Voxxed" title="Voxxed" xmlUrl="https://www.voxxed.com/feed/" htmlUrl="https://www.voxxed.com"/>
+        <outline type="rss" text="Xebia Blog" title="Xebia Blog" xmlUrl="http://blog.xebia.com/feed/" htmlUrl="https://xebia.com/blog"/>
+        <outline type="rss" text="Zef.me" title="Zef.me" xmlUrl="http://feeds.feedburner.com/zefme" htmlUrl="https://zef.me?source=rss----875b6d268386---4"/>
+    </body>
+</opml>

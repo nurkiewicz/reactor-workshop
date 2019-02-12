@@ -183,7 +183,7 @@ public class R040_Buffer {
 	/**
 	 * TODO using moving, overlapping window discover three subsequent false values
 	 * <p>
-	 * Hint: use {@link Flux#buffer(Duration)} and {@link Flux#doOnNext(Consumer)} to troubleshoot
+	 * Hint: use {@link Flux#buffer(int, int)} and {@link Flux#doOnNext(Consumer)} to troubleshoot
 	 * </p>
 	 */
 	@Test

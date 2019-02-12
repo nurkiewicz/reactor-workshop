@@ -72,7 +72,7 @@ public class R034_Distinct {
 
 	/**
 	 * TODO Use {@link Flux#distinctUntilChanged(Function, BiPredicate)} to discover temperature changes
-	 * greater than 0.5
+	 * greater than or equal 0.5
 	 *
 	 * @throws Exception
 	 */

@@ -40,7 +40,7 @@ public class R023_CallbackToFlux {
 	}
 
 	/**
-	 * TODO Receive first five minutes from any inbox
+	 * TODO Receive first five messages from any inbox
 	 * Hint: <code>emails</code> list must be thread safe
 	 * Notice: how do you stop subscription?
 	 */
