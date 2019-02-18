@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -102,14 +101,6 @@ class ReactorController {
 				.map(response -> "");
 	}
 
-	@GetMapping(value = "/emojis", produces = TEXT_EVENT_STREAM_VALUE)
-	Flux<ServerSentEvent> emojis() {
-		return webClient
-				.get()
-				.uri("http://emojitrack-gostreamer.herokuapp.com/subscribe/eps")
-				.retrieve()
-				.bodyToFlux(ServerSentEvent.class);
-	}
 }
 
 class Data {
