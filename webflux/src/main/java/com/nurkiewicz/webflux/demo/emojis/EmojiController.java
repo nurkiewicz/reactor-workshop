@@ -82,7 +82,7 @@ public class EmojiController {
     }
 
     /**
-     * TODO Top 10 most frequent emojis (with count)
+     * TODO Top 10 most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
      */
     @GetMapping(value = "/emojis/top10", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<HashMap<String, Integer>> top10() {
