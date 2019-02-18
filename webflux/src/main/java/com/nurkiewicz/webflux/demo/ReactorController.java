@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.http.MediaType.TEXT_EVENT_STREAM;
 import static org.springframework.http.MediaType.TEXT_EVENT_STREAM_VALUE;
 
 
@@ -108,7 +107,6 @@ class ReactorController {
 		return webClient
 				.get()
 				.uri("http://emojitrack-gostreamer.herokuapp.com/subscribe/eps")
-				.accept(TEXT_EVENT_STREAM)
 				.retrieve()
 				.bodyToFlux(ServerSentEvent.class);
 	}
