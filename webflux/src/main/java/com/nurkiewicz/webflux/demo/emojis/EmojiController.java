@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 import java.net.URI;
+import java.util.HashMap;
 
 import static org.springframework.http.MediaType.TEXT_EVENT_STREAM_VALUE;
 
@@ -35,7 +36,7 @@ public class EmojiController {
      * TODO How many pushes from /subscribe/eps per second are emitted?
      */
     @GetMapping(value = "/emojis/rps", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<ServerSentEvent> rps() {
+    Flux<Long> rps() {
         return Flux.empty();
     }
 
@@ -43,7 +44,7 @@ public class EmojiController {
      * TODO How many emojis in total per second are emitted?
      */
     @GetMapping(value = "/emojis/eps", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<ServerSentEvent> eps() {
+    Flux<Long> eps() {
         return Flux.empty();
     }
 
@@ -51,15 +52,15 @@ public class EmojiController {
      * TODO Total number of each emoji (ever-growing map)
      */
     @GetMapping(value = "/emojis/aggregated", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<ServerSentEvent> aggregated() {
+    Flux<HashMap<String, Integer>> aggregated() {
         return Flux.empty();
     }
 
     /**
-     * TODO Top 10 most frequent emojis (with count)
+     * TODO Top 10 most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
      */
     @GetMapping(value = "/emojis/top10", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<ServerSentEvent> top10() {
+    Flux<HashMap<String, Integer>> top10() {
         return Flux.empty();
     }
 
@@ -68,7 +69,7 @@ public class EmojiController {
      * @see #codeToEmoji(String)
      */
     @GetMapping(value = "/emojis/top10str", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<ServerSentEvent> top10str() {
+    Flux<String> top10str() {
         return Flux.empty();
     }
 
