@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.net.URI;
@@ -109,13 +110,14 @@ public class R073_Expand {
         final URI init = new URI("https://google.com");
 
         //when
-        final Flux<URI> allUris = Crawler
-                .outgoingLinks(init)
+        final Flux<URI> allUris = Mono
+                .just(init)
                 .expand(Crawler::outgoingLinks);
 
         //then
         allUris
                 .as(StepVerifier::create)
+                .expectNext(new URI("https://google.com"))
                 .expectNext(new URI("https://abc.xyz/"))
                 .expectNext(new URI("https://gmail.com"))
                 .expectNext(new URI("https://maps.google.com"))
