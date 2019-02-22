@@ -114,6 +114,7 @@ public class R073_Expand {
         //then
         allUris
                 .as(StepVerifier::create)
+                .expectNext(new URI("https://google.com"))
                 .expectNext(new URI("https://abc.xyz/"))
                 .expectNext(new URI("https://gmail.com"))
                 .expectNext(new URI("https://maps.google.com"))
