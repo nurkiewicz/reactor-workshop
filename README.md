@@ -47,13 +47,14 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 - [RxJava](https://github.com/ReactiveX/RxJava) interoperability
 
 ## Day 3: Practical
-- `ConnectableFlux`
+- Comparison to blocking and asynchronous servlets
 - Refactoring existing application to Reactor
 - [Spring Boot](https://spring.io/projects/spring-boot)
   - Reactive database access
   - Reactive controllers
   - `WebFilter`
   - Global error handling
+  - Payload validation
   - Web sockets
 - Streaming data in and out
 - Troubleshooting and debugging
