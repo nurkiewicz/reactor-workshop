@@ -22,37 +22,6 @@ public class R046_Timeout {
 	private static final Logger log = LoggerFactory.getLogger(R046_Timeout.class);
 
 	/**
-	 * TODO Ask two {@link CacheServer}s for the same key 1.
-	 * <p>
-	 *     Ask <code>first</code> server in the beginning.
-	 *     If it doesn't respond within 200 ms, continue waiting, but ask <code>second</code> server.
-	 *     Second server is much faster, but fails often. If it fails, swallow the exception and wait
-	 *     for the first server anyway.
-	 *     However if the second server doesn't fail, you'll get the response faster.
-	 *     Make sure to run the test a few times to make sure it works on both branches.
-	 * </p>
-	 *
-	 * @see Flux#merge(Publisher[])
-	 * @see Mono#delaySubscription(Duration)
-	 * @see Mono#onErrorResume(Function)
-	 */
-	@Test
-	public void speculativeExecution() throws Exception {
-		//given
-		CacheServer first = new CacheServer("foo", ofSeconds(1), 0);
-		CacheServer second = new CacheServer("bar", ofMillis(100), 0.5);
-
-		//when
-		final Mono<String> response = null;
-
-		//then
-		response
-				.as(StepVerifier::create)
-				.expectNextMatches(s -> s.startsWith("Value-1 from"))
-				.verifyComplete();
-	}
-
-	/**
 	 * TODO Add fallback to {@link Flux#timeout(Duration)}
 	 * It should return -1 when timeout of 100ms occurs.
 	 */
@@ -91,5 +60,37 @@ public class R046_Timeout {
 		//then
 		withTimeouts.block();
 	}
+
+	/**
+	 * TODO Ask two {@link CacheServer}s for the same key 1.
+	 * <p>
+	 *     Ask <code>first</code> server in the beginning.
+	 *     If it doesn't respond within 200 ms, continue waiting, but ask <code>second</code> server.
+	 *     Second server is much faster, but fails often. If it fails, swallow the exception and wait
+	 *     for the first server anyway.
+	 *     However if the second server doesn't fail, you'll get the response faster.
+	 *     Make sure to run the test a few times to make sure it works on both branches.
+	 * </p>
+	 *
+	 * @see Flux#merge(Publisher[])
+	 * @see Mono#delaySubscription(Duration)
+	 * @see Mono#onErrorResume(Function)
+	 */
+	@Test
+	public void speculativeExecution() throws Exception {
+		//given
+		CacheServer first = new CacheServer("foo", ofSeconds(1), 0);
+		CacheServer second = new CacheServer("bar", ofMillis(100), 0.5);
+
+		//when
+		final Mono<String> response = null;
+
+		//then
+		response
+			.as(StepVerifier::create)
+			.expectNextMatches(s -> s.startsWith("Value-1 from"))
+			.verifyComplete();
+	}
+
 
 }
