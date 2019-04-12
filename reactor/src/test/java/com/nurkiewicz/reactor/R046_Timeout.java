@@ -43,7 +43,7 @@ public class R046_Timeout {
 	/**
 	 * TODO Add timeout of 80ms to {@link CacheServer#findBy(int)} method.
 	 * <p>
-	 *     When timeout occurs, {@link Flux#retry()}. However fail if retry takes more than 5 seconds.
+	 *     When timeout occurs, {@link Flux#retry()}. However, fail if retry takes more than 5 seconds.
 	 * </p>
 	 */
 	@Test
@@ -68,7 +68,7 @@ public class R046_Timeout {
 	 *     If it doesn't respond within 200 ms, continue waiting, but ask <code>second</code> server.
 	 *     Second server is much faster, but fails often. If it fails, swallow the exception and wait
 	 *     for the first server anyway.
-	 *     However if the second server doesn't fail, you'll get the response faster.
+	 *     However, if the second server doesn't fail, you'll get the response faster.
 	 *     Make sure to run the test a few times to make sure it works on both branches.
 	 * </p>
 	 *
