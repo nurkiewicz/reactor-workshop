@@ -2,6 +2,7 @@ package com.nurkiewicz.webflux.demo.emojis;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,7 @@ public class EmojiController {
     @GetMapping(value = "/emojis/raw", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<ServerSentEvent> raw() {
         return retrieve()
-                .bodyToFlux(ServerSentEvent.class);
+            .bodyToFlux(ServerSentEvent.class);
     }
 
     /**
@@ -41,28 +42,21 @@ public class EmojiController {
     @GetMapping(value = "/emojis/rps", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Long> rps() {
         return retrieve()
-                .bodyToFlux(ServerSentEvent.class)
-                .window(Duration.ofSeconds(1))
-                .flatMap(Flux::count);
+            .bodyToFlux(ServerSentEvent.class)
+            .window(Duration.ofSeconds(1))
+            .flatMap(Flux::count);
     }
 
     /**
      * TODO How many emojis in total per second are emitted?
      */
     @GetMapping(value = "/emojis/eps", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<Long> eps() {
+    Flux<Integer> eps() {
         return retrieve()
-                .bodyToFlux(Map.class)
-                .window(Duration.ofSeconds(1))
-                .flatMap(win -> win.reduce(0L, (c, data) -> c + sumValues(data)));
-    }
-
-    private long sumValues(Map data) {
-        return data
-                .values()
-                .stream()
-                .mapToInt(x -> (Integer) x)
-                .sum();
+            .bodyToFlux(new ParameterizedTypeReference<Map<String, Integer>>() {})
+            .concatMapIterable(Map::values)
+            .window(Duration.ofSeconds(1))
+            .flatMap(win -> win.reduce(Integer::sum));
     }
 
     /**
@@ -71,14 +65,12 @@ public class EmojiController {
     @GetMapping(value = "/emojis/aggregated", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<HashMap<String, Integer>> aggregated() {
         return retrieve()
-                .bodyToFlux(Map.class)
-                .scan(new HashMap<>(), (HashMap<String, Integer> acc, Map data) -> {
-                    final HashMap<String, Integer> result = new HashMap<>(acc);
-                    data.forEach((k, v) -> {
-                        result.merge(k.toString(), (int) v, (old, n) -> old + n);
-                    });
-                    return result;
-                });
+            .bodyToFlux(new ParameterizedTypeReference<Map<String, Integer>>() {})
+            .scan(new HashMap<>(), ( acc, update) -> {
+                final HashMap<String, Integer> result = new HashMap<>(acc);
+                update.forEach((k, v) -> result.merge(k, v, Integer::sum));
+                return result;
+            });
     }
 
     /**
@@ -87,16 +79,17 @@ public class EmojiController {
     @GetMapping(value = "/emojis/top10", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<HashMap<String, Integer>> top10() {
         return aggregated()
-                .map(this::top10values);
+            .map(this::top10values)
+            .distinctUntilChanged();
     }
 
     private HashMap<String, Integer> top10values(Map<String, Integer> agg) {
         return new HashMap<>(agg
-                .entrySet()
-                .stream()
-                .sorted(comparing(e -> -e.getValue()))
-                .limit(10)
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue)));
+            .entrySet()
+            .stream()
+            .sorted(comparing(e -> -e.getValue()))
+            .limit(10)
+            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue)));
     }
 
     /**
@@ -106,23 +99,23 @@ public class EmojiController {
     @GetMapping(value = "/emojis/top10str", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<String> top10str() {
         return top10()
-                .map(this::keysAsOneString);
+            .map(this::keysAsOneString);
     }
 
     private String keysAsOneString(HashMap<String, Integer> m) {
         return m
-                .keySet()
-                .stream()
-                .map(EmojiController::codeToEmoji)
-                .collect(Collectors.joining());
+            .keySet()
+            .stream()
+            .map(EmojiController::codeToEmoji)
+            .collect(Collectors.joining());
     }
 
     @NotNull
     private WebClient.ResponseSpec retrieve() {
         return webClient
-                .get()
-                .uri(emojiTrackerUrl)
-                .retrieve();
+            .get()
+            .uri(emojiTrackerUrl)
+            .retrieve();
     }
 
     private static String codeToEmoji(String hex) {
