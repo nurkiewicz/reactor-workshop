@@ -160,7 +160,7 @@ public class R040_Buffer {
 	}
 
 	/**
-	 * TODO Turn Mono is empty, turn it into true. If it terminates with an error, make it false
+	 * TODO If Mono is empty, turn it into true. If it terminates with an error, make it false
 	 *
 	 * @see Mono#switchIfEmpty(Mono)
 	 * @see Mono#onErrorReturn(Object)

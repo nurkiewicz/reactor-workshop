@@ -8,15 +8,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Optional;
-import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class Domains {
 
 	/**
 	 * TODO Convert file to stream of {@link Domain}
 	 *
+	 * @see Flux#fromStream(Stream) (Supplier)
 	 * @see Mono#justOrEmpty(Optional)
-	 * @see Flux#defer(Supplier)
 	 */
 	public static Flux<Domain> all() {
 		return Flux.defer(

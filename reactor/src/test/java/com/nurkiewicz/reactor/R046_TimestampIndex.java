@@ -1,7 +1,7 @@
 package com.nurkiewicz.reactor;
 
-import com.nurkiewicz.reactor.samples.Ping;
 import com.nurkiewicz.reactor.user.LoremIpsum;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,44 +10,16 @@ import reactor.test.StepVerifier;
 import reactor.util.function.Tuple2;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static java.time.Duration.ofMillis;
 import static org.assertj.core.api.Assertions.assertThat;
 import static reactor.util.function.Tuples.of;
 
-public class R042_Casting {
+@Ignore
+public class R046_TimestampIndex {
 
-	private static final Logger log = LoggerFactory.getLogger(R042_Casting.class);
-
-	@Test
-	public void castingElements() throws Exception {
-		//given
-		Flux<Number> nums = Flux.just(1, 2, 3);
-
-		//when
-		final Flux<Integer> ints = nums.cast(Integer.class);
-
-		//then
-		final List<Integer> list = ints.collectList().block();
-		assertThat(list).containsExactly(1, 2, 3);
-	}
-
-	@Test
-	public void castingWithFiltering() throws Exception {
-		//given
-		Flux<Number> nums = Flux.just(1, 2.0, 3.0f);
-
-		//when
-		final Flux<Double> doubles = nums.ofType(Double.class);
-
-		//then
-		doubles
-				.as(StepVerifier::create)
-				.expectNext(2.0)
-				.verifyComplete();
-	}
+	private static final Logger log = LoggerFactory.getLogger(R046_TimestampIndex.class);
 
 	@Test
 	public void index() throws Exception {
@@ -76,10 +48,7 @@ public class R042_Casting {
 		final Flux<String> words = Flux.just(LoremIpsum.words()).take(14);
 
 		//when
-		final Flux<String> third = words
-				.index()
-				.filter(t -> t.getT1() % 3 == 2)
-				.map(Tuple2::getT2);
+		final Flux<String> third = words;
 
 		//then
 		assertThat(third.collectList().block())
@@ -119,12 +88,7 @@ public class R042_Casting {
 				.map(lng -> "Item-" + lng);
 
 		//when
-		final Flux<Long> elapsed = ticker
-				.timestamp()
-				.map(Tuple2::getT1)
-				.buffer(2)
-				.map(buf -> buf.get(1) - buf.get(0))
-				.take(5);
+		final Flux<Long> elapsed = null; // TODO tickers...take(5)
 
 		//then
 		elapsed
@@ -175,14 +139,7 @@ public class R042_Casting {
 		//given
 
 		//when
-		final Flux<Long> slowIndices = Ping
-				.checkConstantly("vary.com")
-				.index()
-				.map(Tuple2::getT1)
-				.elapsed()
-				.filter(t -> t.getT1() > 100)
-				.map(Tuple2::getT2)
-				.take(5);
+		final Flux<Long> slowIndices = null;  // Ping.checkConstantly("vary.com")...take(5);
 
 		//then
 		slowIndices

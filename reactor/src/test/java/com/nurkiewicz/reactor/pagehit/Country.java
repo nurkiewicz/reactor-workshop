@@ -11,7 +11,7 @@ public enum Country {
         if (rand < 0.5) {
             return PL;
         }
-        if (rand < 0.99) {
+        if (rand < 0.999) {
             return US;
         }
         return RO;
