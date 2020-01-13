@@ -70,7 +70,7 @@ public class R030_MapAndFilter {
 	 * TODO only pick words starting with 'e' and ending with 't'. But first remove comma or dot from word ending.
 	 */
 	@Test
-	public void lengthOfAllWordsEndingWithT() throws Exception {
+	public void allWordsStartingWithEAndEndingWithT() throws Exception {
 		//given
 		final Flux<String> words = Flux.just(LoremIpsum.words());
 
