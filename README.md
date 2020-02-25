@@ -1,6 +1,6 @@
 # Reactor training
 
-[![Build Status](https://travis-ci.org/nurkiewicz/reactor-workshop.svg?branch=master)](https://travis-ci.org/nurkiewicz/reactor-workshop)
+[![Build Status](https://travis-ci.org/nurkiewicz/reactor-workshop.svg?branch=master)](https://travis-ci.org/nurkiewicz/reactor-workshop) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=nurkiewicz/reactor-workshop)](https://dependabot.com)
 
 Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 

@@ -6,12 +6,26 @@ import com.rometools.rome.io.FeedException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 
+/**
+ * <ul>
+ *	<li>Use {@link WebClient} instead of {@link HttpURLConnection}.</li>
+ *	<li>Handle errors and 301 redirect</li>
+ *	<li>Publish SSE stream of articles</li>
+ *	<li>Polling for new articles periodically</li>
+ *	<li>Store articles in the database (use e.g. {@link ReactiveMongoRepository})</li>
+ *	<li>Create endpoints for browsing (e.g. most recent, about something, by author...)</li>
+ *	<li>Make a simple front-end</li>
+ * </ul>
+ */
 @Component
 public class FeedAggregator {
 
