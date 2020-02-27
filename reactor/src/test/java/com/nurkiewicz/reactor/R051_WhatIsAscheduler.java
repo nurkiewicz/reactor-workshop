@@ -1,7 +1,6 @@
 package com.nurkiewicz.reactor;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,18 +9,16 @@ import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
 public class R051_WhatIsAscheduler {
 
 	private static final Logger log = LoggerFactory.getLogger(R051_WhatIsAscheduler.class);
 
-	/**
-	 * TODO Implement {@link #customScheduler()}
-	 */
 	@Test
 	public void createCustomScheduler() throws Exception {
 		//given
@@ -47,7 +44,9 @@ public class R051_WhatIsAscheduler {
 	 * @see Schedulers#fromExecutorService(ExecutorService)
 	 */
 	private Scheduler customScheduler() {
-		return Schedulers.elastic();
+		ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("Custom-%d").build();
+		ExecutorService executorService = Executors.newFixedThreadPool(10, threadFactory);
+		return Schedulers.fromExecutorService(executorService);
 	}
 
 }

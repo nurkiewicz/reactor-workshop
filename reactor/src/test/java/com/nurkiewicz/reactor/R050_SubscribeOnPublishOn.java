@@ -1,7 +1,6 @@
 package com.nurkiewicz.reactor;
 
 import com.nurkiewicz.reactor.samples.CacheServer;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,6 @@ import reactor.core.scheduler.Schedulers;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-@Ignore
 public class R050_SubscribeOnPublishOn {
 
 	private static final Logger log = LoggerFactory.getLogger(R050_SubscribeOnPublishOn.class);

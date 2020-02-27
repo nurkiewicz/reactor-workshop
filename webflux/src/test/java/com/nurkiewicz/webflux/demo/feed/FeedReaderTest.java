@@ -1,10 +1,12 @@
 package com.nurkiewicz.webflux.demo.feed;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+@Ignore
 public class FeedReaderTest {
 
     @Test

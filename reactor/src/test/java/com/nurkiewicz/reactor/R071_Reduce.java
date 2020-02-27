@@ -1,6 +1,5 @@
 package com.nurkiewicz.reactor;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,6 @@ import reactor.test.StepVerifier;
 import java.math.BigInteger;
 import java.util.function.BiFunction;
 
-@Ignore
 public class R071_Reduce {
 
     private static final Logger log = LoggerFactory.getLogger(R071_Reduce.class);

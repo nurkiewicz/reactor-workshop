@@ -1,7 +1,6 @@
 package com.nurkiewicz.reactor;
 
 import com.nurkiewicz.reactor.samples.Primes;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,6 @@ import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
 public class R033_Primes {
 
 	private static final Logger log = LoggerFactory.getLogger(R033_Primes.class);

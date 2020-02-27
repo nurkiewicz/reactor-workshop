@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -117,7 +118,7 @@ public class R023_CallbackToFlux {
 	public void fluxDoesNotAcceptNull() throws Exception {
 		Flux
 				.create(sink -> inbox.read("spam@example.com", sink::next))
-				.blockLast();
+				.blockLast(Duration.ofSeconds(1));
 	}
 
 	/**

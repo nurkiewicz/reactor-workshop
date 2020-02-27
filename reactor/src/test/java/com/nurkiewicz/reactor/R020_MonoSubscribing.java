@@ -1,6 +1,5 @@
 package com.nurkiewicz.reactor;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
 public class R020_MonoSubscribing {
 
 	private static final Logger log = LoggerFactory.getLogger(R020_MonoSubscribing.class);
@@ -113,7 +111,7 @@ public class R020_MonoSubscribing {
 		//given
 
 		//when
-		final Mono<Integer> work = null;
+		final Mono<Integer> work = Mono.error(new IOException("Simulated"));
 
 		//then
 		work.subscribe(
@@ -138,7 +136,7 @@ public class R020_MonoSubscribing {
 		//given
 
 		//when
-		final Mono<Integer> work = null;
+		final Mono<Integer> work = Mono.empty();
 
 		//then
 		work.subscribe(
@@ -163,7 +161,7 @@ public class R020_MonoSubscribing {
 		//given
 
 		//when
-		final Mono<Integer> work = null;
+		final Mono<Integer> work = Mono.never();
 
 		//then
 		work.subscribe(
