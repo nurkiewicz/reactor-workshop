@@ -39,7 +39,7 @@ public class FeedReader {
      *
      * TODO Load data asynchronously using {@link org.springframework.web.reactive.function.client.WebClient}
      */
-    private static String get(URL url) throws IOException {
+    private String get(URL url) throws IOException {
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         if (conn.getResponseCode() == HttpStatus.MOVED_PERMANENTLY.value()) {
             return get(new URL(conn.getHeaderField("Location")));
