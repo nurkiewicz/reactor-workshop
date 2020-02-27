@@ -2,15 +2,15 @@ package com.nurkiewicz.webflux.demo.feed;
 
 import com.rometools.opml.feed.opml.Outline;
 import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.io.FeedException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
+import java.net.URI;
+import java.time.Duration;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class FeedAggregator {
@@ -25,15 +25,22 @@ public class FeedAggregator {
         this.feedReader = feedReader;
     }
 
-    @PostConstruct
-    public void init() throws IOException, FeedException {
-        opmlReader
+    public Flux<Article> articles() {
+        return opmlReader
                 .allFeeds()
-                .map(Outline::getXmlUrl)
-                .flatMap(this::fetchEntries)
-                .subscribe(e ->
-                        log.info("{}: {} at {}", e.getPublishedDate(), e.getTitle(), e.getLink())
-                );
+                .flatMap(this::fetchPeriodically);
+    }
+
+    private Flux<Article> fetchPeriodically(Outline outline) {
+        Duration randSeconds = Duration.ofSeconds(ThreadLocalRandom.current().nextInt(10, 20));
+        return Flux
+                .interval(randSeconds)
+                .flatMap(i -> fetchEntries(outline.getXmlUrl()))
+                .map(this::toArticle);
+    }
+
+    private Article toArticle(SyndEntry entry) {
+        return new Article(URI.create(entry.getLink()), entry.getPublishedDate().toInstant(), entry.getTitle());
     }
 
     @NotNull
