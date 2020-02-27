@@ -2,10 +2,12 @@ package com.nurkiewicz.webflux.demo.feed;
 
 import org.jetbrains.annotations.NotNull;
 import org.reactivestreams.Publisher;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 import java.util.function.Function;
 
+@Component
 public class ArticlesStream {
 
     private final ArticleRepository articleRepository;
