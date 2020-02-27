@@ -52,10 +52,10 @@ public class R060_TransformCompose {
 	}
 
 	@Test
-	public void compose() throws Exception {
+	public void transformDeferred() throws Exception {
 		final Flux<Tuple2<Long, Long>> out = Flux
 				.interval(ofNanos(1))
-				.compose(this::countPerSecond)
+				.transformDeferred(this::countPerSecond)
 				.take(3);
 
 		out.subscribe();
