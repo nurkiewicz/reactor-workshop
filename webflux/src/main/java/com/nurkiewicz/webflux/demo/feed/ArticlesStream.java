@@ -1,6 +1,10 @@
 package com.nurkiewicz.webflux.demo.feed;
 
+import org.jetbrains.annotations.NotNull;
+import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
+
+import java.util.function.Function;
 
 public class ArticlesStream {
 
@@ -13,7 +17,17 @@ public class ArticlesStream {
     }
 
     Flux<Article> newArticles() {
-        return Flux.empty();
+        return feedAggregator
+                .articles()
+                .filterWhen(onlyNewArticles())
+                .flatMap(articleRepository::save);
+    }
+
+    @NotNull
+    private Function<Article, Publisher<Boolean>> onlyNewArticles() {
+        return article -> articleRepository
+                .existsById(article.getLink())
+                .map(x -> !x);
     }
 
 }
