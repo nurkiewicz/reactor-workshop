@@ -1,7 +1,9 @@
 package com.nurkiewicz.webflux.demo.feed;
 
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
+@Component
 public class ArticlesStream {
 
     private final ArticleRepository articleRepository;
