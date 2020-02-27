@@ -32,7 +32,7 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 ## Day 2: Reactor advanced
 - Concurrency with non-blocking code
 - Advanced error handling and retries
-- `transform()` vs. `compose()`
+- `transform()` vs. `transformDeferred()`
 - Advanced operators
   - `groupBy()`, `window()`
   - `reduce()`, `scan()`
