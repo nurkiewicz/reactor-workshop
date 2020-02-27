@@ -8,7 +8,7 @@
 6. Polling for new articles periodically from each `Outline`
 7. Store articles in the database (use e.g. `ReactiveMongoRepository`) so that after restart you don't publish the same articles
     1. Check out e.g. `ArticlesSources`
-8. Create endpoints for browsing (e.g. most recent, about something, by author...)
+8. Create endpoints for browsing (e.g. most recent, about something, by author...). See `ArticlesController`
     1. Most recent
     2. From one blog only
     3. By keyword
