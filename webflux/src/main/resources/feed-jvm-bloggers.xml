@@ -2,7 +2,7 @@
 
 <opml version="1.0">
     <head>
-        <title>Test subscriptions</title>
+        <title>From jvm-bloggers.com</title>
     </head>
     <body>
         <outline type="rss"  title="Tomasz Dziurko" xmlUrl="http://tomaszdziurko.com/feed/"/>
