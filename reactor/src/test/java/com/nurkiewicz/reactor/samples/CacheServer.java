@@ -27,7 +27,7 @@ public class CacheServer {
 			return Mono
 					.fromCallable(() -> findInternal(id))
 					.doOnSubscribe(s -> log.debug("Fetching {} from {}", id, host))
-					.doOnNext(value -> log.debug("Fetching {} from {}", id, host))
+					.doOnNext(value -> log.debug("Fetched {} from {}", id, host))
 					.delayElement(delay.plus(Duration.ofMillis((long) jitter)));
 		});
 	}

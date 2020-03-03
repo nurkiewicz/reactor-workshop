@@ -39,6 +39,7 @@ public class R051_WhatIsAscheduler {
 	/**
 	 * TODO Implement custom bound scheduler.
 	 * It must contain 10 threads named "Custom-" and a sequence number.
+	 * @see Executors#newFixedThreadPool(int)
 	 * @see ExecutorService
 	 * @see ThreadFactoryBuilder
 	 * @see Schedulers#fromExecutorService(ExecutorService)
