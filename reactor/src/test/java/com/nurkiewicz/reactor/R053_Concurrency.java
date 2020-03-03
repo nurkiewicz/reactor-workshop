@@ -38,7 +38,9 @@ public class R053_Concurrency {
 	@Test(timeout = 10_000L)
 	public void crawlConcurrently() throws Exception {
 		//given
-		final Flux<Domain> domains = Domains.all();
+		final Flux<Domain> domains = Domains
+				.all()
+				.doOnSubscribe(s -> log.info("About to load file"));
 
 		//when
 		final Flux<Html> htmls = null; // TODO
