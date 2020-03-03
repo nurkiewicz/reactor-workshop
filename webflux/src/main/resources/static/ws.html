@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reactor streaming</title>
+</head>
+
+<body>
+<ul>
+
+</ul>
+<script>
+    const ws = new WebSocket("ws://localhost:8080/echo");
+
+    ws.onopen = () => {
+        ws.send("Message from client");
+        setTimeout(() => {
+            ws.send("Close");
+        }, 2000);
+    };
+
+    ws.onmessage = evt => {
+        const received = evt.data;
+        console.log("Received", received);
+        if (received === 'CLOSE') {
+            ws.close();
+        }
+    };
+
+    ws.onclose = () => console.info("Closed connection");
+</script>
+</body>
+
+</html>
