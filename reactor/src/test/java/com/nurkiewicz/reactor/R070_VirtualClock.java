@@ -1,17 +1,16 @@
 package com.nurkiewicz.reactor;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.concurrent.TimeoutException;
 
 import static java.time.Duration.ofSeconds;
 import static reactor.test.StepVerifier.withVirtualTime;
 
-@Ignore
 public class R070_VirtualClock {
 
 	private static final Logger log = LoggerFactory.getLogger(R070_VirtualClock.class);
@@ -30,7 +29,15 @@ public class R070_VirtualClock {
 	 */
 	@Test
 	public void timeout() throws Exception {
-		//TODO Write whole test :-)
+		withVirtualTime(this::longRunningWithTimeout)
+				.expectSubscription()
+				.expectNoEvent(ofSeconds(1))
+				.verifyError(TimeoutException.class);
+	}
+
+	Mono<String> longRunningWithTimeout() {
+		return longRunning()
+				.timeout(ofSeconds(1));
 	}
 
 	Mono<String> longRunning() {
