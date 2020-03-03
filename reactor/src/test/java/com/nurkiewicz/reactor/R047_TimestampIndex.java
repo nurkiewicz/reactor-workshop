@@ -88,10 +88,11 @@ public class R047_TimestampIndex {
 				.map(lng -> "Item-" + lng);
 
 		//when
-		final Flux<Long> elapsed = null; // TODO tickers...take(5)
+		final Flux<Long> elapsed = null; // TODO tickers...
 
 		//then
 		elapsed
+				.take(5)
 				.as(StepVerifier::create)
 				.expectNextMatches(x -> x >= 150 && x <= 250)
 				.expectNextMatches(x -> x >= 150 && x <= 250)
