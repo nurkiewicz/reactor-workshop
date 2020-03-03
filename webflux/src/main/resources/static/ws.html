@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reactor streaming</title>
+</head>
+
+<body>
+
+<form action="javascript:sendMessage()">
+    <label for="msg">Message:</label>
+    <input type="text" id="msg" autofocus="autofocus"/>
+    <input type="submit"/>
+</form>
+<ul>
+
+</ul>
+
+<script>
+    const ws = new WebSocket("ws://localhost:8080/echo");
+
+    ws.onopen = () => {
+        ws.send("Hello, world!");
+    };
+
+    ws.onmessage = evt => {
+        const received = evt.data;
+        console.log("Received", received);
+
+        const li = document.createElement("li");
+        li.innerText = received;
+        const ul = document.getElementsByTagName('ul')[0];
+        ul.appendChild(li);
+        if (received === 'CLOSE') {
+            ws.close();
+        }
+    };
+
+    ws.onclose = () => console.info("Closed connection");
+
+    function sendMessage() {
+        let input = document.getElementById('msg');
+        const msg = input.value;
+        ws.send(msg);
+        input.value = '';
+    }
+</script>
+</body>
+
+</html>

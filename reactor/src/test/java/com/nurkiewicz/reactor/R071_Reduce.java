@@ -21,9 +21,9 @@ public class R071_Reduce {
         final Flux<Integer> nums = Flux.range(1, 10);
 
         //when
-        final Mono<Integer> sum = nums.reduce((l, r) -> {
-            log.info("l = {}, r = {}", l, r);
-            return l + r;
+        final Mono<Integer> sum = nums.reduce((accumulator, element) -> {
+            log.info("accumulator = {}, element = {}", accumulator, element);
+            return accumulator + element;
         });
 
         //then
@@ -61,9 +61,9 @@ public class R071_Reduce {
         final Flux<Integer> nums = Flux.empty();
 
         //when
-        final Mono<Integer> sum = nums.reduce((l, r) -> {
-            log.info("l = {}, r = {}", l, r);
-            return l + r;
+        final Mono<Integer> sum = nums.reduce((accumulator, element) -> {
+            log.info("accumulator = {}, element = {}", accumulator, element);
+            return accumulator + element;
         });
 
         //then
@@ -78,9 +78,9 @@ public class R071_Reduce {
         final Flux<Integer> nums = Flux.just(42);
 
         //when
-        final Mono<Integer> sum = nums.reduce((l, r) -> {
-            log.info("l = {}, r = {}", l, r);
-            return l + r;
+        final Mono<Integer> sum = nums.reduce((accumulator, element) -> {
+            log.info("accumulator = {}, element = {}", accumulator, element);
+            return accumulator + element;
         });
 
         //then
