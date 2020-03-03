@@ -10,6 +10,7 @@ import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,6 +43,7 @@ public class R051_WhatIsAscheduler {
 	/**
 	 * TODO Implement custom bound scheduler.
 	 * It must contain 10 threads named "Custom-" and a sequence number.
+	 * @see Executors#newFixedThreadPool(int)
 	 * @see ExecutorService
 	 * @see ThreadFactoryBuilder
 	 * @see Schedulers#fromExecutorService(ExecutorService)
