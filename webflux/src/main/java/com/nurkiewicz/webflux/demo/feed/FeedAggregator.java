@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.time.Duration;
@@ -33,22 +34,31 @@ public class FeedAggregator {
     }
 
     private Flux<Article> fetchPeriodically(Outline outline) {
-        Duration randSeconds = Duration.ofSeconds(ThreadLocalRandom.current().nextInt(10, 20));
+        Duration randDuration = Duration.ofMillis(ThreadLocalRandom.current().nextInt(10_000, 30_000));
         return Flux
-                .interval(randSeconds)
+                .interval(randDuration)
                 .flatMap(i -> fetchEntries(outline.getXmlUrl()))
-                .map(this::toArticle);
+                .flatMap(this::toArticle);
     }
 
-    private Article toArticle(SyndEntry entry) {
-        return new Article(URI.create(entry.getLink()), entry.getPublishedDate().toInstant(), entry.getTitle());
+    private Mono<Article> toArticle(SyndEntry entry) {
+        if (entry.getPublishedDate() == null) {
+            return Mono.empty();
+        }
+        return Mono
+                .fromCallable(() ->
+                        new Article(URI.create(entry.getLink()), entry.getPublishedDate().toInstant(), entry.getTitle())
+                )
+                .doOnError(e -> log.warn("Unable to create article from {}", entry, e))
+                .onErrorResume(e -> Mono.empty());
     }
 
     @NotNull
     private Flux<SyndEntry> fetchEntries(String url) {
         return feedReader
                 .fetch(url)
-                .doOnError(e -> log.warn("Unable to download {}", url, e))
+                .doOnSubscribe(s -> log.info("Fetching entries from {}", url))
+                .doOnError(e -> log.warn("Failed to fetch {}", url, e))
                 .onErrorResume(e -> Flux.empty());
     }
 }

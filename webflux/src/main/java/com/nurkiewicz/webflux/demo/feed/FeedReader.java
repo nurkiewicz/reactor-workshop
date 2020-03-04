@@ -1,10 +1,14 @@
 package com.nurkiewicz.webflux.demo.feed;
 
+import com.google.common.io.CharStreams;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,11 +22,16 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Component
 public class FeedReader {
+
+    private static final Logger log = LoggerFactory.getLogger(FeedReader.class);
 
     private final WebClient webClient;
 
@@ -32,11 +41,13 @@ public class FeedReader {
 
     public Flux<SyndEntry> fetch(String url) {
         return getAsync(url)
-                .flatMapIterable(this::parseFeed);
+                .flatMapIterable(feedBody -> parseFeed(url, feedBody))
+                .doOnNext(syndEntry -> log.trace("Found entry: {}", syndEntry.getTitle()));
     }
 
-    private Iterable<SyndEntry> parseFeed(String feedBody) {
+    private Iterable<SyndEntry> parseFeed(String feedUrl, String feedBody) {
         try {
+            log.debug("Parsing feed from {} ({} bytes)", feedUrl, feedBody.length());
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             ByteArrayInputStream is = new ByteArrayInputStream(applyAtomNamespaceFix(feedBody).getBytes(UTF_8));
@@ -51,6 +62,16 @@ public class FeedReader {
 
     private String applyAtomNamespaceFix(String feedBody) {
         return feedBody.replace("https://www.w3.org/2005/Atom", "http://www.w3.org/2005/Atom");
+    }
+
+    private String get(URL url) throws IOException {
+        final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        if (conn.getResponseCode() == HttpStatus.MOVED_PERMANENTLY.value()) {
+            return get(new URL(conn.getHeaderField("Location")));
+        }
+        try (final InputStreamReader reader = new InputStreamReader(conn.getInputStream(), UTF_8)) {
+            return CharStreams.toString(reader);
+        }
     }
 
     private Mono<String> getAsync(String url) {

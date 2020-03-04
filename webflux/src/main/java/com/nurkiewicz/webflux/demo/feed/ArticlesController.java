@@ -1,5 +1,6 @@
 package com.nurkiewicz.webflux.demo.feed;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,16 +11,16 @@ import reactor.core.publisher.Flux;
 @RequestMapping("/articles")
 public class ArticlesController {
 
-    private final ArticlesStream articlesStream;
+    private final ArticleRepository articleRepository;
 
-    public ArticlesController(ArticlesStream articlesStream) {
-        this.articlesStream = articlesStream;
+    public ArticlesController(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
     }
 
     @GetMapping("/newest/{limit}")
     Flux<Article> newest(@PathVariable int limit) {
-        return articlesStream
-                .newArticles()
+        return articleRepository
+                .findAll(Sort.by(Sort.Order.desc("publishedDate")))
                 .take(limit);
     }
 
