@@ -66,9 +66,10 @@ public class EmojiController {
     Flux<HashMap<String, Integer>> aggregated() {
         return retrieve()
             .bodyToFlux(new ParameterizedTypeReference<Map<String, Integer>>() {})
-            .scan(new HashMap<>(), ( acc, update) -> {
+            .concatMapIterable(Map::entrySet)
+            .scan(new HashMap<>(), ( acc, entry) -> {
                 final HashMap<String, Integer> result = new HashMap<>(acc);
-                update.forEach((k, v) -> result.merge(k, v, Integer::sum));
+                result.merge(entry.getKey(), entry.getValue(), Integer::sum);
                 return result;
             });
     }
