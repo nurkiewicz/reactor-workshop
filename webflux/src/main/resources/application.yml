@@ -1,5 +1,6 @@
 logging.level:
   org.springframework.web: INFO
   reactor.netty: INFO
+  com.nurkiewicz: DEBUG
 
 emoji-tracker.url: http://emojitrack-gostreamer.herokuapp.com/subscribe/eps

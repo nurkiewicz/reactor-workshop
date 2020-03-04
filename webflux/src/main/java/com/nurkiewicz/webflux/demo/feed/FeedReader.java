@@ -29,10 +29,15 @@ public class FeedReader {
         final String feedBody = get(url);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(new ByteArrayInputStream(feedBody.getBytes(UTF_8)));
+        ByteArrayInputStream is = new ByteArrayInputStream(applyAtomNamespaceFix(feedBody).getBytes(UTF_8));
+        Document doc = builder.parse(is);
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed feed = input.build(doc);
         return feed.getEntries();
+    }
+
+    private String applyAtomNamespaceFix(String feedBody) {
+        return feedBody.replace("https://www.w3.org/2005/Atom", "http://www.w3.org/2005/Atom");
     }
 
     /**

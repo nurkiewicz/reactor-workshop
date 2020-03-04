@@ -30,4 +30,13 @@ public class Article {
     public String getTitle() {
         return title;
     }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "link=" + link +
+                ", publishedDate=" + publishedDate +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }

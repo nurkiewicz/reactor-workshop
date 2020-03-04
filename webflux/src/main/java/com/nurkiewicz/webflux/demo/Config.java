@@ -29,7 +29,11 @@ class Config {
 
     @Bean
     WebClient webClient() {
-        return WebClient.create();
+        return WebClient
+                .builder()
+                .codecs(codecs ->
+                        codecs.defaultCodecs().maxInMemorySize(1024 * 1024 * 10))
+                .build();
     }
 
     @Bean
