@@ -14,7 +14,7 @@ public class W000_SmokeTest {
 
 	@BeforeClass
 	public static void init() {
-		InitDocker.start().block(Duration.ofSeconds(30));
+		InitDocker.start().block(Duration.ofMinutes(2));
 	}
 
 	@Test

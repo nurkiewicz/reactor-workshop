@@ -9,7 +9,7 @@ import java.time.Duration;
 public class DemoApplication {
 
 	public static void main(String[] args) {
-		InitDocker.start().block(Duration.ofSeconds(30));
+		InitDocker.start().block(Duration.ofMinutes(2));
 		SpringApplication.run(DemoApplication.class, args);
 	}
 

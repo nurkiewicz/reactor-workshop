@@ -22,7 +22,7 @@ public class InitDocker {
         return Mono
                 .fromCallable(() -> {
                     var container = new GenericContainer(containerName);
-                    container.start();
+                    container.withReuse(true).start();
                     return Objects.requireNonNull(container.getMappedPort(port), "No mapping for port " + port);
                 })
                 .subscribeOn(Schedulers.elastic());
