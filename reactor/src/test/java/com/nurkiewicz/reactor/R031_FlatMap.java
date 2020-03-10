@@ -88,7 +88,7 @@ public class R031_FlatMap {
 		final Flux<Mono<Order>> nested = USERS.map(UserOrders::lastOrderOf);
 
 		//when
-		Flux<Order> orders = null;  //TODO
+		Flux<Order> orders = null;  //TODO nested...
 
 		//then
 		orders
