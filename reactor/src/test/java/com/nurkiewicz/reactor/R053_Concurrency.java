@@ -119,7 +119,8 @@ public class R053_Concurrency {
 	}
 
 	/**
-	 * TODO Copy-paste solution from above, but replace {@link Crawler#crawlBlocking(Domain)} with {@link Crawler#crawlThrottled(Domain)}.
+	 * TODO Copy-paste solution from first test, but replace {@link Crawler#crawlBlocking(Domain)} with {@link Crawler#crawlThrottled(Domain)}.
+	 * Your test should fail with "Too many concurrent crawlers" exception.
 	 * How to prevent {@link Flux#flatMap(Function)} from crawling too many domains at once?
 	 *
 	 * @see Flux#flatMap(Function, int)
@@ -130,24 +131,17 @@ public class R053_Concurrency {
 		final Flux<Domain> domains = Domains.all();
 
 		//when
-		final Mono<Map<URI, Html>> mapStream = domains
+		final Flux<Html> htmls = domains
 				.flatMap(domain ->
-						Mono.fromCallable(() ->
-								Crawler.crawlThrottled(domain)).subscribeOn(elastic())
-								.map(html -> Tuples.of(domain.getUri(), html)), 50)
-				.collectMap(Tuple2::getT1, Tuple2::getT2);
+						Mono
+								.fromCallable(() -> Crawler.crawlThrottled(domain))
+								.subscribeOn(elastic()), Crawler.MAX_CRAWLERS);
 
 		//then
-		final Map<URI, Html> map = mapStream.block();
-
-		assertThat(map)
+		final List<String> strings = htmls.map(Html::getRaw).collectList().block();
+		assertThat(strings)
 				.hasSize(500)
-				.containsEntry(new URI("http://archive.org"), new Html("<html><title>http://archive.org</title></html>"))
-				.containsEntry(new URI("http://github.com"), new Html("<html><title>http://github.com</title></html>"));
-
-		map.forEach((key, value) ->
-				assertThat(value.getRaw()).contains(key.getHost())
-		);
+				.contains("<html><title>http://mozilla.org</title></html>");
 	}
 
 	/**
