@@ -1,5 +1,6 @@
 package com.nurkiewicz.webflux.demo;
 
+import com.google.common.net.HostAndPort;
 import org.testcontainers.containers.GenericContainer;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -11,22 +12,29 @@ public class InitDocker {
     public static Mono<Void> start() {
         return Mono.zip(
                 startAsync("mongo:4.0.5", 27017)
-                        .map(Object::toString)
-                        .doOnNext(port -> System.setProperty("spring.data.mongodb.port", port)),
+                        .doOnNext(addr -> configure(addr, "spring.data.mongodb")),
                 startAsync("redis:5.0.3", 6379)
-                        .map(Object::toString)
-                        .doOnNext(port -> System.setProperty("spring.redis.port", port))
+                        .doOnNext(addr -> configure(addr, "spring.redis"))
         ).then();
     }
-    private static Mono<Integer> startAsync(String containerName, int port) {
+
+    private static void configure(HostAndPort addr, String configPrefix) {
+        System.setProperty(configPrefix + ".host", addr.getHost());
+        System.setProperty(configPrefix + ".port", String.valueOf(addr.getPort()));
+
+    }
+
+    private static Mono<HostAndPort> startAsync(String containerName, int port) {
         return Mono
                 .fromCallable(() -> {
                     var container = new GenericContainer(containerName);
                     container.withReuse(true).start();
-                    return Objects.requireNonNull(container.getMappedPort(port), "No mapping for port " + port);
+                    return HostAndPort.fromParts(
+                            container.getContainerIpAddress(),
+                            Objects.requireNonNull(container.getMappedPort(port), "No mapping for port " + port)
+                    );
                 })
                 .subscribeOn(Schedulers.elastic());
     }
-
 
 }
