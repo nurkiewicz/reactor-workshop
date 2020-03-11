@@ -47,7 +47,7 @@ public class FeedAggregator {
         }
         return Mono
                 .fromCallable(() ->
-                        new Article(URI.create(entry.getLink()), entry.getPublishedDate().toInstant(), entry.getTitle())
+                        new Article(URI.create(entry.getLink().trim()), entry.getPublishedDate().toInstant(), entry.getTitle())
                 )
                 .doOnError(e -> log.warn("Unable to create article from {}", entry, e))
                 .onErrorResume(e -> Mono.empty());
