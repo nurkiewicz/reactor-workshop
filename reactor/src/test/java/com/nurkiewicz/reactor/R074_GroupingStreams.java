@@ -27,12 +27,13 @@ public class R074_GroupingStreams {
     public void groupByCountryEverySecond() throws Exception {
         PageHits
                 .random()
-                .window(ofSeconds(1))
-                .flatMap(oneSecond -> oneSecond
-                        .groupBy(PageHit::getCountry)
-                        .flatMap(byCountry -> count(byCountry.key(), byCountry))
-                )
-                .subscribe(System.out::println);
+                .groupBy(PageHit::getCountry)
+                .flatMap(byCountry -> byCountry
+                        .window(ofSeconds(1))
+                        .flatMap(countryInOnSecond ->
+                                count(byCountry.key(), countryInOnSecond)
+                        )
+                ).subscribe(System.out::println);
         TimeUnit.SECONDS.sleep(10);
     }
 
@@ -44,13 +45,12 @@ public class R074_GroupingStreams {
     public void everySecondGroupByCountry() throws Exception {
         PageHits
                 .random()
-                .groupBy(PageHit::getCountry)
-                .flatMap(byCountry -> byCountry
-                        .window(ofSeconds(1))
-                        .flatMap(countryInOnSecond ->
-                                count(byCountry.key(), countryInOnSecond)
-                        )
-                ).subscribe(System.out::println);
+                .window(ofSeconds(1))
+                .flatMap(oneSecond -> oneSecond
+                        .groupBy(PageHit::getCountry)
+                        .flatMap(byCountry -> count(byCountry.key(), byCountry))
+                )
+                .subscribe(System.out::println);
         TimeUnit.SECONDS.sleep(10);
     }
 
