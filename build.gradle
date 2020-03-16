@@ -18,7 +18,7 @@ subprojects {
         testImplementation 'org.awaitility:awaitility:4.0.2'
         testImplementation 'io.projectreactor:reactor-test:3.3.3.RELEASE'
         testImplementation 'com.devskiller:jfairy:0.6.3'
-        testImplementation 'org.mockito:mockito-core:3.3.0'
+        testImplementation 'org.mockito:mockito-core:3.3.3'
     }
 
 }
