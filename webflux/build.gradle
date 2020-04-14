@@ -31,7 +31,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'org.testcontainers:testcontainers:1.13.0'
+	implementation 'org.testcontainers:testcontainers:1.14.0'
 	implementation 'com.rometools:rome-opml:1.12.2'
 	implementation 'com.google.guava:guava:28.2-jre'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
