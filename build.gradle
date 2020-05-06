@@ -14,7 +14,7 @@ subprojects {
         runtime 'ch.qos.logback:logback-classic:1.2.3'
 
         testImplementation 'junit:junit:4.13'
-        testImplementation 'org.assertj:assertj-core:3.15.0'
+        testImplementation 'org.assertj:assertj-core:3.16.0'
         testImplementation 'org.awaitility:awaitility:4.0.2'
         testImplementation 'io.projectreactor:reactor-test:3.3.5.RELEASE'
         testImplementation 'com.devskiller:jfairy:0.6.4'
