@@ -8,7 +8,7 @@ subprojects {
     }
 
     dependencies {
-        implementation 'io.projectreactor:reactor-core:3.3.5.RELEASE'
+        implementation 'io.projectreactor:reactor-core:3.3.7.RELEASE'
         implementation 'org.slf4j:slf4j-api:1.7.30'
         implementation 'com.github.ben-manes.caffeine:caffeine:2.6.2'
         runtime 'ch.qos.logback:logback-classic:1.2.3'
