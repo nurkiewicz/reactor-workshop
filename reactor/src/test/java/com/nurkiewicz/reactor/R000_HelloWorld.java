@@ -1,18 +1,19 @@
 package com.nurkiewicz.reactor;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import org.junit.Test;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 public class R000_HelloWorld {
 
-	private MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+	private final MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
 
 	public R000_HelloWorld() throws NoSuchAlgorithmException { }
 
