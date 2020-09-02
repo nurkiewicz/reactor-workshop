@@ -1,7 +1,8 @@
 package com.nurkiewicz.webflux.demo.feed;
 
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
+
+import org.springframework.stereotype.Component;
 
 @Component
 public class ArticlesStream {
@@ -14,6 +15,10 @@ public class ArticlesStream {
         this.feedAggregator = feedAggregator;
     }
 
+    /**
+     * TODO (7) Create an infinite stream of new articles
+     * @return
+     */
     Flux<Article> newArticles() {
         return Flux.empty();
     }
