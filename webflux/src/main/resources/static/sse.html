@@ -10,7 +10,7 @@
 
 </ul>
 <script>
-    const sse = new EventSource("stream");
+    const sse = new EventSource("/stream");
     const ul = document.getElementsByTagName('ul')[0];
     sse.onmessage = e => {
         const li = document.createElement("li");
