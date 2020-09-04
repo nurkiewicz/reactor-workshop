@@ -1,11 +1,5 @@
 package com.nurkiewicz.webflux.demo.feed;
 
-import com.rometools.opml.feed.opml.Opml;
-import com.rometools.opml.feed.opml.Outline;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.WireFeedInput;
-import org.springframework.stereotype.Component;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,11 +8,18 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import com.rometools.opml.feed.opml.Opml;
+import com.rometools.opml.feed.opml.Outline;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.WireFeedInput;
+
+import org.springframework.stereotype.Component;
+
 @Component
 public class OpmlReader {
 
     /**
-     * TODO Return {@link reactor.core.publisher.Flux}
+     * TODO (1) Return {@link reactor.core.publisher.Flux}
      */
     public List<Outline> allFeeds() throws FeedException, IOException {
         WireFeedInput input = new WireFeedInput();

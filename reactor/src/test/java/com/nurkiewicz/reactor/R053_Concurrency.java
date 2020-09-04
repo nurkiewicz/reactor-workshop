@@ -1,5 +1,10 @@
 package com.nurkiewicz.reactor;
 
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
 import com.nurkiewicz.reactor.domains.Crawler;
 import com.nurkiewicz.reactor.domains.Domain;
 import com.nurkiewicz.reactor.domains.Domains;
@@ -14,11 +19,6 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
-
-import java.net.URI;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -107,7 +107,8 @@ public class R053_Concurrency {
 	}
 
 	/**
-	 * TODO Copy-paste solution from above, but replace {@link Crawler#crawlBlocking(Domain)} with {@link Crawler#crawlThrottled(Domain)}.
+	 * TODO Copy-paste solution from first test, but replace {@link Crawler#crawlBlocking(Domain)} with {@link Crawler#crawlThrottled(Domain)}.
+	 * Your test should fail with "Too many concurrent crawlers" exception.
 	 * How to prevent {@link Flux#flatMap(Function)} from crawling too many domains at once?
 	 *
 	 * @see Flux#flatMap(Function, int)
@@ -115,22 +116,17 @@ public class R053_Concurrency {
 	@Test(timeout = 20_000L)
 	public void throttledDownload() throws Exception {
 		//given
-		final Flux<Domain> domains = Domains.all();
+		final Flux<Domain> domains = Domains
+				.all();
 
 		//when
-		final Mono<Map<URI, Html>> mapStream = null; // TODO
+		final Flux<Html> htmls = null; // TODO
 
 		//then
-		final Map<URI, Html> map = mapStream.block();
-
-		assertThat(map)
+		final List<String> strings = htmls.map(Html::getRaw).collectList().block();
+		assertThat(strings)
 				.hasSize(500)
-				.containsEntry(new URI("http://archive.org"), new Html("<html><title>http://archive.org</title></html>"))
-				.containsEntry(new URI("http://github.com"), new Html("<html><title>http://github.com</title></html>"));
-
-		map.forEach((key, value) ->
-				assertThat(value.getRaw()).contains(key.getHost())
-		);
+				.contains("<html><title>http://mozilla.org</title></html>");
 	}
 
 	/**

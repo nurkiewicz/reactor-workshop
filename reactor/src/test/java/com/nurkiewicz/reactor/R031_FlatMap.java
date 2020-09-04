@@ -1,5 +1,11 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.List;
+import java.util.function.Function;
+
 import com.nurkiewicz.reactor.user.Item;
 import com.nurkiewicz.reactor.user.Order;
 import com.nurkiewicz.reactor.user.User;
@@ -12,14 +18,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.List;
-import java.util.function.Function;
-
 import static com.google.common.collect.ImmutableList.of;
-import static java.time.Month.*;
+import static java.time.Month.FEBRUARY;
+import static java.time.Month.JANUARY;
+import static java.time.Month.MARCH;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
@@ -88,7 +90,7 @@ public class R031_FlatMap {
 		final Flux<Mono<Order>> nested = USERS.map(UserOrders::lastOrderOf);
 
 		//when
-		Flux<Order> orders = null;  //TODO
+		Flux<Order> orders = null;  //TODO nested...
 
 		//then
 		orders

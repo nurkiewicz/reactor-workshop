@@ -1,15 +1,5 @@
 package com.nurkiewicz.webflux.demo.feed;
 
-import com.google.common.io.CharStreams;
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.SyndFeedInput;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,11 +10,25 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import com.google.common.io.CharStreams;
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Component
 public class FeedReader {
 
+    /**
+     * TODO (3) Return <code>Flux&lt;SyndEntry&gt;</code>
+     */
     public List<SyndEntry> fetch(URL url) throws IOException, FeedException, ParserConfigurationException, SAXException {
         final String feedBody = get(url);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -42,7 +46,7 @@ public class FeedReader {
 
     /**
      *
-     * TODO Load data asynchronously using {@link org.springframework.web.reactive.function.client.WebClient}
+     * TODO (2) Load data asynchronously using {@link org.springframework.web.reactive.function.client.WebClient}
      */
     private String get(URL url) throws IOException {
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
