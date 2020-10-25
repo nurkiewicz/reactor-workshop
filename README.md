@@ -66,7 +66,19 @@ Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 2. [Web on Reactive Stack](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#spring-webflux) in [Spring Framework Documentation](https://docs.spring.io/spring/docs/current/spring-framework-reference/index.html)
 3. [The "Spring WebFlux Framework"](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-developing-web-applications.html#boot-features-webflux) in [Spring Boot Reference Guide](https://docs.spring.io/spring-boot/docs/current/reference/html/)
 
-## Pro-tip
+## Troubleshooting
+
+### IntelliJ test runner
 
 In IntelliJ it's much faster to run tests directly, rather than through Gradle.
 Go to `Preferences` -> `Build, Execution, Deployment` -> `Build Tools` -> `Gradle` and select `IntelliJ IDEA` from `Run Tests Using` drop-down.
+
+### Error `Can not connect to Ryuk at localhost:...`
+
+Add this environment variable:
+
+```
+TESTCONTAINERS_RYUK_DISABLED=true
+```
+
+See: [Disabling Ryuk](https://www.testcontainers.org/features/configuration/#disabling-ryuk)

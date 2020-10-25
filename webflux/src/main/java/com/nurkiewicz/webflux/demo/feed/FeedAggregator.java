@@ -1,17 +1,18 @@
 package com.nurkiewicz.webflux.demo.feed;
 
+import java.net.URI;
+import java.time.Duration;
+import java.util.concurrent.ThreadLocalRandom;
+
 import com.rometools.opml.feed.opml.Outline;
 import com.rometools.rome.feed.synd.SyndEntry;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
-import java.time.Duration;
-import java.util.concurrent.ThreadLocalRandom;
+import org.springframework.stereotype.Component;
 
 
 @Component

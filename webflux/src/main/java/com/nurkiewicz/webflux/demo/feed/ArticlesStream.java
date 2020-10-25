@@ -1,13 +1,14 @@
 package com.nurkiewicz.webflux.demo.feed;
 
+import javax.annotation.PostConstruct;
+import java.util.function.Function;
+
 import org.jetbrains.annotations.NotNull;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.util.function.Function;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ArticlesStream {
