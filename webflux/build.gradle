@@ -33,7 +33,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.testcontainers:testcontainers:1.14.3'
 	implementation 'com.rometools:rome-opml:1.15.0'
-	implementation 'com.google.guava:guava:29.0-jre'
+	implementation 'com.google.guava:guava:30.0-jre'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
