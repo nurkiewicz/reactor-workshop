@@ -1,11 +1,11 @@
 package com.nurkiewicz.webflux.demo;
 
+import java.util.Objects;
+
 import com.google.common.net.HostAndPort;
 import org.testcontainers.containers.GenericContainer;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
-
-import java.util.Objects;
 
 public class InitDocker {
 
@@ -34,7 +34,7 @@ public class InitDocker {
                             Objects.requireNonNull(container.getMappedPort(port), "No mapping for port " + port)
                     );
                 })
-                .subscribeOn(Schedulers.elastic());
+                .subscribeOn(Schedulers.boundedElastic());
     }
 
 }

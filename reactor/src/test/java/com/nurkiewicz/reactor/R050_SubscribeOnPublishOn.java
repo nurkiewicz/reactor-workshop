@@ -1,14 +1,14 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
 import com.nurkiewicz.reactor.samples.CacheServer;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
-
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class R050_SubscribeOnPublishOn {
 
@@ -32,7 +32,7 @@ public class R050_SubscribeOnPublishOn {
 	public void subscribeOn() throws Exception {
 		Mono
 				.fromCallable(() -> reliable.findBlocking(41))
-				.subscribeOn(Schedulers.elastic())
+				.subscribeOn(Schedulers.boundedElastic())
 				.doOnNext(x -> log.info("Received {}", x))
 				.map(x -> {
 					log.info("Mapping {}", x);
@@ -55,8 +55,8 @@ public class R050_SubscribeOnPublishOn {
 
 		Mono
 				.zip(
-						one.subscribeOn(Schedulers.elastic()),
-						two.subscribeOn(Schedulers.elastic())
+						one.subscribeOn(Schedulers.boundedElastic()),
+						two.subscribeOn(Schedulers.boundedElastic())
 				)
 				.doOnNext(x -> log.info("Received {}", x))
 				.map(x -> {

@@ -1,13 +1,13 @@
 package com.nurkiewicz.reactor;
 
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.EmitterProcessor;
 import reactor.core.scheduler.Schedulers;
-
-import java.util.concurrent.TimeUnit;
 
 import static com.nurkiewicz.reactor.R090_UnicastProcessor.pushSomeEvents;
 
@@ -37,12 +37,12 @@ public class R091_EmitterProcessor {
 
         //then
         proc
-                .publishOn(Schedulers.elastic())
+                .publishOn(Schedulers.boundedElastic())
                 .subscribe(
                         x -> log.info("A: Got {}", x),
                         e -> log.error("A: Error", e));
         proc
-                .publishOn(Schedulers.elastic())
+                .publishOn(Schedulers.boundedElastic())
                 .subscribe(
                         x -> log.info("B: Got {}", x),
                         e -> log.error("B: Error", e));

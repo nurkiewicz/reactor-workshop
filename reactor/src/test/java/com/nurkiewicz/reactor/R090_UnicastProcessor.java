@@ -1,5 +1,9 @@
 package com.nurkiewicz.reactor;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.LongStream;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.reactivestreams.Processor;
@@ -7,10 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.UnicastProcessor;
 import reactor.core.scheduler.Schedulers;
-
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.LongStream;
 
 @Ignore
 public class R090_UnicastProcessor {
@@ -69,12 +69,12 @@ public class R090_UnicastProcessor {
 
         //then
         proc
-                .subscribeOn(Schedulers.elastic())
+                .subscribeOn(Schedulers.boundedElastic())
                 .subscribe(
                         x -> log.info("Got {}", x),
                         e -> log.error("Error", e));
         proc
-                .subscribeOn(Schedulers.elastic())
+                .subscribeOn(Schedulers.boundedElastic())
                 .subscribe(
                         x -> log.info("Got {}", x),
                         e -> log.error("Error", e));
