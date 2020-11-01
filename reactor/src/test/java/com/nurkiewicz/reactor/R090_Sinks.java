@@ -85,6 +85,4 @@ public class R090_Sinks {
 		assertThat(sink.tryEmitComplete()).isEqualTo(OK);
 	}
 
-
-
 }
