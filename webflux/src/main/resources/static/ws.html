@@ -17,11 +17,7 @@
 </ul>
 
 <script>
-    const ws = new WebSocket("ws://localhost:8080/echo");
-
-    ws.onopen = () => {
-        ws.send("Hello, world!");
-    };
+    const ws = new WebSocket("ws://localhost:8080/chat");
 
     ws.onmessage = evt => {
         const received = evt.data;
