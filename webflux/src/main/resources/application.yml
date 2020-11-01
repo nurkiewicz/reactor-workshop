@@ -4,3 +4,9 @@ logging.level:
   com.nurkiewicz: DEBUG
 
 emoji-tracker.url: http://emojitrack-gostreamer.herokuapp.com/subscribe/eps
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
