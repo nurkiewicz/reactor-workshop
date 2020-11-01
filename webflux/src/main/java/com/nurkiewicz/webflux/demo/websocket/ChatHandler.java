@@ -13,7 +13,7 @@ public class ChatHandler implements WebSocketHandler {
 
 	private static final Logger log = LoggerFactory.getLogger(ChatHandler.class);
 
-	private static final Sinks.Many<String> broadcast = Sinks.many().replay().limit(5);
+	private final Sinks.Many<String> broadcast = Sinks.many().replay().limit(5);
 
 	@Override
 	public Mono<Void> handle(WebSocketSession session) {
