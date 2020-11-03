@@ -66,7 +66,7 @@ public class EmojiController {
     }
 
     /**
-     * TODO Top 10 most frequent emojis (with count), only picture
+     * TODO Top 10 most frequent emojis (without count), only picture
      * @see #codeToEmoji(String)
      */
     @GetMapping(value = "/emojis/top10str", produces = TEXT_EVENT_STREAM_VALUE)
