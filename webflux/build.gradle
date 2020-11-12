@@ -31,7 +31,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'io.micrometer:micrometer-registry-prometheus:1.5.6'
+	implementation 'io.micrometer:micrometer-registry-prometheus:1.6.1'
 	implementation 'org.testcontainers:testcontainers:1.14.3'
 	implementation 'com.rometools:rome-opml:1.15.0'
 	implementation 'com.google.guava:guava:30.0-jre'
