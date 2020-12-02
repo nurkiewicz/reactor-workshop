@@ -1,19 +1,19 @@
 package com.nurkiewicz.webflux.demo.emojis;
 
-import org.jetbrains.annotations.NotNull;
+import java.net.URI;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import reactor.core.publisher.Flux;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-
-import java.net.URI;
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toMap;
@@ -63,7 +63,7 @@ public class EmojiController {
      * TODO Total number of each emoji (ever-growing map)
      */
     @GetMapping(value = "/emojis/aggregated", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<HashMap<String, Integer>> aggregated() {
+    Flux<Map<String, Integer>> aggregated() {
         return retrieve()
             .bodyToFlux(new ParameterizedTypeReference<Map<String, Integer>>() {})
             .concatMapIterable(Map::entrySet)
@@ -78,13 +78,13 @@ public class EmojiController {
      * TODO Top 10 most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
      */
     @GetMapping(value = "/emojis/top10", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<HashMap<String, Integer>> top10() {
+    Flux<Map<String, Integer>> top10() {
         return aggregated()
             .map(this::top10values)
             .distinctUntilChanged();
     }
 
-    private HashMap<String, Integer> top10values(Map<String, Integer> agg) {
+    private Map<String, Integer> top10values(Map<String, Integer> agg) {
         return new HashMap<>(agg
             .entrySet()
             .stream()
@@ -94,7 +94,7 @@ public class EmojiController {
     }
 
     /**
-     * TODO Top 10 most frequent emojis (with count), only picture
+     * TODO Top 10 most frequent emojis (without count), only picture
      * @see #codeToEmoji(String)
      */
     @GetMapping(value = "/emojis/top10str", produces = TEXT_EVENT_STREAM_VALUE)
@@ -103,7 +103,7 @@ public class EmojiController {
             .map(this::keysAsOneString);
     }
 
-    private String keysAsOneString(HashMap<String, Integer> m) {
+    private String keysAsOneString(Map<String, Integer> m) {
         return m
             .keySet()
             .stream()
@@ -111,7 +111,6 @@ public class EmojiController {
             .collect(Collectors.joining());
     }
 
-    @NotNull
     private WebClient.ResponseSpec retrieve() {
         return webClient
             .get()

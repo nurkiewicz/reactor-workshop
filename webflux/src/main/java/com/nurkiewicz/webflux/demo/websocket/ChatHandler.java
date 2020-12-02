@@ -9,6 +9,15 @@ import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
 
+/**
+ * TODO
+ * <ol>
+ *     <li>Use single sink to publish incoming messages</li>
+ *     <li>Broadcast that sink to all listening subscribers</li>
+ *     <li>New subscriber should receive last 5 messages before joining</li>
+ *     <li>Add some logging: connecting/disconnecting, how many subscribers</li>
+ * </ol>
+ */
 public class ChatHandler implements WebSocketHandler {
 
 	private static final Logger log = LoggerFactory.getLogger(ChatHandler.class);
