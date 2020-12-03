@@ -18,7 +18,6 @@ import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -112,7 +111,6 @@ public class FeedReader {
                 });
     }
 
-    @NotNull
     private Mono<? extends String> followRedirect(ClientResponse response) {
         String redirectUrl = response.headers().header("Location").get(0);
         return response.bodyToMono(Void.class).then(getAsync(redirectUrl));

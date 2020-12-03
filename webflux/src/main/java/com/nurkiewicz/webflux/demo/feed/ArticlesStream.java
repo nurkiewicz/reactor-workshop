@@ -3,7 +3,6 @@ package com.nurkiewicz.webflux.demo.feed;
 import javax.annotation.PostConstruct;
 import java.util.function.Function;
 
-import org.jetbrains.annotations.NotNull;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +35,6 @@ public class ArticlesStream {
                 );
     }
 
-    @NotNull
     private Function<Article, Publisher<Boolean>> onlyNewArticles() {
         return article -> articleRepository
                 .existsById(article.getLink())

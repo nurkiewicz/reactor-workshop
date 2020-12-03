@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.rometools.opml.feed.opml.Outline;
 import com.rometools.rome.feed.synd.SyndEntry;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
@@ -54,7 +53,6 @@ public class FeedAggregator {
                 .onErrorResume(e -> Mono.empty());
     }
 
-    @NotNull
     private Flux<SyndEntry> fetchEntries(String url) {
         return feedReader
                 .fetch(url)
