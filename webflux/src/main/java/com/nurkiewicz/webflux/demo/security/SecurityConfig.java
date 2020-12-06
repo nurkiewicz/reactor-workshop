@@ -1,4 +1,4 @@
-package com.nurkiewicz.webflux.demo;
+package com.nurkiewicz.webflux.demo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
