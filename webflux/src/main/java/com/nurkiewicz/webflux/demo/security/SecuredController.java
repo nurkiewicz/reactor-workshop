@@ -1,5 +1,7 @@
 package com.nurkiewicz.webflux.demo.security;
 
+import java.util.StringJoiner;
+
 import reactor.core.publisher.Flux;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,5 +50,13 @@ class Secret{
 
 	public String getValue() {
 		return value;
+	}
+
+	@Override
+	public String toString() {
+		return new StringJoiner(", ", Secret.class.getSimpleName() + "[", "]")
+				.add("key='" + key + "'")
+				.add("value='" + value + "'")
+				.toString();
 	}
 }
