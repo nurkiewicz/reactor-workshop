@@ -15,8 +15,8 @@
         return e;
     }
 
-    (async () => {
-        let response = await fetch('secrets')
+    async function fillSecretsFrom(path) {
+        let response = await fetch(path)
         let list = await response.json()
         let definitionList = document.getElementsByTagName("dl")[0];
         list.forEach(secret => {
@@ -24,6 +24,11 @@
                 definitionList.appendChild(element('dd', secret.value));
             }
         )
+    }
+
+    (async () => {
+        await fillSecretsFrom('alpha');
+        await fillSecretsFrom('beta');
     })();
 </script>
 </body>

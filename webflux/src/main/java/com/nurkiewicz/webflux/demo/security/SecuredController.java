@@ -12,16 +12,23 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(value = "/secure", produces = APPLICATION_JSON_VALUE)
 class SecuredController {
 
+	private final SecretService secretService;
+
+	SecuredController(SecretService secretService) {
+		this.secretService = secretService;
+	}
+
 	/**
 	 * Can't return Flux of String: https://twitter.com/sdeleuze/status/956136517348610048
 	 */
-	@GetMapping(value = "/secrets")
-	Flux<Secret> secrets() {
-		return Flux.just(
-				new Secret("k1", "secret1"),
-				new Secret("k2", "secret2"),
-				new Secret("k3", "secret3")
-		);
+	@GetMapping(value = "/alpha")
+	Flux<Secret> user() {
+		return secretService.userSecrets();
+	}
+
+	@GetMapping(value = "/beta")
+	Flux<Secret> admin() {
+		return secretService.adminsSecrets();
 	}
 
 }
