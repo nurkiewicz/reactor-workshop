@@ -29,8 +29,10 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+	implementation 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.testcontainers:testcontainers:1.15.0'
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.6.1'
 	implementation 'com.rometools:rome-opml:1.15.0'

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Secure page</title>
+</head>
+
+<body>
+<h1>This website is password-protected</h1>
+<dl></dl>
+<script>
+    function element(name, text) {
+        let e = document.createElement(name);
+        e.textContent = text;
+        return e;
+    }
+
+    (async () => {
+        let response = await fetch('secrets')
+        let list = await response.json()
+        let definitionList = document.getElementsByTagName("dl")[0];
+        list.forEach(secret => {
+                definitionList.appendChild(element('dt', secret.key));
+                definitionList.appendChild(element('dd', secret.value));
+            }
+        )
+    })();
+</script>
+</body>
+
+</html>
