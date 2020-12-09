@@ -34,6 +34,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.testcontainers:testcontainers:1.15.0'
+
+  	implementation 'io.r2dbc:r2dbc-postgresql:0.8.6.RELEASE'
+    implementation 'r2dbc:r2dbc-pool:0.8.5.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.6.1'
 	implementation 'com.rometools:rome-opml:1.15.0'
 	implementation 'com.google.guava:guava:30.0-jre'
