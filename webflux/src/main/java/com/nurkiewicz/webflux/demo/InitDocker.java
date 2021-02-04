@@ -14,7 +14,11 @@ public class InitDocker {
                 startAsync("mongo:4.0.5", 27017)
                         .doOnNext(addr -> configure(addr, "spring.data.mongodb")),
                 startAsync("redis:5.0.3", 6379)
-                        .doOnNext(addr -> configure(addr, "spring.redis"))
+                        .doOnNext(addr -> configure(addr, "spring.redis")),
+                startAsync("postgres:13.1", 5432)
+                        .doOnNext(addr ->
+                                System.setProperty("spring.r2dbc.url", "r2dbc:postgresql://" + addr.getHost() + ":" + addr.getPort() + "/test")
+                        )
         ).then();
     }
 
@@ -28,6 +32,9 @@ public class InitDocker {
         return Mono
                 .fromCallable(() -> {
                     var container = new GenericContainer(containerName);
+                    container.addEnv("POSTGRES_DB", "test");
+                    container.addEnv("POSTGRES_USER", "test");
+                    container.addEnv("POSTGRES_PASSWORD", "test");
                     container.withReuse(true).start();
                     return HostAndPort.fromParts(
                             container.getContainerIpAddress(),
