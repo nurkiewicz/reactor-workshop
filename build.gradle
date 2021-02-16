@@ -17,7 +17,7 @@ subprojects {
         testImplementation 'junit:junit:4.13.1'
         testImplementation 'org.assertj:assertj-core:3.19.0'
         testImplementation 'org.awaitility:awaitility:4.0.3'
-        testImplementation 'io.projectreactor:reactor-test:3.4.2'
+        testImplementation 'io.projectreactor:reactor-test:3.4.3'
         testImplementation 'com.devskiller:jfairy:0.6.4'
         testImplementation 'org.mockito:mockito-core:3.7.7'
     }
