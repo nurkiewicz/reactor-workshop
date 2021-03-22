@@ -41,7 +41,7 @@ dependencies {
 
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.6.3'
 	implementation 'com.rometools:rome-opml:1.15.0'
-	implementation 'com.google.guava:guava:30.0-jre'
+	implementation 'com.google.guava:guava:30.1.1-jre'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
