@@ -154,7 +154,7 @@ public class R045_ErrorHandling {
 
 	Mono<User> broken() {
 		if (ThreadLocalRandom.current().nextDouble() > 0.1) {
-			return Mono.error(new RuntimeException("Opps"));
+			return Mono.error(new RuntimeException("Opps " + Math.random()));
 		}
 		return Mono.just(new User(1));
 	}
