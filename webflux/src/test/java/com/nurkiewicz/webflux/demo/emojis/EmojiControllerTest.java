@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
 
 @RunWith(SpringRunner.class)
@@ -35,7 +36,20 @@ public class EmojiControllerTest {
 				.take(10)
 				.collectList()
 				.block();
-		System.out.println("events = " + events);
+
+		assertThat(events)
+				.containsExactly(
+						Map.of("1F606", 1,"1F60E", 1),
+						Map.of("1F60A", 1),
+						Map.of("1F60C", 1),
+						Map.of("0031-20E3", 1,"1F49F", 1,"1F601", 1,"1F61E", 1,"1F62D", 1),
+						Map.of("1F495", 1,"1F600", 1,"1F614", 1,"2764", 1),
+						Map.of("1F602", 1),
+						Map.of("1F49C", 1,"1F60E", 1,"1F620", 1),
+						Map.of("1F602", 2,"1F605", 1,"2764", 1),
+						Map.of("1F37A", 1,"1F634", 1,"2764", 1),
+						Map.of("1F614", 1,"1F622", 1)
+						);
 	}
 
 }
