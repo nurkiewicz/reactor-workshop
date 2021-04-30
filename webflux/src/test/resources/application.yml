@@ -3,7 +3,7 @@ logging.level:
   reactor.netty: INFO
   com.nurkiewicz: DEBUG
 
-emoji-tracker.url: http://emojitrack-gostreamer.herokuapp.com/subscribe/eps
+emoji-tracker.url: http://localhost:18080/subscribe/eps
 
 management:
   endpoints:
@@ -17,3 +17,4 @@ spring:
     pool:
       enabled: true
 
+server.port: 18080

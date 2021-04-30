@@ -1,5 +1,7 @@
 package com.nurkiewicz.webflux.demo;
 
+import reactor.core.scheduler.Schedulers;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DemoApplication {
 
 	public static void main(String[] args) {
+		Schedulers.enableMetrics();
 		SpringApplication.run(DemoApplication.class, args);
 	}
 

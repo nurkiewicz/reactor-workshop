@@ -1,5 +1,11 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
+
 import com.nurkiewicz.reactor.samples.CacheServer;
 import com.nurkiewicz.reactor.user.User;
 import org.junit.Ignore;
@@ -8,12 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.time.Duration;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Function;
+import reactor.util.retry.Retry;
+import reactor.util.retry.RetryBackoffSpec;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -74,6 +76,7 @@ public class R045_ErrorHandling {
 
 	/**
 	 * TODO Return different value for {@link IllegalStateException} and different for {@link IllegalArgumentException}
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -95,6 +98,7 @@ public class R045_ErrorHandling {
 
 	/**
 	 * TODO Add error handling
+	 *
 	 * @see Mono#onErrorResume(Function)
 	 */
 	private Mono<Integer> handle(Mono<Integer> careful) {
@@ -103,7 +107,7 @@ public class R045_ErrorHandling {
 
 	private Mono<Integer> danger(int id) {
 		return Mono.fromCallable(() -> {
-			switch(id) {
+			switch (id) {
 				case 1:
 					throw new IllegalArgumentException("One");
 				case 2:
@@ -132,7 +136,7 @@ public class R045_ErrorHandling {
 
 	/**
 	 * TODO Why this test never finishes? Add some logging and fix {@link #broken()} method.
- 	 */
+	 */
 	@Test
 	public void fixEagerMono() throws Exception {
 		//given
@@ -150,17 +154,21 @@ public class R045_ErrorHandling {
 
 	Mono<User> broken() {
 		if (ThreadLocalRandom.current().nextDouble() > 0.1) {
-			return Mono.error(new RuntimeException("Opps"));
+			return Mono.error(new RuntimeException("Opps " + Math.random()));
 		}
 		return Mono.just(new User(1));
 	}
 
 	@Test
 	public void retryWithExponentialBackoff() throws Exception {
+		final RetryBackoffSpec spec = Retry
+				.backoff(20, Duration.ofMillis(100))
+				.jitter(0.2)
+				.maxBackoff(Duration.ofSeconds(2));
 		Mono
 				.error(new RuntimeException("Opps"))
 				.doOnError(x -> log.warn("Exception: {}", x.toString()))
-				.retryBackoff(20, Duration.ofMillis(100), Duration.ofSeconds(2), 1)
+				.retryWhen(spec)
 				.subscribe();
 		TimeUnit.SECONDS.sleep(5);
 	}

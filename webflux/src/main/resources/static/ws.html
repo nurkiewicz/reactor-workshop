@@ -17,7 +17,7 @@
 </ul>
 
 <script>
-    const ws = new WebSocket("ws://localhost:8080/echo");
+    const ws = new WebSocket("ws://localhost:8080/chat");
 
     ws.onopen = () => {
         ws.send("Hello, world!");

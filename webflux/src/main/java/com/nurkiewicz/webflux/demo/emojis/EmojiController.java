@@ -1,14 +1,15 @@
 package com.nurkiewicz.webflux.demo.emojis;
 
+import java.net.URI;
+import java.util.Map;
+
+import reactor.core.publisher.Flux;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-
-import java.net.URI;
-import java.util.HashMap;
 
 import static org.springframework.http.MediaType.TEXT_EVENT_STREAM_VALUE;
 
@@ -52,7 +53,7 @@ public class EmojiController {
      * TODO Total number of each emoji (ever-growing map)
      */
     @GetMapping(value = "/emojis/aggregated", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<HashMap<String, Integer>> aggregated() {
+    Flux<Map<String, Integer>> aggregated() {
         return Flux.empty();
     }
 
@@ -60,12 +61,12 @@ public class EmojiController {
      * TODO Top 10 most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
      */
     @GetMapping(value = "/emojis/top10", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<HashMap<String, Integer>> top10() {
+    Flux<Map<String, Integer>> top10() {
         return Flux.empty();
     }
 
     /**
-     * TODO Top 10 most frequent emojis (with count), only picture
+     * TODO Top 10 most frequent emojis (without count), only picture
      * @see #codeToEmoji(String)
      */
     @GetMapping(value = "/emojis/top10str", produces = TEXT_EVENT_STREAM_VALUE)

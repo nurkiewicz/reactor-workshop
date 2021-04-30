@@ -1,17 +1,16 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+import java.util.function.Function;
+
 import com.nurkiewicz.reactor.samples.CacheServer;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.time.Duration;
-import java.util.function.Function;
 
 import static java.time.Duration.ofMillis;
 import static java.time.Duration.ofSeconds;
@@ -43,7 +42,7 @@ public class R046_Timeout {
 	/**
 	 * TODO Add timeout of 80ms to {@link CacheServer#findBy(int)} method.
 	 * <p>
-	 *     When timeout occurs, {@link Flux#retry()}. However, fail if retry takes more than 5 seconds.
+	 *     When timeout occurs, {@link Mono#retry()}. However, fail if retry takes more than 5 seconds.
 	 * </p>
 	 */
 	@Test
@@ -72,7 +71,7 @@ public class R046_Timeout {
 	 *     Make sure to run the test a few times to make sure it works on both branches.
 	 * </p>
 	 *
-	 * @see Flux#merge(Publisher[])
+	 * @see Mono#firstWithValue(Mono, Mono[])
 	 * @see Mono#delaySubscription(Duration)
 	 * @see Mono#onErrorResume(Function)
 	 */

@@ -1,5 +1,9 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+import java.util.List;
+import java.util.function.Consumer;
+
 import com.nurkiewicz.reactor.samples.Ping;
 import com.nurkiewicz.reactor.user.LoremIpsum;
 import org.junit.Ignore;
@@ -8,10 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
-
-import java.time.Duration;
-import java.util.List;
-import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -112,11 +112,12 @@ public class R041_Window {
 		final Flux<Long> frames = Flux.interval(Duration.ofMillis(16));
 
 		//when
-		//TODO operator here, add take(4)
+		//TODO operator here
 		final Flux<Integer> fps = null;
 
 		//then
 		fps
+				.take(4)
 				.as(StepVerifier::create)
 				.expectNextMatches(x -> x >= 55 && x <= 65)
 				.expectNextMatches(x -> x >= 55 && x <= 65)
