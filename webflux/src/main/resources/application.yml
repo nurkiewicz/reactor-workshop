@@ -12,8 +12,6 @@ management:
         include: '*'
 spring:
   r2dbc:
-    username: test
-    password: test
     pool:
       enabled: true
 
