@@ -20,6 +20,8 @@
 
 ## Resuing containers in testcontainers
 
-In `.testcontainers.properties` put the following line:
+In `.testcontainers.properties` in your `$HOME` folder put the following line:
 
+```
 testcontainers.reuse.enable=true
+```
