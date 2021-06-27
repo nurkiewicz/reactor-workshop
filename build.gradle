@@ -11,7 +11,7 @@ subprojects {
         implementation 'io.projectreactor:reactor-core:3.4.7'
         implementation 'io.projectreactor:reactor-tools:3.4.7'
         implementation 'org.slf4j:slf4j-api:1.7.30'
-        implementation 'com.github.ben-manes.caffeine:caffeine:2.6.2'
+        implementation 'com.github.ben-manes.caffeine:caffeine:3.0.2'
         runtime 'ch.qos.logback:logback-classic:1.2.3'
 
         testImplementation 'junit:junit:4.13.1'
