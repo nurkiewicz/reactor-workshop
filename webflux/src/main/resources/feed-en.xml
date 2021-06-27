@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+    <head>
+        <title>Tomasz subscriptions in feedly Cloud</title>
+    </head>
+    <body>
+        <outline type="rss" text="Java Software Development Tutorials and Videos" title="Java Software Development Tutorials and Videos" xmlUrl="http://www.java-tv.com/feed/atom/" htmlUrl="https://www.java-tv.com"/>
+        <outline type="rss" text="insidejava" title="insidejava" xmlUrl="https://inside.java/feed.xml" htmlUrl="https://inside.java/"/>
+        <outline type="rss" text="JetBrains Company Blog" title="JetBrains Company Blog" xmlUrl="http://feeds.feedburner.com/JetBrainsBlog" htmlUrl="https://blog.jetbrains.com"/>
+        <outline type="rss" text="Javalobby - The heart of the Java developer community" title="Javalobby - The heart of the Java developer community" xmlUrl="http://feeds.dzone.com/javalobby/frontpage" htmlUrl="https://dzone.com/java-jdk-development-tutorials-tools-news"/>
+        <outline type="rss" text="High Scalability" title="High Scalability" xmlUrl="http://feeds.feedburner.com/HighScalability" htmlUrl="http://highscalability.com/blog/"/>
+        <outline type="rss" text="Google Testing Blog" title="Google Testing Blog" xmlUrl="http://feeds.feedburner.com/blogspot/RLXA" htmlUrl="http://testing.googleblog.com/"/>
+        <outline type="rss" text="The Netflix Tech Blog" title="The Netflix Tech Blog" xmlUrl="http://techblog.netflix.com/feeds/posts/default" htmlUrl="https://netflixtechblog.com?source=rss----2615bd06b42e---4"/>
+        <outline type="rss" text="Coding Horror" title="Coding Horror" xmlUrl="http://feeds.feedburner.com/codinghorror/" htmlUrl="https://blog.codinghorror.com/"/>
+        <outline type="rss" text="Zef.me" title="Zef.me" xmlUrl="http://feeds.feedburner.com/zefme" htmlUrl="https://zef.me"/>
+        <outline type="rss" text="DataLiteracy.com" title="DataLiteracy.com" xmlUrl="http://dataliteracy.com/feed/" htmlUrl="https://dataliteracy.com"/>
+        <outline type="rss" text="Lambda the Ultimate - Programming Languages Weblog" title="Lambda the Ultimate - Programming Languages Weblog" xmlUrl="http://lambda-the-ultimate.org/rss.xml" htmlUrl="http://lambda-the-ultimate.org"/>
+        <outline type="rss" text="Joel on Software" title="Joel on Software" xmlUrl="http://www.joelonsoftware.com/rss.xml" htmlUrl="https://www.joelonsoftware.com"/>
+        <outline type="rss" text="Hacker News Best" title="Hacker News Best" xmlUrl="http://hnbest.herokuapp.com/rss" htmlUrl="https://news.ycombinator.com/best"/>
+        <outline type="rss" text="Random thoughts by Ceki Gülcü" title="Random thoughts by Ceki Gülcü" xmlUrl="http://ceki.blogspot.com/feeds/posts/default" htmlUrl="http://ceki.blogspot.com/"/>
+        <outline type="rss" text="Interoperability Happens" title="Interoperability Happens" xmlUrl="http://blogs.tedneward.com/SyndicationService.asmx/GetRss" htmlUrl="http://blogs.tedneward.com/"/>
+        <outline type="rss" text="Posts on A guy with 'Ego' in his name" title="Posts on A guy with 'Ego' in his name" xmlUrl="https://bsideup.github.io/posts/index.xml" htmlUrl="https://bsideup.github.io/posts/"/>
+        <outline type="rss" text="NoBlogDefFound" title="NoBlogDefFound" xmlUrl="http://nurkiewicz.blogspot.com/feeds/posts/default" htmlUrl="https://www.nurkiewicz.com/"/>
+    </body>
+</opml>

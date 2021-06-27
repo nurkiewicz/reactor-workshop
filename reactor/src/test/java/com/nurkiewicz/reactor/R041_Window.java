@@ -1,5 +1,9 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+import java.util.List;
+import java.util.function.Consumer;
+
 import com.nurkiewicz.reactor.samples.Ping;
 import com.nurkiewicz.reactor.user.LoremIpsum;
 import org.junit.Test;
@@ -123,6 +127,7 @@ public class R041_Window {
 
 		//then
 		fps
+				.take(4)
 				.as(StepVerifier::create)
 				.expectNextMatches(x -> x >= 55 && x <= 65)
 				.expectNextMatches(x -> x >= 55 && x <= 65)

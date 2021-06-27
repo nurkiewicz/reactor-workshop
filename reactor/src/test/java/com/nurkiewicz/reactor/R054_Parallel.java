@@ -26,6 +26,7 @@ public class R054_Parallel {
 
 	/**
 	 * TODO Crawl 500 domains as soon as possible using {@link Flux#parallel()} operator.
+	 * Use {@link Crawler#crawlBlocking(Domain)}
 	 *
 	 * @see Flux#parallel(int)
 	 */

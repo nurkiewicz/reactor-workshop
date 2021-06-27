@@ -44,7 +44,7 @@ public class R046_Timeout {
 	/**
 	 * TODO Add timeout of 80ms to {@link CacheServer#findBy(int)} method.
 	 * <p>
-	 *     When timeout occurs, {@link Flux#retry()}. However, fail if retry takes more than 5 seconds.
+	 *     When timeout occurs, {@link Mono#retry()}. However, fail if retry takes more than 5 seconds.
 	 * </p>
 	 */
 	@Test
