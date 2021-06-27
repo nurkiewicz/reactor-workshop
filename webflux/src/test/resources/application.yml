@@ -1,0 +1,20 @@
+logging.level:
+  org.springframework.web: INFO
+  reactor.netty: INFO
+  com.nurkiewicz: DEBUG
+
+emoji-tracker.url: http://localhost:18080/subscribe/eps
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+spring:
+  r2dbc:
+    username: test
+    password: test
+    pool:
+      enabled: true
+
+server.port: 18080
