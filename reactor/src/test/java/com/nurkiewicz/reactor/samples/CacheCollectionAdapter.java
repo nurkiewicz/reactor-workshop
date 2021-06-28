@@ -1,11 +1,11 @@
 package com.nurkiewicz.reactor.samples;
 
+import java.util.AbstractCollection;
+import java.util.Iterator;
+
 import com.github.benmanes.caffeine.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.AbstractCollection;
-import java.util.Iterator;
 
 public class CacheCollectionAdapter<T> extends AbstractCollection<T> {
 
@@ -29,7 +29,7 @@ public class CacheCollectionAdapter<T> extends AbstractCollection<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		final boolean result = cache.getIfPresent(o) != null;
+		final boolean result = cache.getIfPresent((T)o) != null;
 		log.debug("GET {} -> {}", o, result);
 		return result;
 	}

@@ -4,7 +4,7 @@ import java.util.List;
 
 import reactor.core.publisher.Mono;
 
-import org.springframework.data.r2dbc.core.DatabaseClient;
+import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
@@ -23,7 +23,7 @@ class R2dbcUserDetailsService implements ReactiveUserDetailsService {
 	@Override
 	public Mono<UserDetails> findByUsername(String username) {
 		return databaseClient
-				.execute("SELECT password, role FROM users where username = :user")
+				.sql("SELECT password, role FROM users where username = :user")
 				.bind("user", username)
 				.fetch()
 				.one()
