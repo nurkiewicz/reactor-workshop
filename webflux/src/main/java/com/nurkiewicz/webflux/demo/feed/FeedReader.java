@@ -47,6 +47,7 @@ public class FeedReader {
     /**
      *
      * TODO (2) Load data asynchronously using {@link org.springframework.web.reactive.function.client.WebClient}
+     * @see <a href="https://stackoverflow.com/questions/47655789/how-to-make-reactive-webclient-follow-3xx-redirects">How to make reactive webclient follow 3XX-redirects?</a>
      */
     private String get(URL url) throws IOException {
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
