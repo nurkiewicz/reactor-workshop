@@ -43,6 +43,11 @@ public class EmojiController {
 
     /**
      * TODO How many emojis in total per second are emitted?
+     *
+     * Hint: use:
+     * <code>
+     *     .bodyToFlux(new ParameterizedTypeReference<Map<String, Integer>>() {})
+     * </code>
      */
     @GetMapping(value = "/emojis/eps", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Long> eps() {
