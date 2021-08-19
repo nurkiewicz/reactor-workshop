@@ -1,9 +1,9 @@
 package com.nurkiewicz.webflux.demo.feed;
 
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class RedisRepository {
 
     private final ReactiveStringRedisTemplate redis;
