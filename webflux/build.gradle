@@ -40,7 +40,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.7.3'
-	implementation 'com.rometools:rome-opml:1.15.0'
+	implementation 'com.rometools:rome-opml:1.16.0'
 	implementation 'com.google.guava:guava:30.1.1-jre'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
