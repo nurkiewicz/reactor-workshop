@@ -35,6 +35,7 @@ public class InitDocker {
                     container.addEnv("POSTGRES_DB", "test");
                     container.addEnv("POSTGRES_USER", "test");
                     container.addEnv("POSTGRES_PASSWORD", "test");
+                    container.addExposedPort(port);
                     container.withReuse(true).start();
                     return HostAndPort.fromParts(
                             container.getContainerIpAddress(),

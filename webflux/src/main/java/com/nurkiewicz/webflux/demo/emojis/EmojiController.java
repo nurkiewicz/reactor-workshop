@@ -1,6 +1,7 @@
 package com.nurkiewicz.webflux.demo.emojis;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toMap;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.toMap;
 import static org.springframework.http.MediaType.TEXT_EVENT_STREAM_VALUE;
 
@@ -49,6 +53,11 @@ public class EmojiController {
 
     /**
      * TODO How many emojis in total per second are emitted?
+     *
+     * Hint: use:
+     * <code>
+     *     .bodyToFlux(new ParameterizedTypeReference<Map<String, Integer>>() {})
+     * </code>
      */
     @GetMapping(value = "/emojis/eps", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Integer> eps() {
@@ -61,6 +70,20 @@ public class EmojiController {
 
     /**
      * TODO Total number of each emoji (ever-growing map)
+     *
+     * Example input:
+     * <code>
+     *   data:{"2600":1,"2728":1}
+     *   data:{"1F602":1,"2600":2,"2764":1}
+     *   data:{"2728":4,"2828":1}
+     * </code>
+     *
+     * Example output:
+     * <code>
+     *   data:{"2600":1,"2728":1}
+     *   data:{"2600":3,"2728":1,"1F602":1,"2764":1}
+     *   data:{"2600":3,"2728":5,"1F602":1,"2764":1,"2828":1}
+     * </code>
      */
     @GetMapping(value = "/emojis/aggregated", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Map<String, Integer>> aggregated() {
@@ -76,6 +99,7 @@ public class EmojiController {
 
     /**
      * TODO Top 10 most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
+     * @see #top10values
      */
     @GetMapping(value = "/emojis/top10", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Map<String, Integer>> top10() {
@@ -86,11 +110,11 @@ public class EmojiController {
 
     private Map<String, Integer> top10values(Map<String, Integer> agg) {
         return new HashMap<>(agg
-            .entrySet()
-            .stream()
-            .sorted(comparing(e -> -e.getValue()))
-            .limit(10)
-            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue)));
+                .entrySet()
+                .stream()
+                .sorted(comparing(Map.Entry::getValue, reverseOrder()))
+                .limit(10)
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue)));
     }
 
     /**

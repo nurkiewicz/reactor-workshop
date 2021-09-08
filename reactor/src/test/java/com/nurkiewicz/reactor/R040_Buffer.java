@@ -1,5 +1,11 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 import com.nurkiewicz.reactor.samples.Ping;
 import com.nurkiewicz.reactor.user.LoremIpsum;
 import org.junit.Test;
@@ -8,12 +14,6 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.time.Duration;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -130,6 +130,7 @@ public class R040_Buffer {
 
 		//then
 		fps
+				.take(4)
 				.as(StepVerifier::create)
 				.expectNextMatches(x -> x >= 55 && x <= 65)
 				.expectNextMatches(x -> x >= 55 && x <= 65)
