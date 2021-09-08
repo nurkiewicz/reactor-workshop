@@ -1,6 +1,6 @@
 # Reactor training
 
-[![Java CI with Gradle](https://github.com/nurkiewicz/reactor-workshop/actions/workflows/gradle.yml/badge.svg)](https://github.com/nurkiewicz/reactor-workshop/actions/workflows/gradle.yml)
+[![Java CI master](https://github.com/nurkiewicz/reactor-workshop/actions/workflows/gradle.yml/badge.svg)](https://github.com/nurkiewicz/reactor-workshop/actions/workflows/gradle.yml) [![Java CI solutions](https://github.com/nurkiewicz/reactor-workshop/actions/workflows/gradle.yml/badge.svg?branch=solutions)](https://github.com/nurkiewicz/reactor-workshop/actions/workflows/gradle.yml)
 
 Spring [Reactor](https://projectreactor.io) hands-on training (3 days)
 
