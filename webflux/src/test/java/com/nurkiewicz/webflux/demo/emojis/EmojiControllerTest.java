@@ -1,35 +1,41 @@
 package com.nurkiewicz.webflux.demo.emojis;
 
-import java.time.Duration;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-import com.nurkiewicz.webflux.demo.InitDocker;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.http.codec.ServerSentEvent;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
+import org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec;
+import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = DEFINED_PORT)
 public class EmojiControllerTest {
 
-	@Autowired
-	private EmojiController emojiController;
+	public static final URI EMOJI_TRACKER_URL = URI.create("http://example.com");
 
-	@BeforeClass
-	public static void init() {
-		InitDocker.start().block(Duration.ofMinutes(2));
+	private EmojiController emojiController = new EmojiController(EMOJI_TRACKER_URL, webClientStub());
+
+	private WebClient webClientStub() {
+		ResponseSpec rs = mock(ResponseSpec.class);
+		given(rs.bodyToFlux(ServerSentEvent.class)).willReturn(new EmojiTrackerStubController().emojis());
+		RequestHeadersSpec rhs = mock(RequestHeadersSpec.class);
+		given(rhs.retrieve()).willReturn(rs);
+		RequestHeadersUriSpec rhus = mock(RequestHeadersUriSpec.class);
+		given(rhus.uri(EMOJI_TRACKER_URL)).willReturn(rhs);
+		WebClient wtc = mock(WebClient.class);
+		given(wtc.get()).willReturn(rhus).getMock();
+		return wtc;
 	}
 
 	@Test
-	public void showReturnRawStream() {
+	public void shouldReturnRawStream() {
 		final List<Map<String, Integer>> events = emojiController
 				.raw()
 				.map(sse -> (Map<String, Integer>) sse.data())
