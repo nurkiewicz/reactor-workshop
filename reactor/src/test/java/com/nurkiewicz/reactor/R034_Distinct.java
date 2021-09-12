@@ -1,6 +1,13 @@
 package com.nurkiewicz.reactor;
 
-import com.devskiller.jfairy.Fairy;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.concurrent.TimeUnit;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.nurkiewicz.reactor.email.Email;
@@ -14,18 +21,11 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.concurrent.TimeUnit;
-import java.util.function.BiPredicate;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import com.devskiller.jfairy.Fairy;
 
 import static java.time.Duration.ofMillis;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
 public class R034_Distinct {
 
 	private static final Logger log = LoggerFactory.getLogger(R034_Distinct.class);
@@ -82,7 +82,7 @@ public class R034_Distinct {
 		final Flux<Weather> measurements = WeatherService.measurements();
 
 		//when
-		final Flux<Weather> changes = measurements;
+		final Flux<Weather> changes = measurements.distinctUntilChanged(Weather::getTemperature, (t1, t2) -> Math.abs(t1 - t2) < 0.5);
 
 		//then
 		changes
@@ -135,6 +135,7 @@ public class R034_Distinct {
 	 * </p>
 	 */
 	@Test
+	@Ignore
 	public void findOnlyDistinctEmailSender() throws Exception {
 		//given
 		final Flux<Email> emails = emails();

@@ -3,7 +3,6 @@ package com.nurkiewicz.webflux.demo.emojis;
 import java.net.URI;
 import java.util.Map;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import reactor.test.StepVerifier;
 
@@ -19,7 +18,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-@Ignore
 public class EmojiControllerTest {
 
 	public static final URI EMOJI_TRACKER_URL = URI.create("http://example.com");

@@ -1,17 +1,15 @@
 package com.nurkiewicz.reactor;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import reactor.core.publisher.Flux;
-
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
+import org.junit.Test;
+import reactor.core.publisher.Flux;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
-@Ignore
 public class R011_LetsMeetFlux {
 
 	@Test

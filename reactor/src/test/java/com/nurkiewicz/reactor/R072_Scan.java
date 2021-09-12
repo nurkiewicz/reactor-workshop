@@ -1,6 +1,7 @@
 package com.nurkiewicz.reactor;
 
-import org.junit.Ignore;
+import java.util.function.BiFunction;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +10,6 @@ import reactor.test.StepVerifier;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
-import java.util.function.BiFunction;
-
-@Ignore
 public class R072_Scan {
 
     private static final Logger log = LoggerFactory.getLogger(R072_Scan.class);

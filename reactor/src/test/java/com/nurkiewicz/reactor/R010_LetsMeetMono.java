@@ -1,16 +1,14 @@
 package com.nurkiewicz.reactor;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import com.nurkiewicz.reactor.samples.RestClient;
-import org.junit.Ignore;
 import org.junit.Test;
 import reactor.core.publisher.Mono;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
-@Ignore
 public class R010_LetsMeetMono {
 
 	/**
@@ -101,7 +99,7 @@ public class R010_LetsMeetMono {
 	public void cachingMonoComputesOnlyOnce() throws Exception {
 		//given
 		AtomicInteger counter = new AtomicInteger();
-		final Mono<Integer> lazy = Mono.fromCallable(counter::incrementAndGet);
+		final Mono<Integer> lazy = Mono.fromCallable(counter::incrementAndGet).cache();
 
 		//when
 		lazy.block();
@@ -118,7 +116,7 @@ public class R010_LetsMeetMono {
 	public void nonIdempotentWebService() throws Exception {
 		//given
 		RestClient restClient = new RestClient();
-		final Mono<Object> result = Mono.fromRunnable(() -> restClient.post(1));
+		final Mono<Object> result = Mono.fromRunnable(() -> restClient.post(1)).cache();
 
 		//when
 		result.block();
