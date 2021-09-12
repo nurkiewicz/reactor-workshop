@@ -51,6 +51,9 @@ public class EmojiControllerTest {
 				.verifyComplete();
 	}
 
+	/**
+	 * TODO How many pushes from /subscribe/eps per second are emitted?
+	 */
 	@Test(timeout = 1000)
 	public void shouldReturnUpdatesPerSecond() {
 		StepVerifier.withVirtualTime(() -> emojiController()
@@ -69,6 +72,14 @@ public class EmojiControllerTest {
 				.verifyComplete();
 	}
 
+	/**
+	 * TODO How many emojis in total per second are emitted?
+	 *
+	 * Hint: use:
+	 * <code>
+	 *     .bodyToFlux(new ParameterizedTypeReference<Map<String, Integer>>() {})
+	 * </code>
+	 */
 	@Test(timeout = 1000)
 	public void shouldReturnEmojisPerSecond() {
 		StepVerifier.withVirtualTime(() -> emojiController()
@@ -87,6 +98,23 @@ public class EmojiControllerTest {
 				.verifyComplete();
 	}
 
+	/**
+	 * TODO Total number of each emoji (ever-growing map)
+	 *
+	 * Example input:
+	 * <code>
+	 *   data:{"2600":1,"2728":1}
+	 *   data:{"1F602":1,"2600":2,"2764":1}
+	 *   data:{"2728":4,"2828":1}
+	 * </code>
+	 *
+	 * Example output:
+	 * <code>
+	 *   data:{"2600":1,"2728":1}
+	 *   data:{"2600":3,"2728":1,"1F602":1,"2764":1}
+	 *   data:{"2600":3,"2728":5,"1F602":1,"2764":1,"2828":1}
+	 * </code>
+	 */
 	@Test(timeout = 2000)
 	public void shouldReturnAggregatedEmojis() {
 		StepVerifier.withVirtualTime(() -> emojiController()
@@ -106,6 +134,9 @@ public class EmojiControllerTest {
 				.verifyComplete();
 	}
 
+	/**
+	 * TODO Top most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
+	 */
 	@Test(timeout = 2000)
 	public void shouldReturnTop3() {
 		StepVerifier.withVirtualTime(() -> emojiController()
