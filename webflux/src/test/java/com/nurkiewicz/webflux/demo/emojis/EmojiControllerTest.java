@@ -1,18 +1,20 @@
 package com.nurkiewicz.webflux.demo.emojis;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+import reactor.test.StepVerifier;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
 import org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec;
 import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static java.time.Duration.ofSeconds;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -20,42 +22,110 @@ public class EmojiControllerTest {
 
 	public static final URI EMOJI_TRACKER_URL = URI.create("http://example.com");
 
-	private EmojiController emojiController = new EmojiController(EMOJI_TRACKER_URL, webClientStub());
-
-	private WebClient webClientStub() {
+	private EmojiController emojiController() {
 		ResponseSpec rs = mock(ResponseSpec.class);
-		given(rs.bodyToFlux(ServerSentEvent.class)).willReturn(new EmojiTrackerStubController().emojis());
+		given(rs.bodyToFlux(ServerSentEvent.class)).willReturn(new EmojiTrackerStubController().stubSseStream());
+		given(rs.bodyToFlux(any(ParameterizedTypeReference.class))).willReturn(new EmojiTrackerStubController().stubMapStream());
 		RequestHeadersSpec rhs = mock(RequestHeadersSpec.class);
 		given(rhs.retrieve()).willReturn(rs);
 		RequestHeadersUriSpec rhus = mock(RequestHeadersUriSpec.class);
 		given(rhus.uri(EMOJI_TRACKER_URL)).willReturn(rhs);
-		WebClient wtc = mock(WebClient.class);
-		given(wtc.get()).willReturn(rhus).getMock();
-		return wtc;
+		WebClient webClientStub = mock(WebClient.class);
+		given(webClientStub.get()).willReturn(rhus).getMock();
+		return new EmojiController(EMOJI_TRACKER_URL, webClientStub);
 	}
 
 	@Test
 	public void shouldReturnRawStream() {
-		final List<Map<String, Integer>> events = emojiController
+		StepVerifier.withVirtualTime(() -> emojiController()
 				.raw()
 				.map(sse -> (Map<String, Integer>) sse.data())
-				.take(10)
-				.collectList()
-				.block();
+				.take(5))
+				.expectSubscription()
+				.thenAwait(ofSeconds(1))
+				.expectNext(Map.of("1F606", 1, "1F60E", 1))
+				.expectNext(Map.of("1F60A", 1))
+				.expectNext(Map.of("1F60A", 4, "1F60E", 2))
+				.expectNext(Map.of("1F495", 4, "1F606", 2, "1F61E", 1))
+				.expectNext(Map.of("1F495", 1, "1F600", 1, "1F614", 1, "2764", 1))
+				.verifyComplete();
+	}
 
-		assertThat(events)
-				.containsExactly(
-						Map.of("1F606", 1,"1F60E", 1),
-						Map.of("1F60A", 1),
-						Map.of("1F60C", 1),
-						Map.of("0031-20E3", 1,"1F49F", 1,"1F601", 1,"1F61E", 1,"1F62D", 1),
-						Map.of("1F495", 1,"1F600", 1,"1F614", 1,"2764", 1),
-						Map.of("1F602", 1),
-						Map.of("1F49C", 1,"1F60E", 1,"1F620", 1),
-						Map.of("1F602", 2,"1F605", 1,"2764", 1),
-						Map.of("1F37A", 1,"1F634", 1,"2764", 1),
-						Map.of("1F614", 1,"1F622", 1)
-						);
+	@Test(timeout = 1000)
+	public void shouldReturnUpdatesPerSecond() {
+		StepVerifier.withVirtualTime(() -> emojiController()
+				.rps()
+				.take(4)
+		)
+				.expectSubscription()
+				.thenAwait(ofSeconds(1))
+				.expectNext(5L)
+				.thenAwait(ofSeconds(1))
+				.expectNext(5L)
+				.thenAwait(ofSeconds(1))
+				.expectNext(5L)
+				.thenAwait(ofSeconds(1))
+				.expectNext(5L)
+				.verifyComplete();
+	}
+
+	@Test(timeout = 1000)
+	public void shouldReturnEmojisPerSecond() {
+		StepVerifier.withVirtualTime(() -> emojiController()
+				.eps()
+				.take(4)
+		)
+				.expectSubscription()
+				.thenAwait(ofSeconds(1))
+				.expectNext(20)
+				.thenAwait(ofSeconds(1))
+				.expectNext(13)
+				.thenAwait(ofSeconds(1))
+				.expectNext(10)
+				.thenAwait(ofSeconds(1))
+				.expectNext(17)
+				.verifyComplete();
+	}
+
+	@Test(timeout = 2000)
+	public void shouldReturnAggregatedEmojis() {
+		StepVerifier.withVirtualTime(() -> emojiController()
+				.aggregated()
+				.log()
+				.take(7)
+		)
+				.expectSubscription()
+				.thenAwait(ofSeconds(1))
+				.expectNext(Map.of())
+				.expectNext(Map.of("1F606", 1))
+				.expectNext(Map.of("1F606", 1, "1F60E", 1))
+				.expectNext(Map.of("1F606", 1, "1F60A", 1, "1F60E", 1))
+				.expectNext(Map.of("1F606", 1, "1F60A", 1, "1F60E", 3))
+				.expectNext(Map.of("1F606", 1, "1F60A", 1 + 4, "1F60E", 3))
+				.expectNext(Map.of("1F606", 1 + 2, "1F60A", 5, "1F60E", 3))
+				.verifyComplete();
+	}
+
+	@Test(timeout = 2000)
+	public void shouldReturnTop3() {
+		StepVerifier.withVirtualTime(() -> emojiController()
+				.top(4)
+				.log()
+				.take(10)
+		)
+				.expectSubscription()
+				.thenAwait(ofSeconds(5))
+				.expectNext(Map.of())
+				.expectNext(Map.of("1F606", 1))
+				.expectNext(Map.of("1F606", 1, "1F60E", 1))
+				.expectNext(Map.of("1F606", 1, "1F60A", 1, "1F60E", 1))
+				.expectNext(Map.of("1F606", 1, "1F60A", 1, "1F60E", 1 + 2))
+				.expectNext(Map.of("1F606", 1, "1F60A", 1 + 4, "1F60E", 3))
+				.expectNext(Map.of("1F606", 1 + 2, "1F60A", 5, "1F60E", 3))
+				.expectNext(Map.of("1F606", 3, "1F60A", 5, "1F60E", 3, "1F495", 4))
+				.expectNext(Map.of("1F606", 3, "1F60A", 5, "1F60E", 3, "1F495", 4 + 1))
+				.expectNext(Map.of("1F606", 3, "1F60A", 5, "1F60E", 3 + 1, "1F495", 5))
+				.verifyComplete();
 	}
 
 }

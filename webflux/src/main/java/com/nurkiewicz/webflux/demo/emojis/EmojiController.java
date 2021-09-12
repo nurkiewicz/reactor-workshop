@@ -9,6 +9,7 @@ import reactor.core.publisher.Flux;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -54,7 +55,7 @@ public class EmojiController {
      * </code>
      */
     @GetMapping(value = "/emojis/eps", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<Long> eps() {
+    Flux<Integer> eps() {
         return Flux.empty();
     }
 
@@ -81,20 +82,20 @@ public class EmojiController {
     }
 
     /**
-     * TODO Top 10 most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
-     * @see #top10values
+     * TODO Top most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
+     * @see #topValues
      */
-    @GetMapping(value = "/emojis/top10", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<Map<String, Integer>> top10() {
+    @GetMapping(value = "/emojis/top", produces = TEXT_EVENT_STREAM_VALUE)
+    Flux<Map<String, Integer>> top(@RequestParam(defaultValue = "10", required = false) int limit) {
         return Flux.empty();
     }
 
-    private Map<String, Integer> top10values(Map<String, Integer> agg) {
+    private Map<String, Integer> topValues(Map<String, Integer> agg, int n) {
         return new HashMap<>(agg
                 .entrySet()
                 .stream()
                 .sorted(comparing(Map.Entry::getValue, reverseOrder()))
-                .limit(10)
+                .limit(n)
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue)));
     }
 
@@ -102,10 +103,12 @@ public class EmojiController {
      * TODO Top 10 most frequent emojis (without count), only picture
      * @see #codeToEmoji(String)
      */
-    @GetMapping(value = "/emojis/top10str", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<String> top10str() {
+    @GetMapping(value = "/emojis/topStr", produces = TEXT_EVENT_STREAM_VALUE)
+    Flux<String> topStr(@RequestParam(defaultValue = "10", required = false) int limit) {
         return Flux.empty();
     }
+
+
 
     private static String codeToEmoji(String hex) {
         final String[] codes = hex.split("-");
