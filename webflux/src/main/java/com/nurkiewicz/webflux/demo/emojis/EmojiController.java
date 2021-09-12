@@ -38,9 +38,6 @@ public class EmojiController {
             .bodyToFlux(ServerSentEvent.class);
     }
 
-    /**
-     * TODO How many pushes from /subscribe/eps per second are emitted?
-     */
     @GetMapping(value = "/emojis/rps", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Long> rps() {
         return retrieve()
@@ -49,14 +46,6 @@ public class EmojiController {
             .flatMap(Flux::count);
     }
 
-    /**
-     * TODO How many emojis in total per second are emitted?
-     *
-     * Hint: use:
-     * <code>
-     *     .bodyToFlux(new ParameterizedTypeReference<Map<String, Integer>>() {})
-     * </code>
-     */
     @GetMapping(value = "/emojis/eps", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Integer> eps() {
         return retrieve()
@@ -66,23 +55,6 @@ public class EmojiController {
             .flatMap(win -> win.reduce(Integer::sum));
     }
 
-    /**
-     * TODO Total number of each emoji (ever-growing map)
-     *
-     * Example input:
-     * <code>
-     *   data:{"2600":1,"2728":1}
-     *   data:{"1F602":1,"2600":2,"2764":1}
-     *   data:{"2728":4,"2828":1}
-     * </code>
-     *
-     * Example output:
-     * <code>
-     *   data:{"2600":1,"2728":1}
-     *   data:{"2600":3,"2728":1,"1F602":1,"2764":1}
-     *   data:{"2600":3,"2728":5,"1F602":1,"2764":1,"2828":1}
-     * </code>
-     */
     @GetMapping(value = "/emojis/aggregated", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Map<String, Integer>> aggregated() {
         return retrieve()
@@ -96,8 +68,7 @@ public class EmojiController {
     }
 
     /**
-     * TODO Top 10 most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
-     * @see #topValues
+     * @see #topValues(Map, int)
      */
     @GetMapping(value = "/emojis/top", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Map<String, Integer>> top(@RequestParam(defaultValue = "10", required = false) int limit) {
