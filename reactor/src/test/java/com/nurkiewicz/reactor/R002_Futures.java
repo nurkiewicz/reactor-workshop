@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import com.nurkiewicz.reactor.email.EmailSender;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.equalTo;
 
+@Ignore
 public class R002_Futures {
 
 	private static final Logger log = LoggerFactory.getLogger(R002_Futures.class);
