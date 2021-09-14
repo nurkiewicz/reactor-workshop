@@ -12,6 +12,7 @@ import com.rometools.opml.feed.opml.Opml;
 import com.rometools.opml.feed.opml.Outline;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.WireFeedInput;
+import reactor.core.publisher.Flux;
 
 import org.springframework.stereotype.Component;
 
@@ -19,8 +20,12 @@ import org.springframework.stereotype.Component;
 public class OpmlReader {
 
     /**
-     * TODO (1) Return {@link reactor.core.publisher.Flux}
+     * TODO (1) Return {@link #allFeeds()} as {@link Flux}, lazily
      */
+    public Flux<Outline> allFeedsStream() {
+        return Flux.empty();
+    }
+
     public List<Outline> allFeeds() throws FeedException, IOException {
         WireFeedInput input = new WireFeedInput();
         try(final InputStream inputStream = OpmlReader.class.getResourceAsStream("/feed-en.xml")) {
