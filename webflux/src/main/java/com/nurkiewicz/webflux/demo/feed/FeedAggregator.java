@@ -29,7 +29,7 @@ public class FeedAggregator {
 
     public Flux<Article> articles() {
         return opmlReader
-                .allFeeds()
+                .allFeedsStream()
                 .flatMap(this::fetchPeriodically);
     }
 
