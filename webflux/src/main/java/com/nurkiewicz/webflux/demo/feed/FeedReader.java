@@ -17,6 +17,7 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+import reactor.core.publisher.Mono;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -44,11 +45,6 @@ public class FeedReader {
         return feedBody.replace("https://www.w3.org/2005/Atom", "http://www.w3.org/2005/Atom");
     }
 
-    /**
-     *
-     * TODO (2) Load data asynchronously using {@link org.springframework.web.reactive.function.client.WebClient}
-     * @see <a href="https://stackoverflow.com/questions/47655789/how-to-make-reactive-webclient-follow-3xx-redirects">How to make reactive webclient follow 3XX-redirects?</a>
-     */
     private String get(URL url) throws IOException {
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         if (conn.getResponseCode() == HttpStatus.MOVED_PERMANENTLY.value()) {
@@ -57,6 +53,15 @@ public class FeedReader {
         try (final InputStreamReader reader = new InputStreamReader(conn.getInputStream(), UTF_8)) {
             return CharStreams.toString(reader);
         }
+    }
+
+    /**
+     * TODO (2) Load data asynchronously using {@link org.springframework.web.reactive.function.client.WebClient}
+     *
+     * @see <a href="https://stackoverflow.com/questions/47655789/how-to-make-reactive-webclient-follow-3xx-redirects">How to make reactive webclient follow 3XX-redirects?</a>
+     */
+    private Mono<String> getAsync(URL url) {
+        return Mono.error(new UnsupportedOperationException("Not implemented"));
     }
 
 }
