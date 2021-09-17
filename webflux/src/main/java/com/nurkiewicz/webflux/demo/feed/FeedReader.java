@@ -37,84 +37,84 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Component
 public class FeedReader {
 
-    private static final Logger log = LoggerFactory.getLogger(FeedReader.class);
+	private static final Logger log = LoggerFactory.getLogger(FeedReader.class);
 
-    private final WebClient webClient;
+	private final WebClient webClient;
 
-    public FeedReader(WebClient webClient) {
-        this.webClient = webClient;
-    }
+	public FeedReader(WebClient webClient) {
+		this.webClient = webClient;
+	}
 
-    public Flux<SyndEntry> fetch(String url) {
-        return getAsync(url)
-                .doOnError(HttpClientErrorException.class, e -> log.warn("HTTP error when fetching {}: {}", url, e.toString()))
-                .onErrorResume(HttpClientErrorException.class, e -> Mono.empty())
-                .doOnError(UnknownHostException.class, e -> log.warn("Unknown host {}: {}", url, e.toString()))
-                .onErrorResume(UnknownHostException.class, e -> Mono.empty())
-                .doOnError(SSLHandshakeException.class, e -> log.warn("SSL error {}: {}", url, e.toString()))
-                .onErrorResume(SSLHandshakeException.class, e -> Mono.empty())
-                .doOnError(SocketException.class, e -> log.warn("Connection error {}: {}", url, e.toString()))
-                .onErrorResume(SocketException.class, e -> Mono.empty())
-                .flatMapIterable(feedBody -> parseFeed(url, feedBody))
-                .doOnNext(syndEntry -> log.trace("Found entry: {}", syndEntry.getTitle()));
-    }
+	public Flux<SyndEntry> fetch(String url) {
+		return getAsync(url)
+				.doOnError(HttpClientErrorException.class, e -> log.warn("HTTP error when fetching {}: {}", url, e.toString()))
+				.onErrorResume(HttpClientErrorException.class, e -> Mono.empty())
+				.doOnError(UnknownHostException.class, e -> log.warn("Unknown host {}: {}", url, e.toString()))
+				.onErrorResume(UnknownHostException.class, e -> Mono.empty())
+				.doOnError(SSLHandshakeException.class, e -> log.warn("SSL error {}: {}", url, e.toString()))
+				.onErrorResume(SSLHandshakeException.class, e -> Mono.empty())
+				.doOnError(SocketException.class, e -> log.warn("Connection error {}: {}", url, e.toString()))
+				.onErrorResume(SocketException.class, e -> Mono.empty())
+				.flatMapIterable(feedBody -> parseFeed(url, feedBody))
+				.doOnNext(syndEntry -> log.trace("Found entry: {}", syndEntry.getTitle()));
+	}
 
-    private Iterable<SyndEntry> parseFeed(String feedUrl, String feedBody) {
-        try {
-            log.debug("Parsing feed from {} ({} bytes)", feedUrl, feedBody.length());
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            ByteArrayInputStream is = new ByteArrayInputStream(applyAtomNamespaceFix(feedBody).getBytes(UTF_8));
-            Document doc = builder.parse(is);
-            SyndFeedInput input = new SyndFeedInput();
-            SyndFeed feed = input.build(doc);
-            return feed.getEntries();
-        } catch (SAXParseException e) {
-            log.warn("Unable to parse feed {} due to: {}", feedUrl, e.toString());
-            return List.of();
-        } catch (ParserConfigurationException | SAXException | IOException | FeedException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	private Iterable<SyndEntry> parseFeed(String feedUrl, String feedBody) {
+		try {
+			log.debug("Parsing feed from {} ({} bytes)", feedUrl, feedBody.length());
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			ByteArrayInputStream is = new ByteArrayInputStream(applyAtomNamespaceFix(feedBody).getBytes(UTF_8));
+			Document doc = builder.parse(is);
+			SyndFeedInput input = new SyndFeedInput();
+			SyndFeed feed = input.build(doc);
+			return feed.getEntries();
+		} catch (SAXParseException e) {
+			log.warn("Unable to parse feed {} due to: {}", feedUrl, e.toString());
+			return List.of();
+		} catch (ParserConfigurationException | SAXException | IOException | FeedException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    private String applyAtomNamespaceFix(String feedBody) {
-        return feedBody.replace("https://www.w3.org/2005/Atom", "http://www.w3.org/2005/Atom");
-    }
+	private String applyAtomNamespaceFix(String feedBody) {
+		return feedBody.replace("https://www.w3.org/2005/Atom", "http://www.w3.org/2005/Atom");
+	}
 
     /**
      *
      * TODO (2) Load data asynchronously using {@link org.springframework.web.reactive.function.client.WebClient}
      * @see <a href="https://stackoverflow.com/questions/47655789/how-to-make-reactive-webclient-follow-3xx-redirects">How to make reactive webclient follow 3XX-redirects?</a>
      */
-    private String get(URL url) throws IOException {
-        final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        if (conn.getResponseCode() == HttpStatus.MOVED_PERMANENTLY.value()) {
-            return get(new URL(conn.getHeaderField("Location")));
-        }
-        try (final InputStreamReader reader = new InputStreamReader(conn.getInputStream(), UTF_8)) {
-            return CharStreams.toString(reader);
-        }
-    }
+	private String get(URL url) throws IOException {
+		final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		if (conn.getResponseCode() == HttpStatus.MOVED_PERMANENTLY.value()) {
+			return get(new URL(conn.getHeaderField("Location")));
+		}
+		try (final InputStreamReader reader = new InputStreamReader(conn.getInputStream(), UTF_8)) {
+			return CharStreams.toString(reader);
+		}
+	}
 
-    private Mono<String> getAsync(String url) {
-        return webClient
-                .get()
-                .uri(url)
-                .exchange()
-                .flatMap(response -> {
-                    if (response.statusCode().is3xxRedirection()) {
-                        return followRedirect(response);
-                    }
-                    if (response.statusCode().is2xxSuccessful()) {
-                        return response.bodyToMono(String.class);
-                    }
-                    return Mono.error(new HttpClientErrorException(url, response.statusCode(), "Error", null, null, null));
-                });
-    }
+	private Mono<String> getAsync(String url) {
+		return webClient
+				.get()
+				.uri(url)
+				.exchange()
+				.flatMap(response -> {
+					if (response.statusCode().is3xxRedirection()) {
+						return followRedirect(response);
+					}
+					if (response.statusCode().is2xxSuccessful()) {
+						return response.bodyToMono(String.class);
+					}
+					return Mono.error(new HttpClientErrorException(url, response.statusCode(), "Error", null, null, null));
+				});
+	}
 
-    private Mono<? extends String> followRedirect(ClientResponse response) {
-        String redirectUrl = response.headers().header("Location").get(0);
-        return response.bodyToMono(Void.class).then(getAsync(redirectUrl));
-    }
+	private Mono<? extends String> followRedirect(ClientResponse response) {
+		String redirectUrl = response.headers().header("Location").get(0);
+		return response.bodyToMono(Void.class).then(getAsync(redirectUrl));
+	}
 
 }
