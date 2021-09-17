@@ -1,5 +1,6 @@
 package com.nurkiewicz.webflux.demo;
 
+import java.time.Duration;
 import java.util.Objects;
 
 import com.google.common.net.HostAndPort;
@@ -9,7 +10,7 @@ import reactor.core.scheduler.Schedulers;
 
 public class InitDocker {
 
-    public static Mono<Void> start() {
+    public static Mono<Void> startAsync() {
         return Mono.zip(
                 startAsync("mongo:4.0.5", 27017)
                         .doOnNext(addr -> configure(addr, "spring.data.mongodb")),
@@ -20,6 +21,10 @@ public class InitDocker {
                                 System.setProperty("spring.r2dbc.url", "r2dbc:postgresql://" + addr.getHost() + ":" + addr.getPort() + "/test")
                         )
         ).then();
+    }
+
+    public static void start() {
+        startAsync().block(Duration.ofMinutes(5));
     }
 
     private static void configure(HostAndPort addr, String configPrefix) {

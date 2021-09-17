@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class EmojiControllerTest {
+public class W020_EmojiControllerTest {
 
 	public static final URI EMOJI_TRACKER_URL = URI.create("http://example.com");
 
@@ -121,7 +121,7 @@ public class EmojiControllerTest {
 	public void shouldReturnAggregatedEmojis() {
 		StepVerifier.withVirtualTime(() -> emojiController()
 				.aggregated()
-				.log(Loggers.getLogger(EmojiControllerTest.class))
+				.log(Loggers.getLogger(W020_EmojiControllerTest.class))
 				.take(7)
 		)
 				.expectSubscription()
@@ -143,7 +143,7 @@ public class EmojiControllerTest {
 	public void shouldReturnTop3() {
 		StepVerifier.withVirtualTime(() -> emojiController()
 				.top(4)
-				.log(Loggers.getLogger(EmojiControllerTest.class))
+				.log(Loggers.getLogger(W020_EmojiControllerTest.class))
 				.take(10)
 		)
 				.expectSubscription()
@@ -165,7 +165,7 @@ public class EmojiControllerTest {
 	public void shouldReturnTopStr() {
 		StepVerifier.withVirtualTime(() -> emojiController()
 				.topStr(4)
-				.log(Loggers.getLogger(EmojiControllerTest.class))
+				.log(Loggers.getLogger(W020_EmojiControllerTest.class))
 				.take(6)
 		)
 				.expectSubscription()
