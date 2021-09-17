@@ -3,6 +3,7 @@ package com.nurkiewicz.webflux.demo.emojis;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import reactor.core.publisher.Flux;
 
@@ -77,6 +78,14 @@ public class EmojiController {
     @GetMapping(value = "/emojis/topStr", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<String> topStr(@RequestParam(defaultValue = "10", required = false) int limit) {
         return Flux.empty();
+    }
+
+    private String keysAsOneString(Map<String, Integer> m) {
+        return m
+            .keySet()
+            .stream()
+            .map(EmojiController::codeToEmoji)
+            .collect(Collectors.joining());
     }
 
     private static String codeToEmoji(String hex) {
