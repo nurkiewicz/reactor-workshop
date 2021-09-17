@@ -153,8 +153,9 @@ public class R045_ErrorHandling {
 	}
 
 	Mono<User> broken() {
-		if (ThreadLocalRandom.current().nextDouble() > 0.1) {
-			return Mono.error(new RuntimeException("Opps " + Math.random()));
+		double rand = ThreadLocalRandom.current().nextDouble();
+		if (rand > 0.1) {
+			return Mono.error(new RuntimeException("Too big value " + rand));
 		}
 		return Mono.just(new User(1));
 	}

@@ -1,5 +1,10 @@
 package com.nurkiewicz.reactor;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+
 import com.nurkiewicz.reactor.domains.Domain;
 import com.nurkiewicz.reactor.domains.Domains;
 import com.nurkiewicz.reactor.user.LoremIpsum;
@@ -10,11 +15,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.GroupedFlux;
 import reactor.test.StepVerifier;
 import reactor.util.function.Tuple2;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Function;
 
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -91,6 +91,15 @@ public class R071_GroupBy {
     /**
      * TODO Count total number of linking root domains ({@link Domain#getLinkingRootDomains()}) to each TLD ({@link Domain#getTld()}
      * Sort from most to least number of linking root domains.
+     *
+     * If it was SQL:
+     *
+     * <code>
+     *   SELECT d.tld, SUM(linking_root_domains) AS s
+     *   FROM domains d
+     *   GROUP BY d.tld
+     *   ORDER BY s DESC
+     * </code>
      *
      * @see Domain#getTld()
      * @see Domain#getLinkingRootDomains()

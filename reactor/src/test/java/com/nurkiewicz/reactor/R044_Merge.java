@@ -1,5 +1,8 @@
 package com.nurkiewicz.reactor;
 
+import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
+
 import com.nurkiewicz.reactor.samples.CacheServer;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,9 +12,6 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.math.BigDecimal;
-import java.util.concurrent.TimeUnit;
 
 import static java.time.Duration.ofMillis;
 
@@ -63,7 +63,9 @@ public class R044_Merge {
 	private CacheServer second = new CacheServer("bar.com", ofMillis(20), 0);
 
 	/**
-	 * TODO Fetch data from first available cache server
+	 * TODO Fetch data from first available cache server.
+	 *
+	 * BTW this can also be achieved using {@link Mono#firstWithSignal(reactor.core.publisher.Mono[])}
 	 * @see Flux#mergeWith(Publisher)
 	 * @see Flux#next()
 	 */
