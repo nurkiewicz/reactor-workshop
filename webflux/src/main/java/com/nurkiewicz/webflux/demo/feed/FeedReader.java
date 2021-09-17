@@ -29,7 +29,6 @@ import reactor.core.publisher.Mono;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -100,21 +99,8 @@ public class FeedReader {
 		return webClient
 				.get()
 				.uri(url)
-				.exchange()
-				.flatMap(response -> {
-					if (response.statusCode().is3xxRedirection()) {
-						return followRedirect(response);
-					}
-					if (response.statusCode().is2xxSuccessful()) {
-						return response.bodyToMono(String.class);
-					}
-					return Mono.error(new HttpClientErrorException(url, response.statusCode(), "Error", null, null, null));
-				});
-	}
-
-	private Mono<? extends String> followRedirect(ClientResponse response) {
-		String redirectUrl = response.headers().header("Location").get(0);
-		return response.bodyToMono(Void.class).then(getAsync(redirectUrl));
+				.retrieve()
+				.bodyToMono(String.class);
 	}
 
 }
