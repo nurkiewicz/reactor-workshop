@@ -15,14 +15,18 @@ import com.rometools.rome.io.WireFeedInput;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OpmlReader {
 
-    /**
-     * TODO (1) Return {@link #allFeeds()} as {@link Flux}, lazily
-     */
+    public final String feedFile;
+
+    public OpmlReader(@Value("${feed-file}") String feedFile) {
+        this.feedFile = feedFile;
+    }
+
     public Flux<Outline> allFeedsStream() {
         return Mono
                 .fromCallable(this::allFeeds)
@@ -31,7 +35,7 @@ public class OpmlReader {
 
     public List<Outline> allFeeds() throws FeedException, IOException {
         WireFeedInput input = new WireFeedInput();
-        try(final InputStream inputStream = OpmlReader.class.getResourceAsStream("/feed-en.xml")) {
+        try(final InputStream inputStream = OpmlReader.class.getResourceAsStream(feedFile)) {
             final InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             final Reader reader = new BufferedReader(streamReader);
             Opml feed = (Opml) input.build(reader);

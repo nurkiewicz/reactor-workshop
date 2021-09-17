@@ -4,6 +4,7 @@ logging.level:
   com.nurkiewicz: DEBUG
 
 emoji-tracker.url: http://localhost:18080/subscribe/eps
+feed-file: "/feed-en.xml"
 
 management:
   endpoints:
