@@ -3,6 +3,7 @@ package com.nurkiewicz.webflux.demo.feed;
 import java.util.List;
 
 import com.rometools.opml.feed.opml.Outline;
+import org.junit.Ignore;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
 
@@ -11,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * TODO (1) Return {@link OpmlReader#allFeeds()} as {@link Flux} in {@link OpmlReader#allFeedsStream()}, lazily
  */
+@Ignore
 public class W030_OpmlReaderTest {
 
 	@Test
