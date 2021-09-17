@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.junit.Test;
 import reactor.test.StepVerifier;
+import reactor.util.Loggers;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.codec.ServerSentEvent;
@@ -120,7 +121,7 @@ public class EmojiControllerTest {
 	public void shouldReturnAggregatedEmojis() {
 		StepVerifier.withVirtualTime(() -> emojiController()
 				.aggregated()
-				.log()
+				.log(Loggers.getLogger(EmojiControllerTest.class))
 				.take(7)
 		)
 				.expectSubscription()
@@ -142,7 +143,7 @@ public class EmojiControllerTest {
 	public void shouldReturnTop3() {
 		StepVerifier.withVirtualTime(() -> emojiController()
 				.top(4)
-				.log()
+				.log(Loggers.getLogger(EmojiControllerTest.class))
 				.take(10)
 		)
 				.expectSubscription()
@@ -157,6 +158,19 @@ public class EmojiControllerTest {
 				.expectNext(Map.of("1F606", 3, "1F60A", 5, "1F60E", 3, "1F495", 4))
 				.expectNext(Map.of("1F606", 3, "1F60A", 5, "1F60E", 3, "1F495", 4 + 1))
 				.expectNext(Map.of("1F606", 3, "1F60A", 5, "1F60E", 3 + 1, "1F495", 5))
+				.verifyComplete();
+	}
+
+	@Test(timeout = 5000)
+	public void shouldReturnTopStr() {
+		StepVerifier.withVirtualTime(() -> emojiController()
+				.topStr(4)
+				.log(Loggers.getLogger(EmojiControllerTest.class))
+				.take(6)
+		)
+				.expectSubscription()
+				.thenAwait(ofSeconds(5))
+				.expectNext("", "😆", "😆😎", "😊😆😎", "💕😊😆😎", "😂💕😊😎")
 				.verifyComplete();
 	}
 

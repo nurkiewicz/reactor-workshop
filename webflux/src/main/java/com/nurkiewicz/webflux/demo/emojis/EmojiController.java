@@ -91,9 +91,10 @@ public class EmojiController {
      * @see #codeToEmoji(String)
      */
     @GetMapping(value = "/emojis/topStr", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<String> top10str(@RequestParam(defaultValue = "10", required = false) int limit) {
+    Flux<String> topStr(@RequestParam(defaultValue = "10", required = false) int limit) {
         return top(limit)
-            .map(this::keysAsOneString);
+            .map(this::keysAsOneString)
+                .distinctUntilChanged();
     }
 
     private String keysAsOneString(Map<String, Integer> m) {
