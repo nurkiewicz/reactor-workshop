@@ -1,11 +1,13 @@
 package com.nurkiewicz.reactor.samples;
 
+import java.time.Duration;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 
-import java.time.Duration;
-import java.util.concurrent.ThreadLocalRandom;
+import static java.time.Duration.ofMillis;
 
 public class CacheServer {
 
@@ -22,29 +24,26 @@ public class CacheServer {
 	}
 
 	public Mono<String> findBy(int id) {
-		return Mono.defer(() -> {
-			final double jitter = ThreadLocalRandom.current().nextGaussian() * delay.toMillis() / 10;
-			return Mono
-					.fromCallable(() -> findInternal(id))
-					.doOnSubscribe(s -> log.debug("Fetching {} from {}", id, host))
-					.doOnNext(value -> log.debug("Fetched {} from {}", id, host))
-					.delayElement(delay.plus(Duration.ofMillis((long) jitter)));
-		});
+		return Mono.defer(() ->
+				Mono
+						.fromCallable(() -> findInternal(id))
+						.doOnSubscribe(s -> log.debug("Fetching {} from {}", id, host))
+						.doOnNext(value -> log.debug("Fetched {} from {}", id, host)));
 	}
 
 	public String findBlocking(int id) {
 		log.debug("Fetching {} from {}", id, host);
-		Sleeper.sleepRandomly(delay);
 		final String value = findInternal(id);
 		log.debug("Returning {} from {}", value, host);
 		return value;
 	}
 
 	private String findInternal(int id) {
+		final double jitter = ThreadLocalRandom.current().nextGaussian() * delay.toMillis() / 10;
+		Sleeper.sleepRandomly(delay.plus(ofMillis((int) jitter)));
 		if (ThreadLocalRandom.current().nextDouble() < failureProbability) {
 			throw new IllegalStateException("Simulated fault");
 		}
-		final String value = "Value-" + id + " from " + host;
 		return "Value-" + id + " from " + host;
 	}
 
