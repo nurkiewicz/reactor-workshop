@@ -1,12 +1,12 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
-
-import java.time.Duration;
 
 import static java.time.Duration.ofSeconds;
 import static reactor.test.StepVerifier.withVirtualTime;
@@ -16,7 +16,7 @@ public class R070_VirtualClock {
 
 	private static final Logger log = LoggerFactory.getLogger(R070_VirtualClock.class);
 
-	@Test
+	@Test(timeout = 2_000)
 	public void virtualTime() throws Exception {
 		withVirtualTime(this::longRunning)
 				.expectSubscription()
