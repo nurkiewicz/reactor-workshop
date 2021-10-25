@@ -1,5 +1,11 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.List;
+import java.util.function.Function;
+
 import com.nurkiewicz.reactor.user.Item;
 import com.nurkiewicz.reactor.user.Order;
 import com.nurkiewicz.reactor.user.User;
@@ -12,14 +18,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.List;
-import java.util.function.Function;
-
 import static com.google.common.collect.ImmutableList.of;
-import static java.time.Month.*;
+import static java.time.Month.FEBRUARY;
+import static java.time.Month.JANUARY;
+import static java.time.Month.MARCH;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
@@ -52,8 +54,8 @@ public class R031_FlatMap {
 		//then
 		orders
 				.as(StepVerifier::create)
-				.expectNextMatches(order -> order.getItems().equals(of(new Item("Item of 11"))))
-				.expectNextMatches(order -> order.getItems().equals(of(new Item("Item of 12"))))
+				.expectNextMatches(order -> order.getItems().equals(of(new Item("Item of A11"), new Item("Item of B11"))))
+				.expectNextMatches(order -> order.getItems().equals(of(new Item("Item of A12"), new Item("Item of B12"))))
 				.verifyComplete();
 	}
 
@@ -73,8 +75,10 @@ public class R031_FlatMap {
 		//then
 		items
 				.as(StepVerifier::create)
-				.expectNext(new Item("Item of 11"))
-				.expectNext(new Item("Item of 12"))
+				.expectNext(new Item("Item of A11"))
+				.expectNext(new Item("Item of B11"))
+				.expectNext(new Item("Item of A12"))
+				.expectNext(new Item("Item of B12"))
 				.verifyComplete();
 	}
 

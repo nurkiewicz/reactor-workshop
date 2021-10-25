@@ -32,7 +32,7 @@ public class R050_SubscribeOnPublishOn {
 	public void subscribeOn() throws Exception {
 		Mono
 				.fromCallable(() -> reliable.findBlocking(41))
-				.subscribeOn(Schedulers.boundedElastic())
+				.subscribeOn(Schedulers.newBoundedElastic(10, 100, "SubscribeOn"))
 				.doOnNext(x -> log.info("Received {}", x))
 				.map(x -> {
 					log.info("Mapping {}", x);
@@ -55,8 +55,8 @@ public class R050_SubscribeOnPublishOn {
 
 		Mono
 				.zip(
-						one.subscribeOn(Schedulers.boundedElastic()),
-						two.subscribeOn(Schedulers.boundedElastic())
+						one.subscribeOn(Schedulers.newBoundedElastic(10, 100, "A")),
+						two.subscribeOn(Schedulers.newBoundedElastic(10, 100, "B"))
 				)
 				.doOnNext(x -> log.info("Received {}", x))
 				.map(x -> {
@@ -77,21 +77,21 @@ public class R050_SubscribeOnPublishOn {
 	public void publishOn() throws Exception {
 		Mono
 				.fromCallable(() -> reliable.findBlocking(41))
-				.subscribeOn(Schedulers.newElastic("Ela1"))
+				.subscribeOn(Schedulers.newBoundedElastic(10, 100, "A"))
 				.doOnNext(x -> log.info("Received {}", x))
-				.publishOn(Schedulers.newElastic("Ela2"))
+				.publishOn(Schedulers.newBoundedElastic(10, 100, "B"))
 				.map(x -> {
 					log.info("Mapping {}", x);
 					return x;
 				})
-				.publishOn(Schedulers.newElastic("Ela3"))
+				.publishOn(Schedulers.newBoundedElastic(10, 100, "B"))
 				.filter(x -> {
 					log.info("Filtering {}", x);
 					return true;
 				})
-				.publishOn(Schedulers.newElastic("Ela4"))
+				.publishOn(Schedulers.newBoundedElastic(10, 100, "C"))
 				.doOnNext(x -> log.info("Still here {}", x))
-				.publishOn(Schedulers.newElastic("Ela5"))
+				.publishOn(Schedulers.newBoundedElastic(10, 100, "D"))
 				.subscribe(x -> log.info("Finally received {}", x));
 
 		TimeUnit.SECONDS.sleep(2);

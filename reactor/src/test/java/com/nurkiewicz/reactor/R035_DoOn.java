@@ -1,13 +1,13 @@
 package com.nurkiewicz.reactor;
 
+import java.math.BigDecimal;
+import java.util.concurrent.atomic.LongAdder;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.math.BigDecimal;
-import java.util.concurrent.atomic.LongAdder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,11 +40,12 @@ public class R035_DoOn {
 				.doOnSubscribe(s -> log.info("Someone subscribed"))
 				.doOnNext(x -> log.info("Got {}", x))
 				.doOnSuccess(x -> log.info("Success {}", x))
-				.doOnSuccessOrError((x, err) -> log.info("Got value {} or error", x, err))
 				.doOnEach(s -> log.info("Got signal {}", s))
 				.doOnError(e -> log.warn("Got error", e))
 				.doOnRequest(n -> log.info("Subscriber requested {}", n))
 				.doOnTerminate(() -> log.info("Terminated, reason unknown"))
+				.doOnCancel(() -> log.info("Consumer no longer interested"))
+				.log(log.getName())
 				.subscribe();
 	}
 
