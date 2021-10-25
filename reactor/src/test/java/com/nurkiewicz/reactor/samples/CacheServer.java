@@ -6,6 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import static java.time.Duration.ofMillis;
 
@@ -27,6 +28,7 @@ public class CacheServer {
 		return Mono.defer(() ->
 				Mono
 						.fromCallable(() -> findInternal(id))
+						.subscribeOn(Schedulers.boundedElastic())
 						.doOnSubscribe(s -> log.debug("Fetching {} from {}", id, host))
 						.doOnNext(value -> log.debug("Fetched {} from {}", id, host)));
 	}
