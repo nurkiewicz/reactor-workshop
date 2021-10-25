@@ -1,7 +1,5 @@
 package com.nurkiewicz.reactor.domains;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URI;
@@ -37,8 +35,8 @@ public class Domain {
 		}
 	}
 
-	public String getTld() {
-		return StringUtils.substringAfterLast(url.getHost(), ".");
+	public Tld getTld() {
+		return new Tld(url);
 	}
 
 	public long getLinkingRootDomains() {
