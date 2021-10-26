@@ -28,7 +28,7 @@ public class R070_VirtualClock {
 	/**
 	 * TODO Apply {@link Mono#timeout(Duration)} of 1 second to a return value from {@link #longRunning()} method and verify it works
 	 */
-	@Test
+	@Test(timeout = 2_000)
 	public void timeout() throws Exception {
 		//TODO Write whole test :-)
 	}
