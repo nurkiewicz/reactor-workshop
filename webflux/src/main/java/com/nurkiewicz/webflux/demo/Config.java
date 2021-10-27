@@ -35,7 +35,10 @@ class Config {
         return WebClient
                 .builder()
                 .clientConnector(
-                        new ReactorClientHttpConnector(HttpClient.create().followRedirect(true)
+                        new ReactorClientHttpConnector(
+                                HttpClient.create()
+                                        .followRedirect(true)
+                                        .secure()
                 ))
                 .codecs(codecs ->
                         codecs.defaultCodecs().maxInMemorySize(1024 * 1024 * 10))
