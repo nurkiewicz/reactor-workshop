@@ -32,7 +32,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.testcontainers:testcontainers:1.16.2'
 	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.5.12'
 
