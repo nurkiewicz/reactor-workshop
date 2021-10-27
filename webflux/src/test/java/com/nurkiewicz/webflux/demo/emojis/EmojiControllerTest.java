@@ -148,7 +148,7 @@ public class EmojiControllerTest {
 	 * TODO Top most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
 	 */
 	@Test(timeout = 5000)
-	public void shouldReturnTop3() {
+	public void shouldReturnTop4() {
 		StepVerifier.withVirtualTime(() -> emojiController()
 				.top(4)
 				.log(Loggers.getLogger(EmojiControllerTest.class))
@@ -169,6 +169,12 @@ public class EmojiControllerTest {
 				.verifyComplete();
 	}
 
+	/**
+	 * TODO Top 10 most frequent emojis (without count), only picture. Do not emit duplicates
+	 *
+	 * @see EmojiController#keysAsOneString(Map)
+	 * @see EmojiController#codeToEmoji(String)
+	 */
 	@Test(timeout = 5000)
 	public void shouldReturnTopStr() {
 		StepVerifier.withVirtualTime(() -> emojiController()
