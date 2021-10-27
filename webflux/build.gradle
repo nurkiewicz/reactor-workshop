@@ -44,6 +44,8 @@ dependencies {
 	implementation 'com.rometools:rome-opml:1.16.0'
 	implementation 'com.google.guava:guava:31.0.1-jre'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.0.4'
 }
 
 

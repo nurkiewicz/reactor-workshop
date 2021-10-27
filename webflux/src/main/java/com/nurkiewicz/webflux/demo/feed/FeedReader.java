@@ -60,7 +60,7 @@ public class FeedReader {
      *
      * @see <a href="https://stackoverflow.com/questions/47655789/how-to-make-reactive-webclient-follow-3xx-redirects">How to make reactive webclient follow 3XX-redirects?</a>
      */
-    private Mono<String> getAsync(URL url) {
+    Mono<String> getAsync(URL url) {
         return Mono.error(new UnsupportedOperationException("Not implemented"));
     }
 
