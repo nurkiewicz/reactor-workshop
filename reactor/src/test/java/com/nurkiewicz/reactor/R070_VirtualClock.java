@@ -16,19 +16,20 @@ public class R070_VirtualClock {
 
 	private static final Logger log = LoggerFactory.getLogger(R070_VirtualClock.class);
 
-	@Test(timeout = 2_000)
+	@Test
 	public void virtualTime() throws Exception {
 		withVirtualTime(this::longRunning)
 				.expectSubscription()
 				.expectNoEvent(ofSeconds(2))
 				.expectNext("OK")
-				.verifyComplete();
+				.expectComplete()
+				.verify(ofSeconds(5));
 	}
 
 	/**
 	 * TODO Apply {@link Mono#timeout(Duration)} of 1 second to a return value from {@link #longRunning()} method and verify it works
 	 */
-	@Test(timeout = 2_000)
+	@Test
 	public void timeout() throws Exception {
 		//TODO Write whole test :-)
 	}
