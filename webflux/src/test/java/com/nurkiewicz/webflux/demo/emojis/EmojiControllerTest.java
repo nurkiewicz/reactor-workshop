@@ -114,6 +114,7 @@ public class EmojiControllerTest {
 	 *
 	 * Example output:
 	 * <code>
+	 *   data:{"2600":1}
 	 *   data:{"2600":1,"2728":1}
 	 *
 	 *   data:{"2600":1,"2728":1,"1F602":1}
