@@ -17,6 +17,7 @@ import org.springframework.web.reactive.socket.WebSocketSession;
  *     <li>New subscriber should receive last 5 messages before joining</li>
  *     <li>Add some logging: connecting/disconnecting, how many subscribers</li>
  * </ol>
+ * Hint: Sink should hold {@link String}s, not {@link WebSocketMessage}s
  */
 public class ChatHandler implements WebSocketHandler {
 

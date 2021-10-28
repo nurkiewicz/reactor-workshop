@@ -86,10 +86,6 @@ public class EmojiController {
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue)));
     }
 
-    /**
-     * TODO Top 10 most frequent emojis (without count), only picture
-     * @see #codeToEmoji(String)
-     */
     @GetMapping(value = "/emojis/topStr", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<String> topStr(@RequestParam(defaultValue = "10", required = false) int limit) {
         return top(limit)
@@ -97,7 +93,7 @@ public class EmojiController {
                 .distinctUntilChanged();
     }
 
-    private String keysAsOneString(Map<String, Integer> m) {
+    String keysAsOneString(Map<String, Integer> m) {
         return m
             .keySet()
             .stream()
@@ -112,7 +108,7 @@ public class EmojiController {
             .retrieve();
     }
 
-    private static String codeToEmoji(String hex) {
+    static String codeToEmoji(String hex) {
         final String[] codes = hex.split("-");
         if (codes.length == 2) {
             return hexToEmoji(codes[0]) + hexToEmoji(codes[1]);

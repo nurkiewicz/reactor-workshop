@@ -15,13 +15,14 @@ public class R070_VirtualClock {
 
 	private static final Logger log = LoggerFactory.getLogger(R070_VirtualClock.class);
 
-	@Test(timeout = 2_000)
+	@Test
 	public void virtualTime() throws Exception {
 		withVirtualTime(this::longRunning)
 				.expectSubscription()
 				.expectNoEvent(ofSeconds(2))
 				.expectNext("OK")
-				.verifyComplete();
+				.expectComplete()
+				.verify(ofSeconds(5));
 	}
 
 	/**

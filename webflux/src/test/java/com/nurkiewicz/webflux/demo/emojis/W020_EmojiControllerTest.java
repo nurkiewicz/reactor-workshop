@@ -112,8 +112,14 @@ public class W020_EmojiControllerTest {
 	 *
 	 * Example output:
 	 * <code>
+	 *   data:{"2600":1}
 	 *   data:{"2600":1,"2728":1}
+	 *
+	 *   data:{"2600":1,"2728":1,"1F602":1}
+	 *   data:{"2600":3,"2728":1,"1F602":1}
 	 *   data:{"2600":3,"2728":1,"1F602":1,"2764":1}
+	 *
+	 *   data:{"2600":3,"2728":5,"1F602":1,"2764":1}
 	 *   data:{"2600":3,"2728":5,"1F602":1,"2764":1,"2828":1}
 	 * </code>
 	 */
@@ -140,7 +146,7 @@ public class W020_EmojiControllerTest {
 	 * TODO Top most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
 	 */
 	@Test(timeout = 5000)
-	public void shouldReturnTop3() {
+	public void shouldReturnTop4() {
 		StepVerifier.withVirtualTime(() -> emojiController()
 				.top(4)
 				.log(Loggers.getLogger(W020_EmojiControllerTest.class))
@@ -161,6 +167,12 @@ public class W020_EmojiControllerTest {
 				.verifyComplete();
 	}
 
+	/**
+	 * TODO Top 10 most frequent emojis (without count), only picture. Do not emit duplicates
+	 *
+	 * @see EmojiController#keysAsOneString(Map)
+	 * @see EmojiController#codeToEmoji(String)
+	 */
 	@Test(timeout = 5000)
 	public void shouldReturnTopStr() {
 		StepVerifier.withVirtualTime(() -> emojiController()

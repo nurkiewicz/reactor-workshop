@@ -32,7 +32,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.testcontainers:testcontainers:1.16.2'
 	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.5.12'
 
@@ -44,6 +43,8 @@ dependencies {
 	implementation 'com.rometools:rome-opml:1.16.0'
 	implementation 'com.google.guava:guava:31.0.1-jre'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.0.4'
 }
 
 

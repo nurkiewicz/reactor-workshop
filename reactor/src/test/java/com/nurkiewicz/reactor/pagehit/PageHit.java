@@ -24,7 +24,7 @@ public class PageHit {
 	public static PageHit random(Fairy fairy) {
 		try {
 			return new PageHit(
-					Instant.ofEpochMilli(Schedulers.boundedElastic().now(TimeUnit.MILLISECONDS)),
+					Instant.ofEpochMilli(Schedulers.parallel().now(TimeUnit.MILLISECONDS)),
 					Country.random(),
 					new URI(randomUrl(fairy)));
 		} catch (URISyntaxException e) {
