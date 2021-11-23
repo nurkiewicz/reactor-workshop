@@ -113,7 +113,7 @@ public class R041_Window {
 
 		//when
 		//TODO operator here
-		final Flux<Integer> fps = null;
+		final Flux<Long> fps = null;
 
 		//then
 		fps
