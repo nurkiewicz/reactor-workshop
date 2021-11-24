@@ -24,15 +24,17 @@ public class R080_Backpressure {
         Hooks.onOperatorDebug();
         final Flux<Long> flux = Flux
                 .interval(Duration.ofMillis(10))
-                .doOnNext(x -> log.info("Emitting {}", x))
-                .onBackpressureError()
+                .doOnError(e -> log.error("Error", e))
                 .onBackpressureDrop(x -> log.warn("Dropped {}", x))
-                .publishOn(newBoundedElastic(10 , 10, "Two"));
+                .doOnNext(x -> log.info("Emitting {}", x))
+                .doOnRequest(n -> log.info("Requested {}", n))
+                .publishOn(newBoundedElastic(10 , 10, "Subscriber"))
+                .doOnNext(x -> log.info("Handling {}", x))
+                ;
 
         //when
         flux.subscribe(x -> {
-                    log.info("Handling {}", x);
-                    Sleeper.sleep(Duration.ofMillis(1110));
+                    Sleeper.sleep(Duration.ofMillis(100));
                 },
                 e -> {
                     log.error("Opps", e);
