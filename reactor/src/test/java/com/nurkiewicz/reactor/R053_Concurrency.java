@@ -1,5 +1,10 @@
 package com.nurkiewicz.reactor;
 
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
 import com.nurkiewicz.reactor.domains.Crawler;
 import com.nurkiewicz.reactor.domains.Domain;
 import com.nurkiewicz.reactor.domains.Domains;
@@ -14,11 +19,6 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
-
-import java.net.URI;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -136,6 +136,36 @@ public class R053_Concurrency {
 	 */
 	@Test
 	public void zipIsBroken() throws Exception {
+		//given
+		final Flux<Domain> domains = Domains.all();
+
+		//when
+		Flux<Html> responses = null; // TODO
+		final Flux<Tuple2<URI, Html>> tuples = Flux.zip(
+				domains.map(Domain::getUri),
+				responses
+		);
+
+		//then
+		final List<Tuple2<URI, Html>> list = tuples
+				.collectList()
+				.block();
+
+		assertThat(list)
+				.hasSize(500)
+				.contains(Tuples.of(new URI("http://archive.org"), new Html("<html><title>http://archive.org</title></html>")))
+				.contains(Tuples.of(new URI("http://github.com"), new Html("<html><title>http://github.com</title></html>")));
+
+		list.forEach(pair ->
+				assertThat(pair.getT2().getRaw()).contains(pair.getT1().getHost()));
+	}
+
+	/**
+	 * TODO Generate list of tuples, but this time by zipping ({@link Flux#zip(Publisher, Publisher)})
+	 * @see Flux#flatMapSequential(Function)
+	 */
+	@Test
+	public void zipIsNotBrokenIfUsedWithFlatMapSequential() throws Exception {
 		//given
 		final Flux<Domain> domains = Domains.all();
 
