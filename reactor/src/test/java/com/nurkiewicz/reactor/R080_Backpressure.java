@@ -1,5 +1,8 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
 import com.nurkiewicz.reactor.samples.Sleeper;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -8,10 +11,7 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Hooks;
 
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
-
-import static reactor.core.scheduler.Schedulers.newElastic;
+import static reactor.core.scheduler.Schedulers.newBoundedElastic;
 
 @Ignore
 public class R080_Backpressure {
@@ -27,7 +27,7 @@ public class R080_Backpressure {
                 .doOnNext(x -> log.info("Emitting {}", x))
                 .onBackpressureError()
                 .onBackpressureDrop(x -> log.warn("Dropped {}", x))
-                .publishOn(newElastic("Two"));
+                .publishOn(newBoundedElastic(10 , 10, "Two"));
 
         //when
         flux.subscribe(x -> {
