@@ -1,14 +1,14 @@
 package com.nurkiewicz.reactor.domains;
 
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public class Domains {
 
@@ -19,9 +19,11 @@ public class Domains {
 	 * @see Mono#justOrEmpty(Optional)
 	 */
 	public static Flux<Domain> all() {
-		return Flux.empty();
+		return Flux.defer(
+				() -> Flux
+						.fromStream(open().lines())
+						.flatMap(line -> Mono.justOrEmpty(parse(line))));
 	}
-
 	/**
 	 * File from <a href="https://moz.com/top500">https://moz.com/top500</a>.
 	 * Don't change this.
