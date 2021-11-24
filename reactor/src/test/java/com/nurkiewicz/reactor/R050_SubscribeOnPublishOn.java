@@ -86,14 +86,14 @@ public class R050_SubscribeOnPublishOn {
 					log.info("Mapping {}", x);
 					return x;
 				})
-				.publishOn(Schedulers.newBoundedElastic(10, 100, "B"))
+				.publishOn(Schedulers.newBoundedElastic(10, 100, "C"))
 				.filter(x -> {
 					log.info("Filtering {}", x);
 					return true;
 				})
-				.publishOn(Schedulers.newBoundedElastic(10, 100, "C"))
-				.doOnNext(x -> log.info("Still here {}", x))
 				.publishOn(Schedulers.newBoundedElastic(10, 100, "D"))
+				.doOnNext(x -> log.info("Still here {}", x))
+				.publishOn(Schedulers.newBoundedElastic(10, 100, "E"))
 				.subscribe(x -> log.info("Finally received {}", x));
 
 		TimeUnit.SECONDS.sleep(2);
