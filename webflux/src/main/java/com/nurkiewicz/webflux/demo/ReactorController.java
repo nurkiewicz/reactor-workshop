@@ -50,7 +50,8 @@ class ReactorController {
 	Flux<Ping> stream() {
 		return Flux
 				.interval(Duration.ofMillis(500))
-				.map(x -> new Ping(x, Instant.now()));
+				.map(x -> new Ping(x, Instant.now()))
+				.doOnCancel(() -> log.info("Interrupted by client"));
 	}
 
 	@GetMapping("/error/immediate")
