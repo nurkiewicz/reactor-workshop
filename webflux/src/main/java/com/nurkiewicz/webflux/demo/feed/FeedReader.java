@@ -29,6 +29,7 @@ public class FeedReader {
 
     /**
      * TODO (3) Return <code>Flux&lt;SyndEntry&gt;</code>
+     * Start by replacing {@link #get(URL)} with {@link #getAsync(URL)}.
      */
     public List<SyndEntry> fetch(URL url) throws IOException, FeedException, ParserConfigurationException, SAXException {
         final String feedBody = get(url);
