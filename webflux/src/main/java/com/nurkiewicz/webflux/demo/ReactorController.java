@@ -47,10 +47,10 @@ class ReactorController {
 	}
 
 	@GetMapping(value = "/stream", produces = TEXT_EVENT_STREAM_VALUE)
-	Flux<Data> stream() {
+	Flux<Ping> stream() {
 		return Flux
 				.interval(Duration.ofMillis(500))
-				.map(x -> new Data(x, Instant.now()));
+				.map(x -> new Ping(x, Instant.now()));
 	}
 
 	@GetMapping("/error/immediate")
@@ -100,12 +100,12 @@ class ReactorController {
 
 }
 
-class Data {
+class Ping {
 
 	private final long seqNo;
 	private final Instant timestamp;
 
-	Data(long seqNo, Instant timestamp) {
+	Ping(long seqNo, Instant timestamp) {
 		this.seqNo = seqNo;
 		this.timestamp = timestamp;
 	}
