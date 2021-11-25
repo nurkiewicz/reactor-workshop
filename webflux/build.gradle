@@ -45,6 +45,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.0.4'
+	implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
 }
 
 
