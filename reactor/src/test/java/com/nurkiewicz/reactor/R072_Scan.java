@@ -1,11 +1,14 @@
 package com.nurkiewicz.reactor;
 
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.function.BiFunction;
 
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
@@ -66,5 +69,39 @@ public class R072_Scan {
                 .as(StepVerifier::create)
                 .expectNext(10.0, 15.0, 12.0, 10.0, 12.0, 14.0)
                 .verifyComplete();
+    }
+}
+
+class BankOperation {
+    private final Instant when;
+    private final BigDecimal amount;
+
+    BankOperation(Instant when, BigDecimal amount) {
+        this.when = when;
+        this.amount = amount;
+    }
+
+    public Instant getWhen() {
+        return when;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+}
+
+interface Bank {
+    Flux<BankOperation> myAccount();
+
+    default Mono<BigDecimal> balance() {
+        return myAccount()
+                .map(BankOperation::getAmount)
+                .reduce(BigDecimal::add);
+    }
+
+    default Flux<BigDecimal> balanceHistory() {
+        return myAccount()
+                .map(BankOperation::getAmount)
+                .scan(BigDecimal::add);
     }
 }

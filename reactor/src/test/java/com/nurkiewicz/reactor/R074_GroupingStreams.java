@@ -1,5 +1,7 @@
 package com.nurkiewicz.reactor;
 
+import java.util.concurrent.TimeUnit;
+
 import com.nurkiewicz.reactor.pagehit.Country;
 import com.nurkiewicz.reactor.pagehit.PageHit;
 import com.nurkiewicz.reactor.pagehit.PageHits;
@@ -10,8 +12,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
-
-import java.util.concurrent.TimeUnit;
 
 import static java.time.Duration.ofSeconds;
 
