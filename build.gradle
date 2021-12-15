@@ -9,7 +9,7 @@ subprojects {
 
     dependencies {
         implementation 'io.projectreactor:reactor-core:3.4.13'
-        implementation 'io.projectreactor:reactor-tools:3.4.12'
+        implementation 'io.projectreactor:reactor-tools:3.4.13'
         implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
         implementation 'org.slf4j:slf4j-api:1.7.32'
         implementation 'com.github.ben-manes.caffeine:caffeine:3.0.4'
