@@ -32,17 +32,17 @@ class ReactorController {
 	}
 
 	@GetMapping("/hello")
+	Mono<String> fast() {
+		return Mono
+				.just(Instant.now())
+				.map(Instant::toString);
+	}
+
+	@GetMapping("/slow")
 	Mono<String> hello() {
 		return Mono
 				.just(Instant.now())
 				.delayElement(Duration.ofMillis(500))
-				.map(Instant::toString);
-	}
-
-	@GetMapping("/fast")
-	Mono<String> fast() {
-		return Mono
-				.just(Instant.now())
 				.map(Instant::toString);
 	}
 
