@@ -8,19 +8,19 @@ subprojects {
     }
 
     dependencies {
-        implementation 'io.projectreactor:reactor-core:3.4.13'
-        implementation 'io.projectreactor:reactor-tools:3.4.13'
+        implementation 'io.projectreactor:reactor-core:3.4.14'
+        implementation 'io.projectreactor:reactor-tools:3.4.14'
         implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
-        implementation 'org.slf4j:slf4j-api:1.7.32'
+        implementation 'org.slf4j:slf4j-api:1.7.35'
         implementation 'com.github.ben-manes.caffeine:caffeine:3.0.5'
-        implementation 'ch.qos.logback:logback-classic:1.2.8'
+        implementation 'ch.qos.logback:logback-classic:1.2.10'
 
         testImplementation 'junit:junit:4.13.2'
-        testImplementation 'org.assertj:assertj-core:3.21.0'
+        testImplementation 'org.assertj:assertj-core:3.22.0'
         testImplementation 'org.awaitility:awaitility:4.1.1'
-        testImplementation 'io.projectreactor:reactor-test:3.4.13'
+        testImplementation 'io.projectreactor:reactor-test:3.4.14'
         testImplementation 'com.devskiller:jfairy:0.6.4'
-        testImplementation 'org.mockito:mockito-core:4.1.0'
+        testImplementation 'org.mockito:mockito-core:4.3.1'
     }
 
 }
