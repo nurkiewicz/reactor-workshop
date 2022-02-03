@@ -46,6 +46,14 @@ class ReactorController {
 				.map(Instant::toString);
 	}
 
+	@GetMapping(value = "/array")
+	Flux<Ping> array() {
+		return Flux
+				.range(1, 5)
+				.map(x -> new Ping(x, Instant.now()))
+				.doOnCancel(() -> log.info("Interrupted by client"));
+	}
+
 	@GetMapping(value = "/stream", produces = TEXT_EVENT_STREAM_VALUE)
 	Flux<Ping> stream() {
 		return Flux
