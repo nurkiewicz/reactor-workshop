@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import static java.util.Comparator.comparing;
 import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.toMap;
 import static org.springframework.http.MediaType.TEXT_EVENT_STREAM_VALUE;
@@ -77,11 +76,11 @@ public class EmojiController {
             .distinctUntilChanged();
     }
 
-    private Map<String, Integer> topValues(Map<String, Integer> agg, int n) {
+    private <T> Map<T, Integer> topValues(Map<T, Integer> agg, int n) {
         return new HashMap<>(agg
                 .entrySet()
                 .stream()
-                .sorted(comparing(Map.Entry::getValue, reverseOrder()))
+                .sorted(Map.Entry.comparingByValue(reverseOrder()))
                 .limit(n)
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue)));
     }
