@@ -67,7 +67,7 @@ public class R032_AdvancedFiltering {
 		//then
 		items
 				.as(StepVerifier::create)
-				.expectNextCount(2)
+				.expectNextCount(4)
 				.verifyComplete();
 	}
 
