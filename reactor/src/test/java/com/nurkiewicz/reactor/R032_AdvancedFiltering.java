@@ -1,6 +1,7 @@
 package com.nurkiewicz.reactor;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -19,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.SynchronousSink;
 import reactor.test.StepVerifier;
 
 @Ignore
@@ -62,12 +64,17 @@ public class R032_AdvancedFiltering {
 				.flatMap(UserOrders::lastOrderOf);
 
 		//when
-		final Flux<Item> items = null; //Hint: start by copy-pasting solution from above using handle()
-
+		final Flux<Item> items = orders
+				.handle((Order order, SynchronousSink<List<Item>> sink) -> {
+					if (!order.getItems().isEmpty()) {
+						sink.next(order.getItems());
+					}
+				})
+				.concatMapIterable(list -> list);
 		//then
 		items
 				.as(StepVerifier::create)
-				.expectNextCount(2)
+				.expectNextCount(4)
 				.verifyComplete();
 	}
 
