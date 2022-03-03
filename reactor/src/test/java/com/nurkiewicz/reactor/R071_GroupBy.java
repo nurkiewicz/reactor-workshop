@@ -23,9 +23,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static reactor.util.function.Tuples.of;
 
 @Ignore
-public class R061_GroupBy {
+public class R071_GroupBy {
 
-    private static final Logger log = LoggerFactory.getLogger(R061_GroupBy.class);
+    private static final Logger log = LoggerFactory.getLogger(R071_GroupBy.class);
 
     @Test
     public void groupWordsByLength() throws Exception {
