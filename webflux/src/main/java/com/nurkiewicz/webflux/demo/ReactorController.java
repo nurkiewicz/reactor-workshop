@@ -34,15 +34,15 @@ class ReactorController {
 	@GetMapping("/hello")
 	Mono<String> fast() {
 		return Mono
-				.just(Instant.now())
+				.fromCallable(Instant::now)
 				.map(Instant::toString);
 	}
 
 	@GetMapping("/slow")
 	Mono<String> hello() {
 		return Mono
-				.just(Instant.now())
-				.delayElement(Duration.ofMillis(500))
+				.fromCallable(Instant::now)
+				.delayElement(Duration.ofSeconds(1))
 				.map(Instant::toString);
 	}
 
@@ -50,8 +50,7 @@ class ReactorController {
 	Flux<Ping> array() {
 		return Flux
 				.range(1, 5)
-				.map(x -> new Ping(x, Instant.now()))
-				.doOnCancel(() -> log.info("Interrupted by client"));
+				.map(x -> new Ping(x, Instant.now()));
 	}
 
 	@GetMapping(value = "/stream", produces = TEXT_EVENT_STREAM_VALUE)

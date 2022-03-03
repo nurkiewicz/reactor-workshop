@@ -13,9 +13,9 @@ import reactor.test.StepVerifier;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
-public class R072_Scan {
+public class R062_Scan {
 
-    private static final Logger log = LoggerFactory.getLogger(R072_Scan.class);
+    private static final Logger log = LoggerFactory.getLogger(R062_Scan.class);
 
     @Test
     public void sumUsingScan() throws Exception {

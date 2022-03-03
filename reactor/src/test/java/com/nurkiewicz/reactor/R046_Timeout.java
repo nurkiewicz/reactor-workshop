@@ -22,7 +22,7 @@ public class R046_Timeout {
 
 
 	/**
-	 * TODO Add fallback to {@link Flux#timeout(Duration)}
+	 * TODO Add fallback to {@link Mono#timeout(Duration)}
 	 * It should return -1 when timeout of 100ms occurs.
 	 */
 	@Test
