@@ -65,7 +65,7 @@ public class R044_Merge {
 	/**
 	 * TODO Fetch data from first available cache server.
 	 *
-	 * BTW this can also be achieved using {@link Mono#firstWithSignal(reactor.core.publisher.Mono[])}
+	 * BTW this can also be achieved using {@link Mono#firstWithValue(Mono, Mono[])}, but it swallows errors
 	 * @see Flux#mergeWith(Publisher)
 	 * @see Flux#next()
 	 */
