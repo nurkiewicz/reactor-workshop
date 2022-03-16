@@ -59,8 +59,8 @@ public class R044_Merge {
 		TimeUnit.SECONDS.sleep(2);
 	}
 
-	private CacheServer first = new CacheServer("foo.com", ofMillis(20), 0);
-	private CacheServer second = new CacheServer("bar.com", ofMillis(20), 0);
+	private CacheServer foo = new CacheServer("foo.com", ofMillis(20), 0);
+	private CacheServer bar = new CacheServer("bar.com", ofMillis(20), 0);
 
 	/**
 	 * TODO Fetch data from first available cache server.
@@ -72,8 +72,8 @@ public class R044_Merge {
 	@Test
 	public void fetchDataFromFirstAvailableServer() throws Exception {
 		//given
-		final Mono<String> fv = first.findBy(42);
-		final Mono<String> sv = second.findBy(42);
+		final Mono<String> fooResponse = foo.findBy(42);
+		final Mono<String> barResponse = bar.findBy(42);
 
 		//when
 		Mono<String> fastest = null; // TODO
