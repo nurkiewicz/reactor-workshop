@@ -116,7 +116,7 @@ public class R041_Window {
 	@Test
 	public void countFramesPerSecond() throws Exception {
 		//given
-		final Flux<Long> frames = Flux.interval(Duration.ofMillis(16));
+		final Flux<Long> frames = Flux.interval(Duration.ofNanos(16667 * 1000));
 
 		//when
 		final Flux<Integer> fps = frames

@@ -68,7 +68,7 @@ public class R010_LetsMeetMono {
 	@Test
 	public void monoIsLazy() throws Exception {
 		//given
-		AtomicInteger counter = new AtomicInteger();
+		AtomicInteger counter = new AtomicInteger(0);
 
 		//when
 		Mono.fromCallable(() -> counter.incrementAndGet());
@@ -80,7 +80,7 @@ public class R010_LetsMeetMono {
 	@Test
 	public void lazyWithoutCaching() throws Exception {
 		//given
-		AtomicInteger counter = new AtomicInteger();
+		AtomicInteger counter = new AtomicInteger(0);
 		final Mono<Integer> lazy = Mono.fromCallable(() -> counter.incrementAndGet());
 
 		//when
@@ -98,7 +98,7 @@ public class R010_LetsMeetMono {
 	@Test
 	public void cachingMonoComputesOnlyOnce() throws Exception {
 		//given
-		AtomicInteger counter = new AtomicInteger();
+		AtomicInteger counter = new AtomicInteger(0);
 		final Mono<Integer> lazy = Mono.fromCallable(counter::incrementAndGet).cache();
 
 		//when
