@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * <a href="https://projectreactor.io/docs/core/release/reference/#context">Reference</a>
  */
-@Ignore
 public class R091_Context {
 
 	private static final Logger log = LoggerFactory.getLogger(R091_Context.class);
@@ -23,6 +22,7 @@ public class R091_Context {
 	private final String KEY = "KEY";
 
 	@Test
+	@Ignore
 	public void threadLocalIsBroken() {
 		ThreadLocal<String> txId = new ThreadLocal<>();
 		Mono<String> mono = Mono
@@ -63,7 +63,8 @@ public class R091_Context {
 	public void passTraceIdToChildren() {
 		JwtToken jwt = new JwtToken("adam");
 		Flux<String> flux = Flux.just(1, 2, 3)
-				.flatMap(id -> Mono.deferContextual(ctx -> query(id, ctx.get(KEY))));
+				.flatMap(id -> Mono.deferContextual(ctx -> query(id, ctx.get(KEY))))
+				.contextWrite(ctx -> ctx.put(KEY, jwt));
 
 		assertThat(flux.collectList().block()).containsExactly(
 				"Response for " + 1 + " from " + "adam",
