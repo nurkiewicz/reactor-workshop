@@ -17,6 +17,7 @@ import reactor.core.publisher.GroupedFlux;
 import reactor.test.StepVerifier;
 import reactor.util.function.Tuple2;
 
+import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static reactor.util.function.Tuples.of;
@@ -119,10 +120,9 @@ public class R071_GroupBy {
                 .groupBy(Domain::getTld)
                 .flatMap(tlds -> tlds
                         .map(Domain::getLinkingRootDomains)
-                        .collectList()
-                        .map(this::sum)
+                        .reduce(Long::sum)
                         .map(total -> of(tlds.key(), total)))
-                .sort(Comparator.comparing(t -> -t.getT2()));
+                .sort(Comparator.comparing(Tuple2::getT2, reverseOrder()));
 
         //then
         tldToTotalLinkingRootDomains
