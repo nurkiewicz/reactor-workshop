@@ -32,7 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'org.testcontainers:testcontainers:1.16.3'
+	implementation 'org.testcontainers:testcontainers:1.17.0'
 	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.6.7'
 
   	implementation 'io.r2dbc:r2dbc-postgresql:0.8.12.RELEASE'
