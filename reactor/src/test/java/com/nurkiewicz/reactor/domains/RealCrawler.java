@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentMap;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
@@ -27,36 +28,46 @@ public class RealCrawler {
 
 	public Flux<URI> outgoingLinks(URI uri) {
 		return Mono
-				.fromCallable(() -> {
-					if (crawled.putIfAbsent(uri, Instant.now()) == null) {
-						Document doc = Jsoup.connect(uri.toString()).get();
-						return doc.select("a");
-					} else {
-						return null;
-					}
-				})
-				.subscribeOn(scheduler)
+				.just(uri)
+				.flatMap(u -> Mono
+						.fromCallable(() -> {
+							if (crawled.putIfAbsent(u, Instant.now()) == null) {
+								Document doc = Jsoup.connect(u.toString()).get();
+								return doc.select("a");
+							} else {
+								return null;
+							}
+						})
+						.subscribeOn(scheduler))
 				.doOnError(e -> log.warn("Failed to load {}", uri, e))
 				.onErrorResume(e -> Mono.empty())
 				.flatMapMany(elements -> Flux.fromStream(elements.stream()))
+				.transform(this::extractUrls);
+	}
+
+	private Flux<URI> extractUrls(Flux<Element> aElement) {
+		return aElement
 				.map(e -> e.absUrl("href"))
 				.filter(StringUtils::isNotEmpty)
 				.map(href -> StringUtils.substringBefore(href, "#"))
-				.flatMap(s -> Mono.fromCallable(() -> URI.create(s)).onErrorResume(e -> Mono.empty()))
-				.filter(u -> !crawled.containsKey(u));
-
+				.flatMap(s -> Mono
+						.fromCallable(() -> URI.create(s))
+						.doOnError(e -> log.warn("Failed to parse {} ({})", s, e.toString()))
+						.onErrorResume(e -> Mono.empty())
+				).filter(uri -> uri.getScheme().equals("http") || uri.getScheme().equals("https"));
 	}
 
 	private Flux<URI> crawl(URI url) {
-		return Mono.just(url).expand(this::outgoingLinks);
+		return Mono.just(url)
+				.expand(this::outgoingLinks);
 	}
 
 	public static void main(String[] args) {
 		RealCrawler crawler = new RealCrawler();
 		crawler
-				.crawl(URI.create("https://www.yahoo.com"))
-				.delayElements(Duration.ofMillis(500))
-				.take(100)
+				.crawl(URI.create("https://nurkiewicz.com"))
+				.delayElements(Duration.ofMillis(100))
+				.take(1000)
 				.doOnNext(url -> log.info(url.toString()))
 				.blockLast();
 	}
