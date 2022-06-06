@@ -4,6 +4,7 @@ logging.level:
   com.nurkiewicz: DEBUG
 
 emoji-tracker.url: http://localhost:18080/subscribe/eps
+feed-file: "/feed-en.xml"
 
 management:
   endpoints:
@@ -11,6 +12,9 @@ management:
       exposure:
         include: '*'
 spring:
+  mongodb:
+    embedded:
+      version: 3.6.23
   r2dbc:
     username: test
     password: test

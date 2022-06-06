@@ -1,7 +1,13 @@
 package com.nurkiewicz.reactor;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+
 import com.nurkiewicz.reactor.domains.Domain;
 import com.nurkiewicz.reactor.domains.Domains;
+import com.nurkiewicz.reactor.domains.Tld;
 import com.nurkiewicz.reactor.user.LoremIpsum;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -11,11 +17,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.GroupedFlux;
 import reactor.test.StepVerifier;
 import reactor.util.function.Tuple2;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Function;
 
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -90,6 +91,15 @@ public class R071_GroupBy {
      * TODO Count total number of linking root domains ({@link Domain#getLinkingRootDomains()}) to each TLD ({@link Domain#getTld()}
      * Sort from most to least number of linking root domains.
      *
+     * If it was SQL:
+     *
+     * <code>
+     *   SELECT d.tld, SUM(linking_root_domains) AS s
+     *   FROM domains d
+     *   GROUP BY d.tld
+     *   ORDER BY s DESC
+     * </code>
+     *
      * @see Domain#getTld()
      * @see Domain#getLinkingRootDomains()
      * @see Flux#groupBy(Function)
@@ -103,47 +113,47 @@ public class R071_GroupBy {
         final Flux<Domain> domains = Domains.all();
 
         //when
-        final Flux<Tuple2<String, Long>> tldToTotalLinkingRootDomains = null; //TODO
+        final Flux<Tuple2<Tld, Long>> tldToTotalLinkingRootDomains = null; //TODO
 
         //then
         tldToTotalLinkingRootDomains
                 .as(StepVerifier::create)
-                .expectNext(of("com", 87_760_745L))
-                .expectNext(of("org", 9_041_936L))
-                .expectNext(of("gov", 2_331_526L))
-                .expectNext(of("uk", 1_922_036L))
-                .expectNext(of("jp", 1_869_929L))
-                .expectNext(of("net", 1_627_997L))
-                .expectNext(of("edu", 1_490_589L))
-                .expectNext(of("be", 1_076_391L))
-                .expectNext(of("de", 1_056_153L))
-                .expectNext(of("cn", 1_051_999L))
-                .expectNext(of("gl", 995_299L))
-                .expectNext(of("ru", 917_921L))
-                .expectNext(of("ly", 738_098L))
-                .expectNext(of("co", 533_094L))
-                .expectNext(of("eu", 454_617L))
-                .expectNext(of("me", 424_173L))
-                .expectNext(of("fr", 404_814L))
-                .expectNext(of("ca", 233_912L))
-                .expectNext(of("es", 229_458L))
-                .expectNext(of("nl", 204_242L))
-                .expectNext(of("to", 181_817L))
-                .expectNext(of("la", 177_604L))
-                .expectNext(of("pl", 171_095L))
-                .expectNext(of("br", 158_381L))
-                .expectNext(of("it", 150_409L))
-                .expectNext(of("us", 142_895L))
-                .expectNext(of("au", 139_500L))
-                .expectNext(of("io", 124_859L))
-                .expectNext(of("tv", 105_500L))
-                .expectNext(of("int", 104_755L))
-                .expectNext(of("ch", 90_364L))
-                .expectNext(of("cz", 87_073L))
-                .expectNext(of("in", 55_601L))
-                .expectNext(of("se", 55_181L))
-                .expectNext(of("info", 37_701L))
-                .expectNext(of("no", 35_631L))
+                .expectNext(of(new Tld("com"), 87_760_745L))
+                .expectNext(of(new Tld("org"), 9_041_936L))
+                .expectNext(of(new Tld("gov"), 2_331_526L))
+                .expectNext(of(new Tld("uk"), 1_922_036L))
+                .expectNext(of(new Tld("jp"), 1_869_929L))
+                .expectNext(of(new Tld("net"), 1_627_997L))
+                .expectNext(of(new Tld("edu"), 1_490_589L))
+                .expectNext(of(new Tld("be"), 1_076_391L))
+                .expectNext(of(new Tld("de"), 1_056_153L))
+                .expectNext(of(new Tld("cn"), 1_051_999L))
+                .expectNext(of(new Tld("gl"), 995_299L))
+                .expectNext(of(new Tld("ru"), 917_921L))
+                .expectNext(of(new Tld("ly"), 738_098L))
+                .expectNext(of(new Tld("co"), 533_094L))
+                .expectNext(of(new Tld("eu"), 454_617L))
+                .expectNext(of(new Tld("me"), 424_173L))
+                .expectNext(of(new Tld("fr"), 404_814L))
+                .expectNext(of(new Tld("ca"), 233_912L))
+                .expectNext(of(new Tld("es"), 229_458L))
+                .expectNext(of(new Tld("nl"), 204_242L))
+                .expectNext(of(new Tld("to"), 181_817L))
+                .expectNext(of(new Tld("la"), 177_604L))
+                .expectNext(of(new Tld("pl"), 171_095L))
+                .expectNext(of(new Tld("br"), 158_381L))
+                .expectNext(of(new Tld("it"), 150_409L))
+                .expectNext(of(new Tld("us"), 142_895L))
+                .expectNext(of(new Tld("au"), 139_500L))
+                .expectNext(of(new Tld("io"), 124_859L))
+                .expectNext(of(new Tld("tv"), 105_500L))
+                .expectNext(of(new Tld("int"), 104_755L))
+                .expectNext(of(new Tld("ch"), 90_364L))
+                .expectNext(of(new Tld("cz"), 87_073L))
+                .expectNext(of(new Tld("in"), 55_601L))
+                .expectNext(of(new Tld("se"), 55_181L))
+                .expectNext(of(new Tld("info"), 37_701L))
+                .expectNext(of(new Tld("no"), 35_631L))
                 .verifyComplete();
     }
 

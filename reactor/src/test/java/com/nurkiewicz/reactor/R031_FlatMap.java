@@ -54,8 +54,8 @@ public class R031_FlatMap {
 		//then
 		orders
 				.as(StepVerifier::create)
-				.expectNextMatches(order -> order.getItems().equals(of(new Item("Item of 11"))))
-				.expectNextMatches(order -> order.getItems().equals(of(new Item("Item of 12"))))
+				.expectNextMatches(order -> order.getItems().equals(of(new Item("Item of A11"), new Item("Item of B11"))))
+				.expectNextMatches(order -> order.getItems().equals(of(new Item("Item of A12"), new Item("Item of B12"))))
 				.verifyComplete();
 	}
 
@@ -75,8 +75,10 @@ public class R031_FlatMap {
 		//then
 		items
 				.as(StepVerifier::create)
-				.expectNext(new Item("Item of 11"))
-				.expectNext(new Item("Item of 12"))
+				.expectNext(new Item("Item of A11"))
+				.expectNext(new Item("Item of B11"))
+				.expectNext(new Item("Item of A12"))
+				.expectNext(new Item("Item of B12"))
 				.verifyComplete();
 	}
 

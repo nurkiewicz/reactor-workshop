@@ -1,5 +1,8 @@
 package com.nurkiewicz.reactor;
 
+import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
+
 import com.nurkiewicz.reactor.samples.CacheServer;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,9 +12,6 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.math.BigDecimal;
-import java.util.concurrent.TimeUnit;
 
 import static java.time.Duration.ofMillis;
 
@@ -59,19 +59,21 @@ public class R044_Merge {
 		TimeUnit.SECONDS.sleep(2);
 	}
 
-	private CacheServer first = new CacheServer("foo.com", ofMillis(20), 0);
-	private CacheServer second = new CacheServer("bar.com", ofMillis(20), 0);
+	private CacheServer foo = new CacheServer("foo.com", ofMillis(20), 0);
+	private CacheServer bar = new CacheServer("bar.com", ofMillis(20), 0);
 
 	/**
-	 * TODO Fetch data from first available cache server
+	 * TODO Fetch data from first available cache server.
+	 *
+	 * BTW this can also be achieved using {@link Mono#firstWithValue(Mono, Mono[])}, but it swallows errors
 	 * @see Flux#mergeWith(Publisher)
 	 * @see Flux#next()
 	 */
 	@Test
 	public void fetchDataFromFirstAvailableServer() throws Exception {
 		//given
-		final Mono<String> fv = first.findBy(42);
-		final Mono<String> sv = second.findBy(42);
+		final Mono<String> fooResponse = foo.findBy(42);
+		final Mono<String> barResponse = bar.findBy(42);
 
 		//when
 		Mono<String> fastest = null; // TODO

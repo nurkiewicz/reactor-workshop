@@ -1,16 +1,21 @@
 package com.nurkiewicz.webflux.demo.emojis;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import reactor.core.publisher.Flux;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import static java.util.Comparator.reverseOrder;
+import static java.util.stream.Collectors.toMap;
 import static org.springframework.http.MediaType.TEXT_EVENT_STREAM_VALUE;
 
 @RestController
@@ -33,48 +38,53 @@ public class EmojiController {
                 .bodyToFlux(ServerSentEvent.class);
     }
 
-    /**
-     * TODO How many pushes from /subscribe/eps per second are emitted?
-     */
     @GetMapping(value = "/emojis/rps", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Long> rps() {
         return Flux.empty();
     }
 
-    /**
-     * TODO How many emojis in total per second are emitted?
-     */
     @GetMapping(value = "/emojis/eps", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<Long> eps() {
+    Flux<Integer> eps() {
         return Flux.empty();
     }
 
-    /**
-     * TODO Total number of each emoji (ever-growing map)
-     */
     @GetMapping(value = "/emojis/aggregated", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Map<String, Integer>> aggregated() {
         return Flux.empty();
     }
 
     /**
-     * TODO Top 10 most frequent emojis (with count). Only emit when data changes (do not emit subsequent duplicates).
+     * @see #topValues(Map, int)
      */
-    @GetMapping(value = "/emojis/top10", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<Map<String, Integer>> top10() {
+    @GetMapping(value = "/emojis/top", produces = TEXT_EVENT_STREAM_VALUE)
+    Flux<Map<String, Integer>> top(@RequestParam(defaultValue = "10", required = false) int limit) {
+//        return aggregated()...
         return Flux.empty();
     }
 
-    /**
-     * TODO Top 10 most frequent emojis (without count), only picture
-     * @see #codeToEmoji(String)
-     */
-    @GetMapping(value = "/emojis/top10str", produces = TEXT_EVENT_STREAM_VALUE)
-    Flux<String> top10str() {
+    private <T> Map<T, Integer> topValues(Map<T, Integer> agg, int n) {
+        return new HashMap<>(agg
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(reverseOrder()))
+                .limit(n)
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue)));
+    }
+
+    @GetMapping(value = "/emojis/topStr", produces = TEXT_EVENT_STREAM_VALUE)
+    Flux<String> topStr(@RequestParam(defaultValue = "10", required = false) int limit) {
         return Flux.empty();
     }
 
-    private static String codeToEmoji(String hex) {
+    String keysAsOneString(Map<String, Integer> m) {
+        return m
+            .keySet()
+            .stream()
+            .map(EmojiController::codeToEmoji)
+            .collect(Collectors.joining());
+    }
+
+    static String codeToEmoji(String hex) {
         final String[] codes = hex.split("-");
         if (codes.length == 2) {
             return hexToEmoji(codes[0]) + hexToEmoji(codes[1]);

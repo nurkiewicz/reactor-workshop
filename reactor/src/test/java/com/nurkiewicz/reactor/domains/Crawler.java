@@ -1,5 +1,11 @@
 package com.nurkiewicz.reactor.domains;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.time.Duration;
+import java.util.concurrent.Semaphore;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.nurkiewicz.reactor.samples.Sleeper;
@@ -7,19 +13,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.time.Duration;
-import java.util.concurrent.Semaphore;
 
 public class Crawler {
 
 	public static final int MAX_CRAWLERS = 50;
 
 	private static final Logger log = LoggerFactory.getLogger(Crawler.class);
+	private static final Scheduler crawlAsyncScheduler = Schedulers.newBoundedElastic(500, 500, "CrawlAsync");
 
 	public static Html crawlBlocking(Domain domain) {
 		final URL url = domain.getUrl();
@@ -47,7 +49,7 @@ public class Crawler {
 	public static Mono<Html> crawlAsync(Domain domain) {
 		return Mono
 				.fromCallable(() -> crawlBlocking(domain))
-				.subscribeOn(Schedulers.elastic());
+				.subscribeOn(crawlAsyncScheduler);
 	}
 
 

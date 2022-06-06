@@ -1,21 +1,20 @@
 package com.nurkiewicz.webflux.demo;
 
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
-import java.time.Duration;
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.TEXT_EVENT_STREAM_VALUE;
@@ -33,25 +32,33 @@ class ReactorController {
 	}
 
 	@GetMapping("/hello")
-	Mono<String> hello() {
+	Mono<String> fast() {
 		return Mono
-				.just(Instant.now())
-				.delayElement(Duration.ofMillis(500))
+				.fromCallable(Instant::now)
 				.map(Instant::toString);
 	}
 
-	@GetMapping("/fast")
-	Mono<String> fast() {
+	@GetMapping("/slow")
+	Mono<String> hello() {
 		return Mono
-				.just(Instant.now())
+				.fromCallable(Instant::now)
+				.delayElement(Duration.ofSeconds(1))
 				.map(Instant::toString);
+	}
+
+	@GetMapping(value = "/array")
+	Flux<Ping> array() {
+		return Flux
+				.range(1, 5)
+				.map(x -> new Ping(x, Instant.now()));
 	}
 
 	@GetMapping(value = "/stream", produces = TEXT_EVENT_STREAM_VALUE)
-	Flux<Data> stream() {
+	Flux<Ping> stream() {
 		return Flux
 				.interval(Duration.ofMillis(500))
-				.map(x -> new Data(x, Instant.now()));
+				.map(x -> new Ping(x, Instant.now()))
+				.doOnCancel(() -> log.info("Interrupted by client"));
 	}
 
 	@GetMapping("/error/immediate")
@@ -67,19 +74,17 @@ class ReactorController {
 	}
 
 	@GetMapping(value = "/cached")
-	Mono<ResponseEntity<Map<String, String>>> cached() {
-		return Mono.fromCallable(() -> {
-			Map<String, String> book = new HashMap<>();
-			book.put("title", "Lord Of The Rings");
-			return book;
-		}).map(book ->
-				ResponseEntity
-						.ok()
-						.contentType(APPLICATION_JSON)
-						.cacheControl(CacheControl.maxAge(30, TimeUnit.DAYS))
-						.eTag(String.valueOf(book.hashCode()))
-						.body(book)
-		);
+	Mono<ResponseEntity<Book>> cached() {
+		return Mono.fromCallable(() ->
+						new Book("Tolkien", "Lord Of The Rings"))
+				.map(book ->
+						ResponseEntity
+								.ok()
+								.contentType(APPLICATION_JSON)
+								.cacheControl(CacheControl.maxAge(30, TimeUnit.DAYS))
+								.eTag(String.valueOf(book.hashCode()))
+								.body(book)
+				);
 	}
 
 	@GetMapping("/proxy")
@@ -103,11 +108,12 @@ class ReactorController {
 
 }
 
-class Data {
+class Ping {
+
 	private final long seqNo;
 	private final Instant timestamp;
 
-	Data(long seqNo, Instant timestamp) {
+	Ping(long seqNo, Instant timestamp) {
 		this.seqNo = seqNo;
 		this.timestamp = timestamp;
 	}
@@ -118,5 +124,24 @@ class Data {
 
 	public long getSeqNo() {
 		return seqNo;
+	}
+}
+
+class Book {
+
+	private final String author;
+	private final String title;
+
+	public Book(String author, String title) {
+		this.author = author;
+		this.title = title;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public String getTitle() {
+		return title;
 	}
 }

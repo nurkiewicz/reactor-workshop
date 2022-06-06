@@ -1,6 +1,12 @@
 package com.nurkiewicz.reactor;
 
+import java.nio.charset.StandardCharsets;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 import com.google.common.collect.ImmutableList;
+import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
 import com.nurkiewicz.reactor.user.Item;
 import com.nurkiewicz.reactor.user.LoremIpsum;
@@ -14,11 +20,6 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.nio.charset.StandardCharsets;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 @Ignore
 public class R032_AdvancedFiltering {
@@ -66,7 +67,7 @@ public class R032_AdvancedFiltering {
 		//then
 		items
 				.as(StepVerifier::create)
-				.expectNextCount(2)
+				.expectNextCount(4)
 				.verifyComplete();
 	}
 
@@ -76,7 +77,7 @@ public class R032_AdvancedFiltering {
 		final Flux<String> words = Flux.just(LoremIpsum.words());
 
 		//when
-		final Flux<String> filtered = words.filter(s -> sha256(s).startsWith("0"));
+		final Flux<String> filtered = words.filter(s -> sha256(s).toString().startsWith("0"));
 
 		//then
 		filtered
@@ -86,11 +87,10 @@ public class R032_AdvancedFiltering {
 				.verifyComplete();
 	}
 
-	private String sha256(String input) {
+	private HashCode sha256(String input) {
 		return Hashing
 				.sha256()
-				.hashString(input, StandardCharsets.UTF_8)
-				.toString();
+				.hashString(input, StandardCharsets.UTF_8);
 	}
 
 	@Test
@@ -100,7 +100,7 @@ public class R032_AdvancedFiltering {
 
 		//when
 		final Flux<String> filtered = words
-				.filter(s -> asyncSha256(s).block().startsWith("0"));  //No, no, NO!
+				.filter(s -> asyncSha256(s).block().toString().startsWith("0"));  //No, no, NO!
 
 		//then
 		filtered
@@ -157,7 +157,7 @@ public class R032_AdvancedFiltering {
 	/**
 	 * Not really async...
 	 */
-	private Mono<String> asyncSha256(String input) {
+	private Mono<HashCode> asyncSha256(String input) {
 		return Mono.fromCallable(() -> sha256(input));
 	}
 

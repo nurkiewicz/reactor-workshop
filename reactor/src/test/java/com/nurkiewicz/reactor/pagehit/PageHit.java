@@ -1,13 +1,14 @@
 package com.nurkiewicz.reactor.pagehit;
 
-import com.devskiller.jfairy.Fairy;
-import com.google.common.base.MoreObjects;
-import reactor.core.scheduler.Schedulers;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
+
+import com.google.common.base.MoreObjects;
+import reactor.core.scheduler.Schedulers;
+
+import com.devskiller.jfairy.Fairy;
 
 public class PageHit {
 	private final Instant timestamp;
@@ -23,7 +24,7 @@ public class PageHit {
 	public static PageHit random(Fairy fairy) {
 		try {
 			return new PageHit(
-					Instant.ofEpochMilli(Schedulers.elastic().now(TimeUnit.MILLISECONDS)),
+					Instant.ofEpochMilli(Schedulers.parallel().now(TimeUnit.MILLISECONDS)),
 					Country.random(),
 					new URI(randomUrl(fairy)));
 		} catch (URISyntaxException e) {

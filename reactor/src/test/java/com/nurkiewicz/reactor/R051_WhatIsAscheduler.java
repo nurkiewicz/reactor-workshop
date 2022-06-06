@@ -1,5 +1,9 @@
 package com.nurkiewicz.reactor;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
+
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -8,10 +12,6 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,7 +49,7 @@ public class R051_WhatIsAscheduler {
 	 * @see Schedulers#fromExecutorService(ExecutorService)
 	 */
 	private Scheduler customScheduler() {
-		return Schedulers.elastic();
+		return Schedulers.boundedElastic();
 	}
 
 }

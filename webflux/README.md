@@ -15,3 +15,13 @@
     4. Fetch article content
 9. Make a simple front-end for SSE
 10. Use Redis to store how many times each article's content was fetched
+
+# Tips and tricks
+
+## Resuing containers in testcontainers
+
+In `.testcontainers.properties` in your `$HOME` folder put the following line:
+
+```
+testcontainers.reuse.enable=true
+```

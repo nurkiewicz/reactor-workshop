@@ -1,15 +1,19 @@
 package com.nurkiewicz.reactor;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.function.Function;
+
 import com.nurkiewicz.reactor.domains.Crawler;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.net.URI;
-import java.util.function.Function;
 
 @Ignore
 public class R073_Expand {
@@ -128,6 +132,33 @@ public class R073_Expand {
                 .expectNext(new URI("https://abc.xyz/investor/other/code-of-conduct/"))
                 .verifyComplete();
 
+    }
+
+    @Test
+    public void listTopLevelFiles() {
+        listFiles(new File(".."))
+                .log()
+                .blockLast();
+    }
+
+    @Test
+    public void listAllFiles() {
+        Mono.just(new File(".."))
+                .expandDeep(this::listFiles)
+                .log()
+                .blockLast();
+
+    }
+
+    Flux<File> listFiles(File parent) {
+        return Mono
+                .fromCallable(() -> parent.listFiles(filter()))
+                .flatMapIterable(Arrays::asList);
+    }
+
+    private FilenameFilter filter() {
+        return (dir, name) ->
+                !(name.equals(".gradle") || name.equals(".git"));
     }
 
 }

@@ -1,5 +1,8 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
 import com.nurkiewicz.reactor.samples.Ping;
 import com.nurkiewicz.reactor.user.Order;
 import com.nurkiewicz.reactor.user.User;
@@ -14,9 +17,6 @@ import reactor.test.StepVerifier;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
@@ -27,7 +27,7 @@ public class R043_Zip {
 	@Test
 	public void zipTwoStreams() throws Exception {
 		//given
-		final Flux<Integer> nums = Flux.just(1, 2, 3);
+		final Flux<Integer> nums = Flux.just(1,   2, 3);
 		final Flux<String> strs = Flux.just("a", "b");
 
 		//when
@@ -81,7 +81,8 @@ public class R043_Zip {
 	@Test
 	public void latest() throws Exception {
 		//given
-		final Flux<Long> fast = Flux.interval(Duration.ofMillis(100)).delayElements(Duration.ofMillis(1000));
+		final Flux<Long> fast = Flux.interval(Duration.ofMillis(100))
+				.delaySequence(Duration.ofMillis(1000));
 		final Flux<Long> slow = Flux.interval(Duration.ofMillis(250));
 
 		//when

@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.3.5.RELEASE'
+		springBootVersion = '2.6.6'
 	}
 	repositories {
 		mavenCentral()
@@ -17,8 +17,8 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.nurkiewicz'
-sourceCompatibility = 10
-targetCompatibility = 10
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
 	mavenCentral()
@@ -31,21 +31,23 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
-	implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0'
+	implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.4.5'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'org.springframework.boot:spring-boot-devtools'
-	implementation 'org.testcontainers:testcontainers:1.15.1'
+	implementation 'org.testcontainers:testcontainers:1.16.3'
+	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.6.7'
 
-  	implementation 'io.r2dbc:r2dbc-h2:0.8.4.RELEASE'
-    implementation 'io.r2dbc:r2dbc-pool:0.8.5.RELEASE'
+  	implementation 'io.r2dbc:r2dbc-h2:0.9.1.RELEASE'
+    implementation 'io.r2dbc:r2dbc-spi:0.9.1.RELEASE'
+    implementation 'io.r2dbc:r2dbc-pool:0.9.0.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 
-	implementation 'io.micrometer:micrometer-registry-prometheus:1.6.3'
-	implementation 'com.rometools:rome-opml:1.15.0'
-	implementation 'com.google.guava:guava:30.0-jre'
-	implementation 'com.h2database:h2:1.4.200'
-
+	implementation 'io.micrometer:micrometer-registry-prometheus:1.8.4'
+	implementation 'com.rometools:rome-opml:1.18.0'
+	implementation 'com.google.guava:guava:31.1-jre'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'com.h2database:h2:2.1.212'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.1.1'
 }
 
 

@@ -1,12 +1,12 @@
 package com.nurkiewicz.reactor;
 
+import java.time.Duration;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
-
-import java.time.Duration;
 
 import static java.time.Duration.ofSeconds;
 import static reactor.test.StepVerifier.withVirtualTime;
@@ -22,11 +22,13 @@ public class R070_VirtualClock {
 				.expectSubscription()
 				.expectNoEvent(ofSeconds(2))
 				.expectNext("OK")
-				.verifyComplete();
+				.expectComplete()
+				.verify(ofSeconds(5));
 	}
 
 	/**
-	 * TODO Apply {@link Mono#timeout(Duration)} of 1 second to a return value from {@link #longRunning()} method and verify it works
+	 * TODO Apply {@link Mono#timeout(Duration)} of 1 second to a return value from {@link #longRunning()} method and verify it works.
+	 * Warning: {@link reactor.test.StepVerifier.LastStep#verifyTimeout(java.time.Duration)} doesn't verify {@link java.util.concurrent.TimeoutException}
 	 */
 	@Test
 	public void timeout() throws Exception {

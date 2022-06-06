@@ -8,7 +8,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -21,7 +20,7 @@ public class R046_Timeout {
 	private static final Logger log = LoggerFactory.getLogger(R046_Timeout.class);
 
 	/**
-	 * TODO Add fallback to {@link Flux#timeout(Duration)}
+	 * TODO Add fallback to {@link Mono#timeout(Duration)}
 	 * It should return -1 when timeout of 100ms occurs.
 	 */
 	@Test

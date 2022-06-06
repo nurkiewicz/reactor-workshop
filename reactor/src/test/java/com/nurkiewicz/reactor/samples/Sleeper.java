@@ -15,8 +15,7 @@ public class Sleeper {
 	public static void sleep(Duration duration) {
 		try {
 			TimeUnit.MILLISECONDS.sleep(duration.toMillis());
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
+		} catch (InterruptedException ignored) {
 		}
 	}
 

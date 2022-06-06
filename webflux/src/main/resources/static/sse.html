@@ -10,8 +10,8 @@
 
 </ul>
 <script>
-    const sse = new EventSource("/stream");
     const ul = document.getElementsByTagName('ul')[0];
+    const sse = new EventSource("/stream");
     sse.onmessage = e => {
         const li = document.createElement("li");
         const data = JSON.parse(e.data);

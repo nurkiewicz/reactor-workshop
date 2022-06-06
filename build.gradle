@@ -1,25 +1,27 @@
 subprojects {
     apply plugin: 'java'
-    sourceCompatibility = 10
-    targetCompatibility = 10
+    sourceCompatibility = 11
+    targetCompatibility = 11
  
     repositories {
        mavenCentral()
     }
 
     dependencies {
-        implementation 'io.projectreactor:reactor-core:3.4.2'
-        implementation 'io.projectreactor:reactor-tools:3.4.2'
-        implementation 'org.slf4j:slf4j-api:1.7.30'
-        implementation 'com.github.ben-manes.caffeine:caffeine:2.6.2'
-        runtime 'ch.qos.logback:logback-classic:1.2.3'
+        implementation 'io.projectreactor:reactor-core:3.4.16'
+        implementation 'io.projectreactor:reactor-tools:3.4.16'
+        implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
+        implementation 'org.slf4j:slf4j-api:1.7.36'
+        implementation 'com.github.ben-manes.caffeine:caffeine:3.0.6'
+        implementation 'ch.qos.logback:logback-classic:1.2.11'
+        implementation 'org.jsoup:jsoup:1.14.3'
 
-        testImplementation 'junit:junit:4.13.1'
-        testImplementation 'org.assertj:assertj-core:3.19.0'
-        testImplementation 'org.awaitility:awaitility:4.0.3'
-        testImplementation 'io.projectreactor:reactor-test:3.4.2'
-        testImplementation 'com.devskiller:jfairy:0.6.4'
-        testImplementation 'org.mockito:mockito-core:3.7.7'
+        testImplementation 'junit:junit:4.13.2'
+        testImplementation 'org.assertj:assertj-core:3.22.0'
+        testImplementation 'org.awaitility:awaitility:4.2.0'
+        testImplementation 'io.projectreactor:reactor-test:3.4.16'
+        testImplementation 'com.devskiller:jfairy:0.6.5'
+        testImplementation 'org.mockito:mockito-core:4.4.0'
     }
 
 }

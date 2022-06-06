@@ -28,7 +28,13 @@ public class ArticlesController {
     }
 
     /**
-     * TODO (8) Create an SSE stream of newest articles
+     * TODO (8) Create an SSE stream of newest articles.
+     * Possible solutions:
+     * <ol>
+     *     <li>articleRepository.save() inserts into sink, then sink.asFlux()</li>
+     *     <li>@Tailable on MongoDB with capped collection</li>
+     *     <li>insert into queue (Redis? Kafka?), fetch from this queue in this endpoint</li>
+     * </ol>
      */
     @GetMapping(value = "/newest-stream", produces = TEXT_EVENT_STREAM_VALUE)
     Flux<Article> streamNew() {
