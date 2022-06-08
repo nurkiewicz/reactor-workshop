@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
@@ -107,8 +108,7 @@ public class R053_Concurrency {
 	}
 
 	/**
-	 * TODO Copy-paste solution from first test, but replace {@link Crawler#crawlBlocking(Domain)} with {@link Crawler#crawlThrottled(Domain)}.
-	 * Your test should fail with "Too many concurrent crawlers" exception.
+	 * Your test fails with "Too many concurrent crawlers" exception.
 	 * How to prevent {@link Flux#flatMap(Function)} from crawling too many domains at once?
 	 *
 	 * @see Flux#flatMap(Function, int)
@@ -120,7 +120,14 @@ public class R053_Concurrency {
 				.all();
 
 		//when
-		final Flux<Html> htmls = null; // TODO
+		final Scheduler crawlerScheduler =
+				Schedulers.newBoundedElastic(500, 100, "Crawler");
+		final Flux<Html> htmls = domains
+				.flatMap(domain ->
+						Mono
+								.fromCallable(() -> Crawler.crawlThrottled(domain))
+								.subscribeOn(crawlerScheduler)
+				);
 
 		//then
 		final List<String> strings = htmls.map(Html::getRaw).collectList().block();
