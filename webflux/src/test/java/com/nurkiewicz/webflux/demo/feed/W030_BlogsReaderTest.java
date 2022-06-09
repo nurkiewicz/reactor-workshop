@@ -10,18 +10,18 @@ import reactor.core.publisher.Flux;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * TODO (1) Return {@link OpmlReader#allFeeds()} as {@link Flux} in {@link OpmlReader#allFeedsStream()}, lazily
+ * TODO (1) Return {@link BlogsReader#allBlogs()} as {@link Flux} in {@link BlogsReader#allBlogsStream()}, lazily
  */
 @Ignore
-public class W030_OpmlReaderTest {
+public class W030_BlogsReaderTest {
 
 	@Test
 	public void shouldReturnStreamOfBlogs() {
 		//given
-		OpmlReader opmlReader = new OpmlReader("/feed-en.xml");
+		BlogsReader blogsReader = new BlogsReader("/feed-en.xml");
 
 		//when
-		Flux<Outline> stream = opmlReader.allFeedsStream();
+		Flux<Outline> stream = blogsReader.allBlogsStream();
 
 		//then
 		List<String> blogs = stream
@@ -41,10 +41,10 @@ public class W030_OpmlReaderTest {
 	@Test
 	public void shouldBeLazy() {
 		//given
-		OpmlReader opmlReader = new OpmlReader("/feed-404.xml");
+		BlogsReader blogsReader = new BlogsReader("/feed-404.xml");
 
 		//when
-		opmlReader.allFeedsStream();
+		blogsReader.allBlogsStream();
 
 		//then
 		//no exception thrown

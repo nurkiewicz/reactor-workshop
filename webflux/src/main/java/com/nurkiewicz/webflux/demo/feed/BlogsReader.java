@@ -18,21 +18,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OpmlReader {
+public class BlogsReader {
 
     public final String feedFile;
 
-    public OpmlReader(@Value("${feed-file}") String feedFile) {
+    public BlogsReader(@Value("${feed-file}") String feedFile) {
         this.feedFile = feedFile;
     }
 
-    public Flux<Outline> allFeedsStream() {
+    public Flux<Outline> allBlogsStream() {
         return Flux.empty();
     }
 
-    public List<Outline> allFeeds() throws FeedException, IOException {
+    public List<Outline> allBlogs() throws FeedException, IOException {
         WireFeedInput input = new WireFeedInput();
-        try(final InputStream inputStream = OpmlReader.class.getResourceAsStream(feedFile)) {
+        try(final InputStream inputStream = BlogsReader.class.getResourceAsStream(feedFile)) {
             final InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             final Reader reader = new BufferedReader(streamReader);
             Opml feed = (Opml) input.build(reader);
