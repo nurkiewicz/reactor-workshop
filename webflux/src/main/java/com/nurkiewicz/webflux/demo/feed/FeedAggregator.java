@@ -17,11 +17,11 @@ public class FeedAggregator {
     private static final Logger log = LoggerFactory.getLogger(FeedAggregator.class);
 
     private final BlogsReader blogsReader;
-    private final FeedReader feedReader;
+    private final ArticlesReader articlesReader;
 
-    public FeedAggregator(BlogsReader blogsReader, FeedReader feedReader) {
+    public FeedAggregator(BlogsReader blogsReader, ArticlesReader articlesReader) {
         this.blogsReader = blogsReader;
-        this.feedReader = feedReader;
+        this.articlesReader = articlesReader;
     }
 
     /**
@@ -31,7 +31,7 @@ public class FeedAggregator {
 //    @PostConstruct
     public void init() throws IOException, FeedException, SAXException, ParserConfigurationException {
         final String feed = blogsReader.allBlogs().get(0).getXmlUrl();
-        feedReader.fetch(new URL(feed)).forEach(e -> {
+        articlesReader.loadFromOneBlog(new URL(feed)).forEach(e -> {
             log.info("{}: {} at {}", e.getPublishedDate(), e.getTitle(), e.getLink());
         });
     }

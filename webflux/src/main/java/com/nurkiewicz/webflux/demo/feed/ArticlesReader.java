@@ -25,13 +25,13 @@ import org.springframework.stereotype.Component;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Component
-public class FeedReader {
+public class ArticlesReader {
 
     /**
      * TODO (3) Return <code>Flux&lt;SyndEntry&gt;</code>
      * Start by replacing {@link #get(URL)} with {@link #getAsync(URL)}.
      */
-    public List<SyndEntry> fetch(URL url) throws IOException, FeedException, ParserConfigurationException, SAXException {
+    public List<SyndEntry> loadFromOneBlog(URL url) throws IOException, FeedException, ParserConfigurationException, SAXException {
         final String feedBody = get(url);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();

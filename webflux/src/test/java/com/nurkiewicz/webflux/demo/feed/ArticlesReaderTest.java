@@ -14,12 +14,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
-public class FeedReaderTest extends IntegrationTest {
+public class ArticlesReaderTest extends IntegrationTest {
 
     @Test
     public void testGetAsync() throws MalformedURLException {
         //given
-        Mono<String> htmlMono = new FeedReader().getAsync(new URL("http://www.example.com"));
+        Mono<String> htmlMono = new ArticlesReader().getAsync(new URL("http://www.example.com"));
 
         //when
         String html = htmlMono.block();
