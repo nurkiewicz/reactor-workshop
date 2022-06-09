@@ -1,7 +1,7 @@
 # WebFlux Exercises
 
 1. `OpmlReader.allFeeds()` should return `Flux<Outline>` of blogs
-2. `FeedReader.get()` should return `Mono<String>` and use `WebClient instead of `HttpURLConnection`
+2. `FeedReader.get()` should return `Mono<String>` and use `WebClient` instead of `HttpURLConnection`
 3. Use `WebClient` instead of `HttpURLConnection`.
 4. Handle errors and 301 redirect
 5. Publish SSE stream of new articles
