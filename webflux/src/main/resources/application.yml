@@ -14,6 +14,9 @@ management:
       exposure:
         include: '*'
 spring:
+  mongodb:
+    embedded:
+      version: 3.6.23
   r2dbc:
     pool:
       enabled: true
