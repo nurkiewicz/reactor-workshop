@@ -32,14 +32,14 @@ class ReactorController {
 	}
 
 	@GetMapping("/hello")
-	Mono<String> fast() {
+	Mono<String> hello() {
 		return Mono
 				.fromCallable(Instant::now)
 				.map(Instant::toString);
 	}
 
 	@GetMapping("/slow")
-	Mono<String> hello() {
+	Mono<String> slow() {
 		return Mono
 				.fromCallable(Instant::now)
 				.delayElement(Duration.ofSeconds(1))
@@ -94,16 +94,6 @@ class ReactorController {
 				.uri("http://example.com")
 				.retrieve()
 				.bodyToMono(String.class);
-	}
-
-	@GetMapping("/leak")
-	Mono<String> leak() {
-		return webClient
-				.get()
-				.uri("http://example.com")
-				.exchange()
-//				.flatMap(response -> response.bodyToMono(Void.class))
-				.map(response -> "");
 	}
 
 }
