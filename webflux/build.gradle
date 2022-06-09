@@ -36,7 +36,7 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.6.9'
 
   	implementation 'io.r2dbc:r2dbc-postgresql:0.8.12.RELEASE'
-    implementation 'io.r2dbc:r2dbc-spi:0.9.1.RELEASE'
+    implementation 'io.r2dbc:r2dbc-spi:1.0.0.RELEASE'
     implementation 'io.r2dbc:r2dbc-pool:0.9.0.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 
