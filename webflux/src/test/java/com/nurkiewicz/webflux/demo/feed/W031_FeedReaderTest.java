@@ -22,11 +22,11 @@ public class W031_FeedReaderTest {
 	}
 
 	@Autowired
-	private FeedReader feedReader;
+	private ArticlesReader articlesReader;
 
 	@Test
 	public void shouldDownloadFromUrl() throws MalformedURLException {
-		String html = feedReader
+		String html = articlesReader
 				.getAsync("http://www.example.com")
 				.block(Duration.ofSeconds(5));
 		System.out.println(html);

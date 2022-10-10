@@ -67,7 +67,7 @@ See also [workshop notes](https://nurkiewicz.com/slides/reactor-workshop).
 2. [Web on Reactive Stack](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#spring-webflux) in [Spring Framework Documentation](https://docs.spring.io/spring/docs/current/spring-framework-reference/index.html)
 3. [The "Spring WebFlux Framework"](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-developing-web-applications.html#boot-features-webflux) in [Spring Boot Reference Guide](https://docs.spring.io/spring-boot/docs/current/reference/html/)
 
-## Troubleshooting
+## Troubleshooting, tips and tricks
 
 ### IntelliJ test runner
 
@@ -83,3 +83,11 @@ TESTCONTAINERS_RYUK_DISABLED=true
 ```
 
 See: [Disabling Ryuk](https://www.testcontainers.org/features/configuration/#disabling-ryuk)
+
+### Reusing containers in testcontainers
+
+In `.testcontainers.properties` in your `$HOME` folder put the following line:
+
+```
+testcontainers.reuse.enable=true
+```

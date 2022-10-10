@@ -19,17 +19,17 @@ public class FeedAggregator {
 
     private static final Logger log = LoggerFactory.getLogger(FeedAggregator.class);
 
-    private final OpmlReader opmlReader;
-    private final FeedReader feedReader;
+    private final BlogsReader blogsReader;
+    private final ArticlesReader articlesReader;
 
-    public FeedAggregator(OpmlReader opmlReader, FeedReader feedReader) {
-        this.opmlReader = opmlReader;
-        this.feedReader = feedReader;
+    public FeedAggregator(BlogsReader blogsReader, ArticlesReader articlesReader) {
+        this.blogsReader = blogsReader;
+        this.articlesReader = articlesReader;
     }
 
     public Flux<Article> articles() {
-        return opmlReader
-                .allFeedsStream()
+        return blogsReader
+                .allBlogsStream()
                 .flatMap(this::fetchPeriodically);
     }
 
@@ -54,7 +54,7 @@ public class FeedAggregator {
     }
 
     private Flux<SyndEntry> fetchEntries(String url) {
-        return feedReader
+        return articlesReader
                 .fetch(url)
                 .doOnSubscribe(s -> log.info("Fetching entries from {}", url))
                 .doOnError(e -> log.warn("Failed to fetch {}", url, e))

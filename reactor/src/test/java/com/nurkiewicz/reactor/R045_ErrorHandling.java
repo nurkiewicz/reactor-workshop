@@ -143,7 +143,7 @@ public class R045_ErrorHandling {
 		final Mono<User> mono = broken();
 
 		//when
-		final Mono<User> retried = mono.retry();
+		final Mono<User> retried = mono.retry(1_000);
 
 		//then
 		retried
@@ -155,7 +155,9 @@ public class R045_ErrorHandling {
 	Mono<User> broken() {
 		double rand = ThreadLocalRandom.current().nextDouble();
 		if (rand > 0.1) {
-			return Mono.error(new RuntimeException("Too big value " + rand));
+			return Mono
+					.<User>error(new RuntimeException("Too big value " + rand))
+					.delaySubscription(Duration.ofMillis(10));
 		}
 		return Mono.just(new User(1));
 	}

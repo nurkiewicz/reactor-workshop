@@ -7,6 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.SocketException;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.List;
 
@@ -29,13 +30,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Component
-public class FeedReader {
+public class ArticlesReader {
 
-	private static final Logger log = LoggerFactory.getLogger(FeedReader.class);
+	private static final Logger log = LoggerFactory.getLogger(ArticlesReader.class);
 
 	private final WebClient webClient;
 
-	public FeedReader(WebClient webClient) {
+	public ArticlesReader(WebClient webClient) {
 		this.webClient = webClient;
 	}
 

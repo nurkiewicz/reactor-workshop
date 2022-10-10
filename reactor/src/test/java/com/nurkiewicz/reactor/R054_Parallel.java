@@ -1,5 +1,11 @@
 package com.nurkiewicz.reactor;
 
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
+
 import com.nurkiewicz.reactor.domains.Crawler;
 import com.nurkiewicz.reactor.domains.Domain;
 import com.nurkiewicz.reactor.domains.Domains;
@@ -12,11 +18,6 @@ import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
-import java.net.URI;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static reactor.core.scheduler.Schedulers.elastic;
 
@@ -26,7 +27,7 @@ public class R054_Parallel {
 
 	/**
 	 * TODO Crawl 500 domains as soon as possible using {@link Flux#parallel()} operator.
-	 * Use {@link Crawler#crawlBlocking(Domain)}
+	 * Use {@link Crawler#crawlBlocking(Domain)}. Don't use {@link Mono#fromCallable(Callable)}
 	 *
 	 * @see Flux#parallel(int)
 	 */
