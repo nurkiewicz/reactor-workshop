@@ -165,7 +165,7 @@ public class R045_ErrorHandling {
 	@Test
 	public void retryWithExponentialBackoff() throws Exception {
 		final RetryBackoffSpec spec = Retry
-				.backoff(20, Duration.ofMillis(100))
+				.backoff(10, Duration.ofMillis(100))
 				.jitter(0.2)
 				.maxBackoff(Duration.ofSeconds(2));
 		Mono
