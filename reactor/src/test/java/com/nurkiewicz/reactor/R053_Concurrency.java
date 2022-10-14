@@ -147,6 +147,31 @@ public class R053_Concurrency {
 	}
 
 	/**
+	 * Why creating a tiny thread pool doesn't help?
+	 * Tip: shrink it even further to just one thread (!)
+	 */
+	@Test(timeout = 20_000L)
+	public void smallPoolsDoesntWork() throws Exception {
+		//given
+		final Flux<Domain> domains = Domains
+				.all();
+
+		//when
+		final Flux<Html> htmls = domains
+				.flatMap(domain ->
+						Mono
+								.fromCallable(() -> Crawler.crawlThrottled(domain))
+								.subscribeOn(Schedulers.newBoundedElastic(50, 100, "Crawler"))
+				);
+
+		//then
+		final List<String> strings = htmls.map(Html::getRaw).collectList().block();
+		assertThat(strings)
+				.hasSize(500)
+				.contains("<html><title>http://mozilla.org</title></html>");
+	}
+
+	/**
 	 * TODO Generate list of tuples, but this time by zipping ({@link Flux#zip(Publisher, Publisher)})
 	 * stream of domains with stream of responses.
 	 * Why does it fail?
