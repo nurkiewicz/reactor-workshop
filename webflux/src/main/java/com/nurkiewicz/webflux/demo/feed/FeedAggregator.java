@@ -25,7 +25,8 @@ public class FeedAggregator {
     }
 
     /**
-     * TODO (4) Read all feeds and store them into database using {@link ArticleRepository}
+     * TODO (4) Read all feeds using {@link BlogsReader#allBlogsStream()}
+     *  and store them into database using {@link ArticleRepository}
      * TODO (5) Repeat periodically, do not store duplicates. Hint: use {@link ArticleRepository#existsById(Object)}
      */
 //    @PostConstruct
