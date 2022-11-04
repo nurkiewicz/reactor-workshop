@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Sinks;
 
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketMessage;
@@ -18,6 +19,8 @@ import org.springframework.web.reactive.socket.WebSocketSession;
  *     <li>Add some logging: connecting/disconnecting, how many subscribers</li>
  * </ol>
  * Hint: Sink should hold {@link String}s, not {@link WebSocketMessage}s
+ *
+ * @see Sinks.Many#currentSubscriberCount()
  */
 public class ChatHandler implements WebSocketHandler {
 
