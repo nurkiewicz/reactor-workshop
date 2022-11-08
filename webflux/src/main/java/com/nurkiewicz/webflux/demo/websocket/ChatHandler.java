@@ -18,6 +18,8 @@ import org.springframework.web.reactive.socket.WebSocketSession;
  *     <li>Add some logging: connecting/disconnecting, how many subscribers</li>
  * </ol>
  * Hint: Sink should hold {@link String}s, not {@link WebSocketMessage}s
+ *
+ * @see Sinks.Many#currentSubscriberCount()
  */
 public class ChatHandler implements WebSocketHandler {
 

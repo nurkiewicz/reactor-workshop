@@ -1,6 +1,7 @@
 package com.nurkiewicz.reactor.user;
 
 import com.google.common.collect.ImmutableList;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public class UserOrders {
@@ -18,4 +19,8 @@ public class UserOrders {
 		});
 	}
 
+
+	public static Flux<Order> allOrdersOf(User user) {
+		return lastOrderOf(user).flux().repeat(5);
+	}
 }
