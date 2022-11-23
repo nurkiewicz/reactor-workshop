@@ -24,6 +24,7 @@ repositories {
 	mavenCentral()
 	maven { url "https://repo.spring.io/snapshot" }
 	maven { url "https://repo.spring.io/milestone" }
+	maven { url "https://packages.confluent.io/maven/" }
 }
 
 dependencies {
@@ -43,6 +44,7 @@ dependencies {
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.9.5'
 	implementation 'com.rometools:rome-opml:1.18.0'
 	implementation 'com.google.guava:guava:31.1-jre'
+	implementation 'org.apache.kafka:kafka-clients:7.0.1-ccs'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.1.4'
