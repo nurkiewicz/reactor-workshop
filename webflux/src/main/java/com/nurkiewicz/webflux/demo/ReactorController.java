@@ -3,6 +3,7 @@ package com.nurkiewicz.webflux.demo;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -51,6 +52,12 @@ class ReactorController {
 		return Flux
 				.range(1, 5)
 				.map(x -> new Ping(x, Instant.now()));
+	}
+
+	@GetMapping(value = "/array-mono")
+	Mono<List<Ping>> arrayMono() {
+		return array()
+				.collectList();
 	}
 
 	@GetMapping(value = "/stream", produces = TEXT_EVENT_STREAM_VALUE)

@@ -19,6 +19,7 @@ public class TracingController {
 
 	private final WebClient webClient;
 	private final Scheduler instrumentedScheduler;
+	private final Scheduler manual = Schedulers.newBoundedElastic(10, 100, "Manual");
 
 	public TracingController(WebClient webClient, Scheduler instrumentedScheduler) {
 		this.webClient = webClient;
@@ -37,8 +38,7 @@ public class TracingController {
 	@GetMapping("/tracing/async-plain")
 	Mono<String> tracingAsyncPlain() {
 		log.info("In method tracingAsyncPlain");
-		return tracing()
-				.subscribeOn(Schedulers.boundedElastic());
+		return tracing().subscribeOn(manual);
 	}
 
 	@GetMapping("/tracing/async-instrumented")
