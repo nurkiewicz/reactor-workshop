@@ -50,7 +50,7 @@ public class FeedAggregator {
                         new Article(URI.create(entry.getLink().trim()), entry.getPublishedDate().toInstant(), entry.getTitle())
                 )
                 .doOnError(e -> log.warn("Unable to create article from {}", entry, e))
-                .onErrorResume(e -> Mono.empty());
+                .onErrorComplete();
     }
 
     private Flux<SyndEntry> fetchEntries(String url) {
@@ -58,6 +58,6 @@ public class FeedAggregator {
                 .fetch(url)
                 .doOnSubscribe(s -> log.info("Fetching entries from {}", url))
                 .doOnError(e -> log.warn("Failed to fetch {}", url, e))
-                .onErrorResume(e -> Flux.empty());
+                .onErrorComplete();
     }
 }
