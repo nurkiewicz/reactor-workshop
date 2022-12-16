@@ -11,9 +11,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.blockhound.BlockHound;
+import reactor.core.Scannable;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 import reactor.tools.agent.ReactorDebugAgent;
+import reactor.util.function.Tuple2;
 
 @Ignore
 public class R38_Debugging {
@@ -31,7 +33,19 @@ public class R38_Debugging {
 
 	@Test
 	public void showStackTrace() throws InterruptedException {
-		Mono.zip(
+		flux().subscribe();
+		TimeUnit.SECONDS.sleep(2);
+	}
+
+	@Test
+	public void scannable() throws InterruptedException {
+		Scannable.from(flux())
+				.steps()
+				.forEach(System.out::println);
+	}
+
+	private static Mono<Tuple2<Object, Object>> flux() {
+		return Mono.zip(
 						Mono.never().timeout(Duration.ofMillis(10)),
 						Mono.never().timeout(Duration.ofMillis(100))
 				)
@@ -39,9 +53,7 @@ public class R38_Debugging {
 				.map(x -> x)
 				.checkpoint("Handling GET")
 				.filter(x -> true)
-				.timeout(Duration.ofMillis(70))
-				.subscribe();
-		TimeUnit.SECONDS.sleep(2);
+				.timeout(Duration.ofMillis(70));
 	}
 
 	@Test

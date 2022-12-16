@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 import reactor.netty.http.client.HttpClient;
 
 import org.springframework.context.annotation.Bean;
@@ -43,6 +45,11 @@ class Config {
                 .codecs(codecs ->
                         codecs.defaultCodecs().maxInMemorySize(1024 * 1024 * 10))
                 .build();
+    }
+
+    @Bean
+    Scheduler instrumentedScheduler() {
+        return Schedulers.newBoundedElastic(10, 100, "Instrumented");
     }
 
     @Bean
@@ -98,8 +105,8 @@ class Config {
 
 
 class Person {
-    private String name;
-    private int age;
+    private final String name;
+    private final int age;
 
     public Person(String name, int age) {
         this.name = name;

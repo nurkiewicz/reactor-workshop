@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.7.4'
+		springBootVersion = '2.7.5'
 	}
 	repositories {
 		mavenCentral()
@@ -24,6 +24,7 @@ repositories {
 	mavenCentral()
 	maven { url "https://repo.spring.io/snapshot" }
 	maven { url "https://repo.spring.io/milestone" }
+	maven { url "https://packages.confluent.io/maven/" }
 }
 
 dependencies {
@@ -32,20 +33,22 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'org.testcontainers:testcontainers:1.17.5'
-	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.6.11'
+	implementation 'org.testcontainers:testcontainers:1.17.6'
+	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.6.13'
 
   	implementation 'io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE'
-    implementation 'io.r2dbc:r2dbc-spi:1.0.0.RELEASE'
-    implementation 'io.r2dbc:r2dbc-pool:0.9.2.RELEASE'
+    implementation 'io.r2dbc:r2dbc-spi:0.9.1.RELEASE'
+    implementation 'io.r2dbc:r2dbc-pool:0.9.1.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 
-	implementation 'io.micrometer:micrometer-registry-prometheus:1.9.5'
+	implementation 'io.micrometer:micrometer-registry-prometheus:1.10.1'
 	implementation 'com.rometools:rome-opml:1.18.0'
 	implementation 'com.google.guava:guava:31.1-jre'
+	implementation 'org.apache.kafka:kafka-clients:7.0.1-ccs'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.1.4'
+	implementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.1.5'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.5'
 }
 
 

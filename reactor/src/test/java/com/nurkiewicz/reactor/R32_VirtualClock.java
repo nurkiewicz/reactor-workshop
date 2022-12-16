@@ -26,8 +26,11 @@ public class R32_VirtualClock {
 	}
 
 	/**
-	 * TODO Apply {@link Mono#timeout(Duration)} of 1 second to a return value from {@link #longRunning()} method and verify it works.
-	 * Warning: {@link reactor.test.StepVerifier.LastStep#verifyTimeout(java.time.Duration)} doesn't verify {@link java.util.concurrent.TimeoutException}
+	 * TODO Apply {@link Mono#timeout(Duration)} of 1 second to a return value from
+	 * {@link #longRunning()} method and verify it works.
+	 * Warning: both {@link reactor.test.StepVerifier.LastStep#verifyTimeout(java.time.Duration)} and
+	 * {@link reactor.test.StepVerifier.LastStep#expectTimeout(Duration)}
+	 * don't verify {@link java.util.concurrent.TimeoutException}
 	 */
 	@Test
 	public void timeout() throws Exception {

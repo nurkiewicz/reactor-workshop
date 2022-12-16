@@ -21,6 +21,7 @@ public class SecurityConfig {
 						.pathMatchers("/secure/**").authenticated()
 						.anyExchange().permitAll()
 				)
+				.csrf().disable()
 				.httpBasic(withDefaults())
 				.formLogin(withDefaults());
 		return http.build();
