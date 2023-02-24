@@ -44,7 +44,7 @@ dependencies {
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.10.1'
 	implementation 'com.rometools:rome-opml:1.18.0'
 	implementation 'com.google.guava:guava:31.1-jre'
-	implementation 'org.apache.kafka:kafka-clients:7.0.1-ccs'
+	implementation 'org.apache.kafka:kafka-clients:7.3.2-ce'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.1.5'
