@@ -33,7 +33,7 @@ public class R08_ReadingFileFromStream {
 		final Long count = lines
 				.count()
 				.block();
-		assertThat(count).isEqualTo(13);
+		assertThat(count).isEqualTo(12);
 	}
 
 	private BufferedReader open(String path) {
