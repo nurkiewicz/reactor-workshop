@@ -11,7 +11,7 @@ subprojects {
         implementation 'io.projectreactor:reactor-core:3.4.24'
         implementation 'io.projectreactor:reactor-tools:3.4.24'
         implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
-        implementation 'org.slf4j:slf4j-api:2.0.6'
+        implementation 'org.slf4j:slf4j-api:1.7.36'
         implementation 'com.github.ben-manes.caffeine:caffeine:3.1.1'
         implementation 'ch.qos.logback:logback-classic:1.2.11'
         implementation 'org.jsoup:jsoup:1.15.3'
