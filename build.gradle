@@ -13,7 +13,7 @@ subprojects {
         implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
         implementation 'org.slf4j:slf4j-api:2.0.6'
         implementation 'com.github.ben-manes.caffeine:caffeine:3.1.1'
-        implementation 'ch.qos.logback:logback-classic:1.2.11'
+        implementation 'ch.qos.logback:logback-classic:1.4.7'
         implementation 'org.jsoup:jsoup:1.15.3'
 
         testImplementation 'junit:junit:4.13.2'
