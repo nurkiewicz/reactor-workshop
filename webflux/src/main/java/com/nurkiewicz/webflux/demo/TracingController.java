@@ -1,17 +1,22 @@
 package com.nurkiewicz.webflux.demo;
 
-import java.lang.invoke.MethodHandles;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
+import java.lang.invoke.MethodHandles;
 
+/**
+ * Testing (run simple web server in the background, like <code>nc -kl 8040</code>:
+ * <pre>
+ *     http -v :8080/tracing/proxy X-B3-TraceId:abc X-B3-SpanId:def
+ * </pre>
+ */
 @RestController
 public class TracingController {
 
