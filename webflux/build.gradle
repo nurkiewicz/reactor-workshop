@@ -48,7 +48,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.1.5'
-	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.5'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.9'
 }
 
 
